@@ -1,0 +1,9 @@
+.vscode
+*.log
+*.o
+*.a
+*.gcno
+*.gcda
+vgcore*
+disp.c
+myrpg
