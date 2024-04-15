@@ -11,7 +11,6 @@ SRC =	src/main.c					\
 		src/app/destroy_app.c		\
 		src/linked_list/add.c		\
 		src/linked_list/del.c		\
-		src/linked_list/disp.c		\
 		src/linked_list/free_list.c	\
 		src/linked_list/list_len.c	\
 		src/debug/mini_printf.c		\
