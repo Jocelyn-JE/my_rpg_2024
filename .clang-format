@@ -1,0 +1,51 @@
+BasedOnStyle: LLVM
+Language: Cpp
+AlignEscapedNewlines: Left
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+BitFieldColonSpacing: After
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: true
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+IndentWidth: 4
+TabWidth: 4
+IncludeBlocks: Merge
+UseTab: Never
+ColumnLimit: 80
+IndentCaseLabels: true
+IndentCaseBlocks: true
+AlwaysBreakAfterReturnType: None
+DisableFormat: false
+QualifierAlignment: Left
+IndentPPDirectives: BeforeHash
+PointerAlignment: Right
+ReferenceAlignment: Right
+DerivePointerAlignment: false
+SpacesInParentheses: false
+SeparateDefinitionBlocks: Always
+SortIncludes: CaseSensitive
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeAssignmentOperators: true
+SpaceInEmptyParentheses: false
+SpaceBeforeCaseColon: false
+SpaceBeforeJsonColon: false
+SpaceBeforeSquareBrackets: false
+SpacesBeforeTrailingComments: 6
+SpaceAfterTemplateKeyword: true
