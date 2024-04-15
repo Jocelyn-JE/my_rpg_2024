@@ -1,0 +1,62 @@
+name: Program Availability
+
+on:
+  push:
+  pull_request:
+
+env:
+  EXECUTABLE: "my_rpg"
+
+jobs:
+  check_coding_style:
+    runs-on: ubuntu-latest
+    container: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run coding style check
+        id: coding_style_check
+        run: |
+          check.sh $(pwd) $(pwd)
+          echo "::set-output name=error_report::$(<coding-style-reports.log)"
+      - name: Display coding style errors
+        if: steps.coding_style_check.outputs.error_report != ''
+        run: |
+          while IFS= read -r line; do
+            file=$(echo "$line" | cut -d ':' -f 1)
+            line_number=$(echo "$line" | cut -d ':' -f 2)
+            severity=$(echo "$line" | cut -d ':' -f 3)
+            error_code=$(echo "$line" | cut -d ':' -f 4)
+            echo "::error file=$file,line=$line_number::[$severity] coding style error: $file:$line_number $error_code"
+          done <<< "${{ steps.coding_style_check.outputs.error_report }}"
+
+  check_program_compilation:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile program
+        run: make
+        timeout-minutes: 2
+      - name: Clean up
+        run: make clean
+      - name: Check executables
+        run: |
+          IFS=',' read -ra ADDR <<< "${EXECUTABLE}"
+          for executable in "${ADDR[@]}"; do
+            if [ -f "$executable" ] && [ -x "$executable" ]; then
+              echo "Executable $executable exists and is executable."
+            else
+              echo "::error:: Executable $executable does not exist or is not executable." 
+              exit 1
+            fi
+          done
+
+  run_tests:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: make tests_run
+        timeout-minutes: 2
