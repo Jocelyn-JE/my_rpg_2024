@@ -5,19 +5,21 @@
 ## Makefile
 ##
 
-SRC =	src/main.c					\
-		src/window/init.c			\
-		src/app/init_app.c			\
-		src/app/destroy_app.c		\
-		src/linked_list/add.c		\
-		src/linked_list/del.c		\
-		src/linked_list/free_list.c	\
-		src/linked_list/list_len.c	\
-		src/debug/mini_printf.c		\
-		src/debug/my_itoa.c			\
-		src/debug/my_put_nbr.c		\
-		src/debug/my_strcmp.c		\
-		src/poll_events.c			\
+SRC =	src/main.c							\
+		src/window/init.c					\
+		src/app/init_app.c					\
+		src/app/destroy_app.c				\
+		src/linked_list/add.c				\
+		src/linked_list/del.c				\
+		src/linked_list/free_list.c			\
+		src/linked_list/list_len.c			\
+		src/debug/mini_printf.c				\
+		src/conversions/my_itoa.c			\
+		src/conversions/cartesian_to_iso.c	\
+		src/debug/my_put_nbr.c				\
+		src/debug/my_strcmp.c				\
+		src/poll_events.c					\
+		src/random.c						\
 
 OBJ	=	$(SRC:.c=.o)
 
