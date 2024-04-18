@@ -14,6 +14,7 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
     static sfVector2f newpos;
     static sfVector2f delta_pos;
     float zoom = 0;
+    static bool wireframe = false;
     sfView *view = (sfView *)sfRenderWindow_getDefaultView(app->window);
 
     if (event->type == sfEvtClosed)
@@ -23,6 +24,12 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
             moving = true;
             oldpos = sfRenderWindow_mapPixelToCoords(app->window, (sfVector2i){event->mouseButton.x, event->mouseButton.y}, NULL);
         }
+    }
+    if (event->type == sfEvtKeyPressed) {
+        if (event->key.code == sfKeyW && wireframe)
+            wireframe = false;
+        else if (event->key.code == sfKeyW)
+            wireframe = true;
     }
     if (event->type == sfEvtMouseButtonReleased) {
         if (event->mouseButton.button == sfMouseLeft)
@@ -44,6 +51,10 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
         sfRenderWindow_setView(app->window, view);
         oldpos = sfRenderWindow_mapPixelToCoords(app->window, (sfVector2i){event->mouseMove.x, event->mouseMove.y}, NULL);
     }
+    if (wireframe)
+        sfVertexArray_setPrimitiveType(app->map[0]->vertices, sfLinesStrip);
+    else
+        sfVertexArray_setPrimitiveType(app->map[0]->vertices, sfTriangles);
 }
 
 void poll_events(app_t *app, sfEvent *event)

@@ -13,10 +13,10 @@ int main(int argc, char **argv)
 
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &events);
-        sfRenderWindow_clear(app->window, sfWhite);
-        app->map->renderstate.transform = sfTransformable_getTransform(app->map->transform);
-        sfRenderWindow_drawVertexArray(app->window, app->map->vertices,
-            &app->map->renderstate);
+        sfRenderWindow_clear(app->window, sfBlack);
+        app->map[0]->renderstate.transform = sfTransformable_getTransform(app->map[0]->transform);
+        sfRenderWindow_drawVertexArray(app->window, app->map[0]->vertices,
+            &app->map[0]->renderstate);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

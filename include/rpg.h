@@ -19,16 +19,28 @@
 
 // Structures
 
-typedef struct map_s {
+typedef struct sfVector3u {
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
+} sfVector3u;
+
+typedef struct sfVector3i {
+    int x;
+    int y;
+    int z;
+} sfVector3i;
+
+typedef struct chunk_s {
     sfTransformable *transform;
     sfVertexArray *vertices;
     sfRenderStates renderstate;
-} map_t;
+} chunk_t;
 
 typedef struct app_s {
     sfRenderWindow *window;
     sfClock *game_clock;
-    map_t *map;
+    chunk_t **map;
 } app_t;
 
 // Create / init functions
