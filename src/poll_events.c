@@ -36,7 +36,7 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
             moving = false;
     }
     if (event->type == sfEvtMouseWheelScrolled) {
-        zoom = event->mouseWheel.delta > 0.0f ? 0.9f : 1.1f;
+        zoom = event->mouseWheelScroll.delta > 0.0f ? 0.9f : 1.1f;
         sfView_setSize(view, sfView_getSize(sfRenderWindow_getDefaultView(app->window)));
         sfView_zoom(view, zoom);
         sfRenderWindow_setView(app->window, view);

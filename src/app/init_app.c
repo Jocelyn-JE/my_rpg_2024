@@ -14,13 +14,13 @@ static void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***lev
     int block_id = level[position.x][position.y][position.z];
     int size = 100;
 
-    if (block_id == 0 || (!(position.z + 1 > level_size.z - 1 ||
+    if (block_id == b_air || (!(position.z + 1 > level_size.z - 1 ||
         position.x + 1 > level_size.x - 1 ||
         position.y + 1 > level_size.y - 1) &&
         level[position.x + 1][position.y + 1][position.z + 1] != 1))
         return;
     // Top
-    if (position.z + 1 > level_size.z - 1 || level[position.x][position.y][position.z + 1] == 1) {
+    if (position.z + 1 > level_size.z - 1 || level[position.x][position.y][position.z + 1] == b_air) {
         sfVertexArray_append(vertices,
             (sfVertex){cartesian_to_isometric(0 + f_position.x - f_position.z, 0 + f_position.y - f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0}});
         sfVertexArray_append(vertices,
@@ -35,7 +35,7 @@ static void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***lev
             (sfVertex){cartesian_to_isometric(1 + f_position.x - f_position.z, 1 + f_position.y - f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16}});
     }
     // Left
-    if (position.x + 1 > level_size.x - 1 || level[position.x + 1][position.y][position.z] == 1) {
+    if (position.x + 1 > level_size.x - 1 || level[position.x + 1][position.y][position.z] == b_air) {
         sfVertexArray_append(vertices,
             (sfVertex){cartesian_to_isometric(1 + f_position.x - f_position.z, 0 + f_position.y - f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 16}});
         sfVertexArray_append(vertices,
@@ -50,7 +50,7 @@ static void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***lev
             (sfVertex){cartesian_to_isometric(2 + f_position.x - f_position.z, 1 + f_position.y - f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 16}});
     }
     // Right
-    if (position.y + 1 > level_size.y - 1 || level[position.x][position.y + 1][position.z] == 1) {
+    if (position.y + 1 > level_size.y - 1 || level[position.x][position.y + 1][position.z] == b_air) {
         sfVertexArray_append(vertices,
             (sfVertex){cartesian_to_isometric(1 + f_position.x - f_position.z, 1 + f_position.y - f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 32}});
         sfVertexArray_append(vertices,
@@ -88,7 +88,7 @@ static void load_chunk(chunk_t *map)
         for (int y = 0; y < chunk_size.y; y++) {
             for (int z = 0; z < chunk_size.z; z++) {
                 if (z != 0)
-                    level[x][y][z] = get_random_nb(b_stone, b_library);
+                    level[x][y][z] = get_random_nb(2, 8);
                 else 
                     level[x][y][z] = b_grass;
             }
