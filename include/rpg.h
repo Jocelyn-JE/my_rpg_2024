@@ -32,6 +32,7 @@ typedef struct sfVector3i {
 } sfVector3i;
 
 typedef struct chunk_s {
+    char ***blocks;
     sfTransformable *transform;
     sfVertexArray *vertices;
     sfRenderStates renderstate;
@@ -40,6 +41,7 @@ typedef struct chunk_s {
 typedef struct app_s {
     sfRenderWindow *window;
     sfClock *game_clock;
+    sfTexture *block_atlas;
     chunk_t **map;
 } app_t;
 
@@ -49,10 +51,12 @@ sfRenderWindow *create_window(unsigned int w,
     unsigned int h, unsigned int bpp);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***level,
-    sfVector3u level_size);
+    char level_size);
+void create_chunk(chunk_t *chunk, sfTexture *atlas);
 
 // Destroy / free functions
 
+void destroy_chunk(chunk_t *chunk);
 void destroy_app(app_t *app);
 
 // Coordinates conversion

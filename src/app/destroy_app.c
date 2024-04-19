@@ -6,18 +6,11 @@
 */
 #include "rpg.h"
 
-static void destroy_map(chunk_t *map)
-{
-    sfVertexArray_destroy(map->vertices);
-    sfTexture_destroy((sfTexture *)map->renderstate.texture);
-    sfTransformable_destroy(map->transform);
-    free(map);
-}
-
 void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
-    destroy_map(app->map[0]);
+    sfTexture_destroy(app->block_atlas);
+    destroy_chunk(app->map[0]);
     free(app->map);
     free(app);
 }
