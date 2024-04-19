@@ -18,6 +18,7 @@ SRC =	src/main.c					\
 		src/debug/my_put_nbr.c		\
 		src/debug/my_strcmp.c		\
 		src/poll_events.c			\
+		src/splash_screen.c			\
 
 OBJ	=	$(SRC:.c=.o)
 

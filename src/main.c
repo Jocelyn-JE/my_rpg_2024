@@ -9,12 +9,8 @@
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
-    sfEvent events;
 
-    while (sfRenderWindow_isOpen(app->window)) {
-        poll_events(app, &events);
-        sfRenderWindow_display(app->window);
-    }
+    splash_screen(app);
     destroy_app(app);
     return 0;
 }

@@ -10,6 +10,7 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
 
+    app->e = malloc(sizeof(event_t));
     app->window = create_window(1920, 1080, 32);
     return app;
 }

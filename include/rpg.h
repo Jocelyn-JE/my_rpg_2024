@@ -17,8 +17,12 @@
 
 typedef struct app_s {
     sfRenderWindow *window;
+    struct event_s *e;
 } app_t;
 
+typedef struct event_s {
+    sfEvent event;
+} event_t;
 // Create / init functions
 
 sfRenderWindow *create_window(unsigned int w,
@@ -32,3 +36,4 @@ void destroy_app(app_t *app);
 // Other
 
 void poll_events(app_t *app, sfEvent *event);
+void splash_screen(app_t *a);
