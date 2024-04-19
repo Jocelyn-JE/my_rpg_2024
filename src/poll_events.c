@@ -10,6 +10,7 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
     sfVector2f mouse_pos)
 {
     static bool moving = false;
+    static bool hitbox = true;
     static sfVector2f oldpos;
     static sfVector2f newpos;
     static sfVector2f delta_pos;
@@ -30,6 +31,10 @@ static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
             wireframe = false;
         else if (event->key.code == sfKeyW)
             wireframe = true;
+        if (event->key.code == sfKeyX && hitbox)
+            hitbox = false;
+        else if (event->key.code == sfKeyX)
+            hitbox = true;
     }
     if (event->type == sfEvtMouseButtonReleased) {
         if (event->mouseButton.button == sfMouseLeft)

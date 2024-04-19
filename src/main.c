@@ -17,6 +17,9 @@ int main(int argc, char **argv)
         app->map[0]->renderstate.transform = sfTransformable_getTransform(app->map[0]->transform);
         sfRenderWindow_drawVertexArray(app->window, app->map[0]->vertices,
             &app->map[0]->renderstate);
+        draw_bounding_box(app->window,
+            sfVertexArray_getBounds(app->map[0]->vertices),
+            sfTransformable_getPosition(app->map[0]->transform));
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

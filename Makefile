@@ -20,6 +20,8 @@ SRC =	src/main.c							\
 		src/debug/my_strcmp.c				\
 		src/poll_events.c					\
 		src/random.c						\
+		src/app/add_cube.c					\
+		src/debug/draw_bounding_box.c		\
 
 OBJ	=	$(SRC:.c=.o)
 

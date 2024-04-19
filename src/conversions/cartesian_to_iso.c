@@ -6,12 +6,16 @@
 */
 #include "rpg.h"
 
-sfVector2f cartesian_to_isometric(float y, float x, float size)
+sfVector2f cartesian_to_isometric(float x, float y, float z, float size)
 {
-    return (sfVector2f){(x - y) * size * 0.5f, (x + y) * size * 0.25f};
+    float cx = x - z;
+    float cy = y - z;
+    sfVector2f pos = {(cx - cy) * size * 0.5f, (cx + cy) * size * 0.25f};
+    return pos;
 }
 
 sfVector2f isometric_to_cartesian(float x, float y, float size)
 {
-    return (sfVector2f){(x + (2.0f * y)) / size, (-x + (2.0f * y)) / size};
+    sfVector2f pos = {(x + (2.0f * y)) / size, (-x + (2.0f * y)) / size};
+    return pos;
 }
