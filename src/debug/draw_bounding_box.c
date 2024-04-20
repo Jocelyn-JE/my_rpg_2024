@@ -12,9 +12,11 @@ void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
     sfRectangleShape *rect = sfRectangleShape_create();
 
     sfRectangleShape_setSize(rect, (sfVector2f){box.width, box.height});
-    sfRectangleShape_setPosition(rect, (sfVector2f){box.left, box.top});
+    sfRectangleShape_setPosition(rect, (sfVector2f){box.left + position.x,
+        box.top + position.y});
     sfRectangleShape_setOutlineColor(rect, sfRed);
-    sfRectangleShape_setOutlineThickness(rect, 2);
+    sfRectangleShape_setOutlineThickness(rect,
+        sfView_getSize(sfRenderWindow_getDefaultView(window)).x / 1000);
     sfRectangleShape_setFillColor(rect, sfTransparent);
     sfRenderWindow_drawRectangleShape(window, rect, NULL);
     sfRectangleShape_destroy(rect);

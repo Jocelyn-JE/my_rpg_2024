@@ -7,60 +7,77 @@
 #include "rpg.h"
 #include "blocks.h"
 
-void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***blocks, char level_size)
+static void add_top_face(sfVertexArray *vertices, vector3uint8_t position,
+    int block_id, int size)
 {
-    sfVector3i position = {f_position.x, f_position.y, f_position.z};
-    int block_id = blocks[position.x][position.y][position.z];
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(0 + position.x, 0 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 0 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(0 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(0 + position.x, 0 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0}});
+}
+
+static void add_left_face(sfVertexArray *vertices, vector3uint8_t position,
+    int block_id, int size)
+{
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 0 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(2 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(2 + position.x, 2 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16 + 16}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(2 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 16}});
+}
+
+static void add_right_face(sfVertexArray *vertices, vector3uint8_t position,
+    int block_id, int size)
+{
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 32}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(2 + position.x, 2 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 32}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(0 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 32}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(0 + position.x, 1 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 32}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(1 + position.x, 2 + position.y, position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16 + 32}});
+    sfVertexArray_append(vertices,
+        (sfVertex){cartesian_to_isometric(2 + position.x, 2 + position.y, position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 32}});
+}
+
+void add_cube(sfVertexArray *vertices, vector3uint8_t position, uint8_t *blocks)
+{
+    int block_id = blocks[volumetric_to_linear(position.x, position.y, position.z)];
     int size = 100;
 
-    if (block_id == b_air || (!(position.z + 1 > level_size - 1 ||
-        position.x + 1 > level_size - 1 ||
-        position.y + 1 > level_size - 1) &&
-        blocks[position.x + 1][position.y + 1][position.z + 1] != 1))
+    if (block_id == b_air || (!(position.z + 1 > 16 - 1 ||
+        position.x + 1 > 16 - 1 ||
+        position.y + 1 > 16 - 1) &&
+        blocks[volumetric_to_linear(position.x + 1, position.y + 1, position.z + 1)] != 1))
         return;
     // Top
-    if (position.z + 1 > level_size - 1 || blocks[position.x][position.y][position.z + 1] == b_air) {
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(0 + f_position.x, 0 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(0 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(0 + f_position.x, 0 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 0 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16}});
+    if (position.z + 1 > 16 - 1 || blocks[volumetric_to_linear(position.x, position.y, position.z + 1)] == b_air) {
+        add_top_face(vertices, position, block_id, size);
     }
     // Left
-    if (position.x + 1 > level_size - 1 || blocks[position.x + 1][position.y][position.z] == b_air) {
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 0 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(2 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(2 + f_position.x, 2 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16 + 16}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(2 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 16}});
+    if (position.x + 1 > 16 - 1 || blocks[volumetric_to_linear(position.x + 1, position.y, position.z)] == b_air) {
+        add_left_face(vertices, position, block_id, size);
     }
     // Right
-    if (position.y + 1 > level_size - 1 || blocks[position.x][position.y + 1][position.z] == b_air) {
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 0 + 32}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(2 + f_position.x, 2 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 32}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(0 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 32}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(0 + f_position.x, 1 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 0 + 32}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(1 + f_position.x, 2 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){16 + (block_id * 16), 16 + 32}});
-        sfVertexArray_append(vertices,
-            (sfVertex){cartesian_to_isometric(2 + f_position.x, 2 + f_position.y, f_position.z, size), sfWhite, (sfVector2f){0 + (block_id * 16), 16 + 32}});
+    if (position.y + 1 > 16 - 1 || blocks[volumetric_to_linear(position.x, position.y + 1, position.z)] == b_air) {
+        add_right_face(vertices, position, block_id, size);
     }
 }

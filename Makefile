@@ -14,6 +14,8 @@ SRC =	src/main.c							\
 		src/linked_list/list_len.c			\
 		src/conversions/my_itoa.c			\
 		src/conversions/cartesian_to_iso.c	\
+		src/conversions/add_vertex_array.c	\
+		src/conversions/3d_to_1d.c			\
 		src/debug/mini_printf.c				\
 		src/debug/my_put_nbr.c				\
 		src/debug/my_strcmp.c				\
@@ -33,7 +35,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	myrpg
 
-CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
+CFLAGS += -Wextra -Werror -Wshadow $(INCLUDES) $(LIBS) -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 

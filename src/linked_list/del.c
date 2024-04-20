@@ -7,7 +7,7 @@
 #include "rpg.h"
 #include <stdbool.h>
 
-static void delete_from_list(linked_list_t *del, linked_list_t *prev)
+static void delete_from_list(list_t *del, list_t *prev)
 {
     free(del->data);
     if (prev != NULL) {
@@ -16,9 +16,9 @@ static void delete_from_list(linked_list_t *del, linked_list_t *prev)
     free(del);
 }
 
-static bool delete_head(linked_list_t **list, void *ptr)
+static bool delete_head(list_t **list, void *ptr)
 {
-    linked_list_t *cpy = NULL;
+    list_t *cpy = NULL;
 
     if (*list != NULL && ptr == (*list)->data) {
         free((*list)->data);
@@ -30,10 +30,10 @@ static bool delete_head(linked_list_t **list, void *ptr)
     return (false);
 }
 
-void del(linked_list_t **list, void *ptr)
+void list_del(list_t **list, void *ptr)
 {
-    linked_list_t *previous_node = NULL;
-    linked_list_t *current_node = *list;
+    list_t *previous_node = NULL;
+    list_t *current_node = *list;
 
     if (delete_head(list, ptr)) {
         return;

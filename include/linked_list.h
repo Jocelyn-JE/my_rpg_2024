@@ -11,8 +11,9 @@
 typedef struct linked_list_s {
     void *data;
     struct linked_list_s *next;
-} linked_list_t;
-void add(linked_list_t **start, void *ptr);
-void del(linked_list_t **list, void *ptr);
-void free_list(linked_list_t *list);
-int list_len(linked_list_t *start);
+} list_t;
+void list_add(list_t **start, void *ptr);
+void list_del(list_t **list, void *ptr);
+void destroy_list(list_t *list);
+void free_list(list_t *list, void (*free_func)());
+int list_len(list_t *start);

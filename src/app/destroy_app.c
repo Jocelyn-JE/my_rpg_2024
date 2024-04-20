@@ -10,7 +10,7 @@ void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
     sfTexture_destroy(app->block_atlas);
-    destroy_chunk(app->map[0]);
-    free(app->map);
+    free_list(app->map, destroy_chunk);
+    free(app->debug_options);
     free(app);
 }

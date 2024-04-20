@@ -14,35 +14,36 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <math.h>
+#include <stdint.h>
 #include "linked_list.h"
 #include "mystr.h"
 
 // Structures
 
-typedef struct sfVector3u {
-    unsigned int x;
-    unsigned int y;
-    unsigned int z;
-} sfVector3u;
-
-typedef struct sfVector3i {
-    int x;
-    int y;
-    int z;
-} sfVector3i;
+typedef struct vector3uint8_s {
+    uint8_t x;
+    uint8_t y;
+    uint8_t z;
+} vector3uint8_t;
 
 typedef struct chunk_s {
-    char ***blocks;
+    uint8_t *blocks;
     sfTransformable *transform;
     sfVertexArray *vertices;
     sfRenderStates renderstate;
 } chunk_t;
 
+typedef struct debug_s {
+    bool wireframe;
+    bool bounding_box;
+} debug_t;
+
 typedef struct app_s {
+    debug_t *debug_options;
     sfRenderWindow *window;
     sfClock *game_clock;
     sfTexture *block_atlas;
-    chunk_t **map;
+    list_t *map;
 } app_t;
 
 // Create / init functions
@@ -50,9 +51,8 @@ typedef struct app_s {
 sfRenderWindow *create_window(unsigned int w,
     unsigned int h, unsigned int bpp);
 app_t *create_app(void);
-void add_cube(sfVertexArray *vertices, sfVector3f f_position, char ***level,
-    char level_size);
-void create_chunk(chunk_t *chunk, sfTexture *atlas);
+void add_cube(sfVertexArray *vertices, vector3uint8_t position, uint8_t *blocks);
+chunk_t *create_chunk(sfTexture *atlas);
 
 // Destroy / free functions
 
@@ -66,9 +66,15 @@ sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 // Other
 
+void vertex_array_cat(sfVertexArray *array, sfVertexArray *add,
+    sfVector2f offset);
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
     sfVector2f position);
+
+// Conversions
+
+int volumetric_to_linear(int x, int y, int z);

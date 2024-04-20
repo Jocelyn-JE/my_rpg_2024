@@ -7,15 +7,10 @@
 #include "rpg.h"
 #include "blocks.h"
 
-static char ***create_blocks(char chunk_size)
+static char *create_blocks(char chunk_size)
 {
-    char ***array = malloc(sizeof(char **) * chunk_size);
+    char *array = malloc(sizeof(char) * powf(chunk_size, 3));
 
-    for (int x = 0; x != chunk_size; x++) {
-        array[x] = malloc(sizeof(char *) * chunk_size);
-        for (int y = 0; y != chunk_size; y++)
-            array[x][y] = malloc(sizeof(char) * chunk_size);
-    }
     return array;
 }
 
@@ -31,24 +26,28 @@ static void init_chunk(chunk_t *chunk, sfTexture *atlas)
     chunk->blocks = create_blocks(16);
 }
 
-void create_chunk(chunk_t *chunk, sfTexture *atlas)
+chunk_t *create_chunk(sfTexture *atlas)
 {
-    init_chunk(chunk, atlas);
+    chunk_t *new_chunk = malloc(sizeof(chunk_t));
+
+    init_chunk(new_chunk, atlas);
     for (int x = 0; x < 16; x++) {
         for (int y = 0; y < 16; y++) {
             for (int z = 0; z < 16; z++) {
                 if (z > 0)
-                    chunk->blocks[x][y][z] = b_air;
+                    new_chunk->blocks[volumetric_to_linear(x, y, z)] = b_air;
                 else 
-                    chunk->blocks[x][y][z] = b_grass;
+                    new_chunk->blocks[volumetric_to_linear(x, y, z)] = b_grass;
             }
         }
     }
-    for (int y = 0; y < 16; y++) {
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++)
-                add_cube(chunk->vertices, (sfVector3f){x, y, z}, chunk->blocks,
-                    16);
+    for (int x = 0; x < 16; x++) {
+        for (int y = 0; y < 16; y++) {
+            for (int z = 0; z < 16; z++) {
+                add_cube(new_chunk->vertices, (vector3uint8_t){x, y, z},
+                    new_chunk->blocks);
+            }
         }
     }
+    return new_chunk;
 }
