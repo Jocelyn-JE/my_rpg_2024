@@ -7,9 +7,9 @@
 #include "rpg.h"
 #include "blocks.h"
 
-static char *create_blocks(char chunk_size)
+static uint8_t *create_blocks(uint8_t chunk_size)
 {
-    char *array = malloc(sizeof(char) * powf(chunk_size, 3));
+    uint8_t *array = malloc(sizeof(uint8_t) * powf(chunk_size, 3));
 
     return array;
 }
