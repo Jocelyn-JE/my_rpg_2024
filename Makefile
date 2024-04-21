@@ -70,4 +70,4 @@ fclean: clean
 	rm -f $(NAME)
 
 tests_run: $(NAME)
-	valgrind $(VALGRIND_FLAGS) $(NAME) &
+	valgrind $(VALGRIND_FLAGS) ./$(NAME) &
