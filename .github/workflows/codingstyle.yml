@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  EXECUTABLE: "myrpg"
+  EXECUTABLE: "my_rpg"
 
 jobs:
   check_coding_style:

@@ -32,7 +32,7 @@ INCLUDES	=	-I ./include
 
 LIBS	= -L ./libs -lm
 
-NAME	=	myrpg
+NAME	=	my_rpg
 
 CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
 
