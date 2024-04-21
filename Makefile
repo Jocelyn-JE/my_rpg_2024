@@ -69,5 +69,5 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-tests_run:
-	valgrind $(VALGRIND_FLAGS) ./my_rpg &
+tests_run: $(NAME)
+	valgrind $(VALGRIND_FLAGS) $(NAME) &
