@@ -36,23 +36,38 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
+CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g -pg
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
 CC	= gcc
 
-.PHONY	=	all re clean fclean lib
+VALGRIND_LOG	=	valgrind.log
+
+VALGRIND_FLAGS	=	--leak-check=full					\
+					--show-leak-kinds=definite			\
+					--track-origins=yes					\
+					--errors-for-leak-kinds=definite	\
+					--log-file="$(VALGRIND_LOG)"		\
+
+.PHONY	=	all re clean fclean lib tests_run prof
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CSFML)
 
+prof: re $(OBJ)
+	./$(NAME)
+	gprof $(NAME) | gprof2dot | dot -Tpng -o output.png
+
 re: fclean $(NAME)
 
 clean:
-	rm -f $(OBJ) *.gcda *.gcno src/main.o vgcore*
+	rm -f $(OBJ) $(VALGRIND_LOG) *.gcda *.gcno src/main.o vgcore* gmon.out
 
 fclean: clean
 	rm -f $(NAME)
+
+tests_run:
+	valgrind $(VALGRIND_FLAGS) ./my_rpg &
