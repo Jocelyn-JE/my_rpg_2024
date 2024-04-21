@@ -24,38 +24,8 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
 
     if (event->type == sfEvtMouseWheelScrolled) {
         zoom = event->mouseWheelScroll.delta > 0.0f ? 0.9f : 1.1f;
-        sfView_setSize(view, sfView_getSize(sfRenderWindow_getDefaultView(window)));
         sfView_zoom(view, zoom);
         sfRenderWindow_setView(window, view);
-    }
-}
-
-static void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view)
-{
-    static bool moving = false;
-    static sfVector2f oldpos;
-    static sfVector2f newpos;
-    static sfVector2f delta_pos;
-
-    if (event->type == sfEvtMouseButtonPressed) {
-        if (event->mouseButton.button == sfMouseLeft) {
-            moving = true;
-            oldpos = sfRenderWindow_mapPixelToCoords(window, (sfVector2i){event->mouseButton.x, event->mouseButton.y}, NULL);
-        }
-    }
-    if (event->type == sfEvtMouseButtonReleased) {
-        if (event->mouseButton.button == sfMouseLeft)
-            moving = false;
-    }
-    if (event->type == sfEvtMouseMoved) {
-        if (!moving)
-            return;
-        newpos = sfRenderWindow_mapPixelToCoords(window, (sfVector2i){event->mouseMove.x, event->mouseMove.y}, NULL);
-        delta_pos = (sfVector2f){oldpos.x - newpos.x, oldpos.y - newpos.y};
-        sfView_setCenter(view, (sfVector2f){sfView_getCenter(view).x + delta_pos.x,
-            sfView_getCenter(view).y + delta_pos.y});
-        sfRenderWindow_setView(window, view);
-        oldpos = sfRenderWindow_mapPixelToCoords(window, (sfVector2i){event->mouseMove.x, event->mouseMove.y}, NULL);
     }
 }
 

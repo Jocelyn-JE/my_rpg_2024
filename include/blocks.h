@@ -5,8 +5,7 @@
 ** blocks
 */
 
-#ifndef BLOCKS_H_
-#define BLOCKS_H_
+#pragma once
 
 enum blocks {
     b_null,
@@ -20,5 +19,3 @@ enum blocks {
     b_library,
     b_cactus
 };
-
-#endif /* !BLOCKS_H_ */

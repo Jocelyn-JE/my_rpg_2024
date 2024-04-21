@@ -11,6 +11,7 @@ static uint8_t *create_blocks(uint8_t chunk_size)
 {
     uint8_t *array = malloc(sizeof(uint8_t) * powf(chunk_size, 3));
 
+    memset(array, b_air, (size_t)powf(chunk_size, 3));
     return array;
 }
 
@@ -32,22 +33,12 @@ chunk_t *create_chunk(sfTexture *atlas)
 
     init_chunk(new_chunk, atlas);
     for (int x = 0; x < 16; x++) {
-        for (int y = 0; y < 16; y++) {
-            for (int z = 0; z < 16; z++) {
-                if (z > 0)
-                    new_chunk->blocks[volumetric_to_linear(x, y, z)] = b_air;
-                else 
-                    new_chunk->blocks[volumetric_to_linear(x, y, z)] = b_grass;
-            }
-        }
+        for (int y = 0; y < 16; y++)
+            new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_grass;
     }
-    for (int x = 0; x < 16; x++) {
-        for (int y = 0; y < 16; y++) {
-            for (int z = 0; z < 16; z++) {
-                add_cube(new_chunk->vertices, (vector3uint8_t){x, y, z},
-                    new_chunk->blocks);
-            }
-        }
+    for (int i = 0; i < powf(16, 3); i++) {
+        add_cube(new_chunk->vertices, get_pos_from_index(i),
+            new_chunk->blocks);
     }
     return new_chunk;
 }

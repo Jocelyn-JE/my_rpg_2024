@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <stdint.h>
+#include <string.h>
 #include "linked_list.h"
 #include "mystr.h"
 
@@ -51,7 +52,8 @@ typedef struct app_s {
 sfRenderWindow *create_window(unsigned int w,
     unsigned int h, unsigned int bpp);
 app_t *create_app(void);
-void add_cube(sfVertexArray *vertices, vector3uint8_t position, uint8_t *blocks);
+void add_cube(sfVertexArray *vertices, vector3uint8_t position,
+    uint8_t *blocks);
 chunk_t *create_chunk(sfTexture *atlas);
 
 // Destroy / free functions
@@ -70,6 +72,8 @@ void vertex_array_cat(sfVertexArray *array, sfVertexArray *add,
     sfVector2f offset);
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
+double clamp(double d, double min, double max);
+void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
@@ -77,4 +81,5 @@ void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
 
 // Conversions
 
-int volumetric_to_linear(int x, int y, int z);
+int get_index_from_pos(int x, int y, int z);
+vector3uint8_t get_pos_from_index(int i);

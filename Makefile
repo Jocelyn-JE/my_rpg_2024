@@ -5,26 +5,27 @@
 ## Makefile
 ##
 
-SRC =	src/main.c							\
-		src/poll_events.c					\
-		src/random.c						\
-		src/linked_list/add.c				\
-		src/linked_list/del.c				\
-		src/linked_list/free_list.c			\
-		src/linked_list/list_len.c			\
-		src/conversions/my_itoa.c			\
-		src/conversions/cartesian_to_iso.c	\
-		src/conversions/3d_to_1d.c			\
-		src/debug/mini_printf.c				\
-		src/debug/my_put_nbr.c				\
-		src/debug/my_strcmp.c				\
-		src/debug/draw_bounding_box.c		\
-		src/app/init_app.c					\
-		src/app/init_window.c				\
-		src/app/destroy_app.c				\
-		src/app/chunk/add_cube.c			\
-		src/app/chunk/create_chunk.c		\
-		src/app/chunk/destroy_chunk.c		\
+SRC =	src/main.c								\
+		src/poll_events.c						\
+		src/random.c							\
+		src/drag_view.c							\
+		src/linked_list/add.c					\
+		src/linked_list/del.c					\
+		src/linked_list/free_list.c				\
+		src/linked_list/list_len.c				\
+		src/conversions/cartesian_to_iso.c		\
+		src/conversions/index_to_pos.c			\
+		src/conversions/clamp.c					\
+		src/debug/mini_printf.c					\
+		src/debug/my_put_nbr.c					\
+		src/debug/my_strcmp.c					\
+		src/debug/draw_bounding_box.c			\
+		src/app/init_app.c						\
+		src/app/init_window.c					\
+		src/app/destroy_app.c					\
+		src/app/chunk/add_cube.c				\
+		src/app/chunk/create_chunk.c			\
+		src/app/chunk/destroy_chunk.c			\
 
 OBJ	=	$(SRC:.c=.o)
 
