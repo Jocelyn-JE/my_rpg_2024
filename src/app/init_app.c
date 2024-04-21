@@ -7,7 +7,7 @@
 #include "rpg.h"
 #include <time.h>
 
-static debug_t *init_debug_options()
+static debug_t *init_debug_options(void)
 {
     debug_t *debug_options = malloc(sizeof(debug_t));
 
@@ -38,7 +38,7 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfView *view;
-    uint16_t map_size[2] = {1, 1};
+    uint16_t map_size[2] = {32, 32};
 
     srand(time(NULL));
     app->window = create_window(1920, 1080, 32);

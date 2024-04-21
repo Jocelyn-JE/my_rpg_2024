@@ -6,7 +6,8 @@
 */
 #include "rpg.h"
 
-sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices, sfVector2f position)
+sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices,
+    sfVector2f position)
 {
     sfFloatRect bounds = sfVertexArray_getBounds(vertices);
     sfFloatRect renderdistance;
@@ -24,7 +25,7 @@ sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices, sfVector2f 
 static void set_chunk_transforms(list_t *list)
 {
     chunk_t *data;
-    
+
     for (list_t *current = list; current != NULL; current =
         current->next) {
         data = current->data;
@@ -37,6 +38,7 @@ static void draw_chunks(list_t *list, sfRenderWindow *window,
     debug_t *debug_options)
 {
     chunk_t *data;
+    sfView *view = (sfView *)sfRenderWindow_getDefaultView(window);
 
     for (list_t *current = list; current != NULL; current =
         current->next) {
@@ -48,7 +50,8 @@ static void draw_chunks(list_t *list, sfRenderWindow *window,
         if (debug_options->bounding_box)
             draw_bounding_box(window, sfVertexArray_getBounds(data->vertices),
                 sfTransformable_getPosition(data->transform));
-        if (is_vertexarray_visible((sfView *)sfRenderWindow_getDefaultView(window), data->vertices, sfTransformable_getPosition(data->transform)))
+        if (is_vertexarray_visible(view, data->vertices,
+            sfTransformable_getPosition(data->transform)))
             sfRenderWindow_drawVertexArray(window, data->vertices,
                 &data->renderstate);
     }
