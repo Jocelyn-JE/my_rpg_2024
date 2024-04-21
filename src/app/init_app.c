@@ -41,7 +41,6 @@ app_t *create_app(void)
     uint16_t map_size[2] = {32, 32};
 
     srand(time(NULL));
-    app->window = create_window(1920, 1080, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
@@ -49,6 +48,7 @@ app_t *create_app(void)
         list_add(&app->map, create_chunk(app->block_atlas));
     place_chunks(app->map, map_size[1]);
     app->debug_options = init_debug_options();
+    app->window = create_window(1920, 1080, 32);
     view = (sfView *)sfRenderWindow_getDefaultView(app->window);
     sfView_setCenter(view, cartesian_to_isometric(0, 0, -8, 100));
     sfRenderWindow_setView(app->window, view);

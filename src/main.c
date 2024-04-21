@@ -10,15 +10,16 @@ sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices,
     sfVector2f position)
 {
     sfFloatRect bounds = sfVertexArray_getBounds(vertices);
-    sfFloatRect renderdistance;
+    sfFloatRect renderdistance = sfView_getViewport(view);
     sfVector2f viewpos = sfView_getCenter(view);
+    sfVector2f size = sfView_getSize(view);
 
-    renderdistance.width = 5000;
-    renderdistance.height = renderdistance.width / 2;
-    renderdistance.left = viewpos.x - renderdistance.width / 2;
-    renderdistance.top = viewpos.y - renderdistance.height / 2;
     bounds.left += position.x;
     bounds.top += position.y;
+    renderdistance.width *= size.x;
+    renderdistance.height *= size.y;
+    renderdistance.left = viewpos.x - renderdistance.width / 2;
+    renderdistance.top = viewpos.y - renderdistance.height / 2;
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
