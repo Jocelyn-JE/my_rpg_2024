@@ -37,8 +37,7 @@ chunk_t *create_chunk(sfTexture *atlas)
             new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_grass;
     }
     for (int i = 0; i < powf(16, 3); i++) {
-        add_cube(new_chunk->vertices, get_pos_from_index(i),
-            new_chunk->blocks);
+        add_cube(new_chunk->vertices, i, new_chunk->blocks);
     }
     return new_chunk;
 }

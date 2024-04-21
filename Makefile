@@ -16,6 +16,7 @@ SRC =	src/main.c								\
 		src/conversions/cartesian_to_iso.c		\
 		src/conversions/index_to_pos.c			\
 		src/conversions/clamp.c					\
+		src/debug/print_fps.c					\
 		src/debug/mini_printf.c					\
 		src/debug/my_put_nbr.c					\
 		src/debug/my_strcmp.c					\

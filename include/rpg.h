@@ -16,6 +16,7 @@
 #include <math.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 #include "linked_list.h"
 #include "mystr.h"
 
@@ -37,6 +38,7 @@ typedef struct chunk_s {
 typedef struct debug_s {
     bool wireframe;
     bool bounding_box;
+    bool fps;
 } debug_t;
 
 typedef struct app_s {
@@ -52,8 +54,7 @@ typedef struct app_s {
 sfRenderWindow *create_window(unsigned int w,
     unsigned int h, unsigned int bpp);
 app_t *create_app(void);
-void add_cube(sfVertexArray *vertices, vector3uint8_t position,
-    uint8_t *blocks);
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks);
 chunk_t *create_chunk(sfTexture *atlas);
 
 // Destroy / free functions
@@ -68,8 +69,6 @@ sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 // Other
 
-void vertex_array_cat(sfVertexArray *array, sfVertexArray *add,
-    sfVector2f offset);
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
@@ -78,6 +77,7 @@ void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
     sfVector2f position);
+void print_framerate(void);
 
 // Conversions
 

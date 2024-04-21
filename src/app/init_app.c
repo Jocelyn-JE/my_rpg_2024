@@ -13,6 +13,7 @@ static debug_t *init_debug_options(void)
 
     debug_options->bounding_box = false;
     debug_options->wireframe = false;
+    debug_options->fps = false;
     return debug_options;
 }
 
@@ -26,6 +27,8 @@ static void place_chunks(list_t *chunks, uint16_t size)
         data = current->data;
         sfTransformable_move(data->transform, cartesian_to_isometric(16 * j,
             16 * i, 0, 100));
+        data->renderstate.transform =
+            sfTransformable_getTransform(data->transform);
         i++;
         if (i == size) {
             j++;

@@ -76,9 +76,10 @@ static void add_right_face(sfVertexArray *vertices, vector3uint8_t pos,
         (sfVector2f){0 + (block_id * 16), 16 + 32}});
 }
 
-void add_cube(sfVertexArray *vertices, vector3uint8_t pos, uint8_t *blocks)
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks)
 {
-    int block_id = blocks[get_index_from_pos(pos.x, pos.y, pos.z)];
+    vector3uint8_t pos = get_pos_from_index(index);
+    int block_id = blocks[index];
     int size = 100;
 
     if (block_id == b_air || (!(pos.z + 1 > 15 || pos.x + 1 > 15 ||

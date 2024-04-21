@@ -23,18 +23,6 @@ sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices,
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-static void set_chunk_transforms(list_t *list)
-{
-    chunk_t *data;
-
-    for (list_t *current = list; current != NULL; current =
-        current->next) {
-        data = current->data;
-        data->renderstate.transform =
-            sfTransformable_getTransform(data->transform);
-    }
-}
-
 static void draw_chunks(list_t *list, sfRenderWindow *window,
     debug_t *debug_options)
 {
@@ -48,13 +36,13 @@ static void draw_chunks(list_t *list, sfRenderWindow *window,
             sfVertexArray_setPrimitiveType(data->vertices, sfLines);
         else
             sfVertexArray_setPrimitiveType(data->vertices, sfTriangles);
-        if (debug_options->bounding_box)
-            draw_bounding_box(window, sfVertexArray_getBounds(data->vertices),
-                sfTransformable_getPosition(data->transform));
         if (is_vertexarray_visible(view, data->vertices,
             sfTransformable_getPosition(data->transform)))
             sfRenderWindow_drawVertexArray(window, data->vertices,
                 &data->renderstate);
+        if (debug_options->bounding_box)
+            draw_bounding_box(window, sfVertexArray_getBounds(data->vertices),
+                sfTransformable_getPosition(data->transform));
     }
 }
 
@@ -64,9 +52,9 @@ int main(int argc, char **argv)
     sfEvent events;
 
     while (sfRenderWindow_isOpen(app->window)) {
+        print_framerate();
         poll_events(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        set_chunk_transforms(app->map);
         draw_chunks(app->map, app->window, app->debug_options);
         sfRenderWindow_display(app->window);
     }

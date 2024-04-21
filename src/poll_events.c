@@ -16,6 +16,10 @@ static void update_debug_options(sfKeyEvent *event, debug_t *options)
         options->bounding_box = false;
     else if (event->code == sfKeyX)
         options->bounding_box = true;
+    if (event->code == sfKeyF3 && options->fps)
+        options->fps = false;
+    else if (event->code == sfKeyX)
+        options->fps = true;
 }
 
 static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
