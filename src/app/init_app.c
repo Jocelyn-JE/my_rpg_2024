@@ -16,7 +16,7 @@ static debug_t *init_debug_options()
     return debug_options;
 }
 
-static void place_chunks(list_t *chunks, int size)
+static void place_chunks(list_t *chunks, uint16_t size)
 {
     int i = 0;
     int j = 0;
@@ -38,16 +38,16 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfView *view;
-    int map_size = 32;
+    uint16_t map_size[2] = {1, 1};
 
     srand(time(NULL));
     app->window = create_window(1920, 1080, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
-    for (int i = 0; i != pow(map_size, 2); i++)
+    for (int i = 0; i != map_size[0] * map_size[1]; i++)
         list_add(&app->map, create_chunk(app->block_atlas));
-    place_chunks(app->map, map_size);
+    place_chunks(app->map, map_size[1]);
     app->debug_options = init_debug_options();
     view = (sfView *)sfRenderWindow_getDefaultView(app->window);
     sfView_setCenter(view, cartesian_to_isometric(0, 0, -8, 100));
