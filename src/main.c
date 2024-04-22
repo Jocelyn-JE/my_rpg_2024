@@ -7,40 +7,41 @@
 #include "rpg.h"
 
 sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
-    sfVector2f position)
+    sfVector2f position, sfRenderWindow *window)
 {
-    sfFloatRect renderdistance = sfView_getViewport(view);
+    sfFloatRect renderdistance = {0, 0, 0, 0};
     sfVector2f viewpos = sfView_getCenter(view);
     sfVector2f size = sfView_getSize(view);
 
     bounds.left += position.x;
     bounds.top += position.y;
-    renderdistance.width *= size.x;
-    renderdistance.height *= size.y;
+    renderdistance.height = size.y;
+    renderdistance.width = size.x;
     renderdistance.left = viewpos.x - renderdistance.width / 2;
     renderdistance.top = viewpos.y - renderdistance.height / 2;
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-static void draw_chunks(list_t *list, sfRenderWindow *window,
-    debug_t *debug_options)
+static void draw_chunks(list_t *list, app_t *app)
 {
     chunk_t *data;
-    sfView *view = (sfView *)sfRenderWindow_getDefaultView(window);
+    sfRenderStates renderstate = sfRenderStates_default();
 
+    renderstate.texture = app->block_atlas;
     for (list_t *current = list; current != NULL; current =
         current->next) {
         data = current->data;
-        if (debug_options->wireframe)
+        renderstate.transform = sfTransformable_getTransform(data->transform);
+        if (app->debug_options->wireframe)
             sfVertexArray_setPrimitiveType(data->vertices, sfLines);
         else
             sfVertexArray_setPrimitiveType(data->vertices, sfTriangles);
-        if (is_vertexarray_visible(view, data->bounding_box,
-            sfTransformable_getPosition(data->transform)))
-            sfRenderWindow_drawVertexArray(window, data->vertices,
-                &data->renderstate);
-        if (debug_options->bounding_box)
-            draw_bounding_box(window, data->bounding_box,
+        if (is_vertexarray_visible(app->view, data->bounding_box,
+            sfTransformable_getPosition(data->transform), app->window))
+            sfRenderWindow_drawVertexArray(app->window, data->vertices,
+                &renderstate);
+        if (app->debug_options->bounding_box)
+            draw_bounding_box(app->window, app->view, data->bounding_box,
                 sfTransformable_getPosition(data->transform));
     }
 }
@@ -54,7 +55,8 @@ int main(int argc, char **argv)
         print_framerate();
         poll_events(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        draw_chunks(app->map, app->window, app->debug_options);
+        draw_chunks(app->map, app);
+        sfRenderWindow_setView(app->window, app->view);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

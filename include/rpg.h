@@ -33,7 +33,6 @@ typedef struct chunk_s {
     sfFloatRect bounding_box;
     sfTransformable *transform;
     sfVertexArray *vertices;
-    sfRenderStates renderstate;
 } chunk_t;
 
 typedef struct debug_s {
@@ -45,6 +44,7 @@ typedef struct debug_s {
 typedef struct app_s {
     debug_t *debug_options;
     sfRenderWindow *window;
+    sfView *view;
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
@@ -52,8 +52,7 @@ typedef struct app_s {
 
 // Create / init functions
 
-sfRenderWindow *create_window(unsigned int w,
-    unsigned int h, unsigned int bpp);
+sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks);
 chunk_t *create_chunk(sfTexture *atlas);
@@ -74,9 +73,10 @@ int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
+void get_letterbox_view(sfView *view, sfVector2f size);
 
 // Debug
-void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
+void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
 

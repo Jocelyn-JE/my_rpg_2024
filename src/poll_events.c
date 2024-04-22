@@ -29,20 +29,20 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
     if (event->type == sfEvtMouseWheelScrolled) {
         zoom = event->mouseWheelScroll.delta > 0.0f ? 0.9f : 1.1f;
         sfView_zoom(view, zoom);
-        sfRenderWindow_setView(window, view);
     }
 }
 
 static void handle_events(app_t *app, sfEvent *event)
 {
-    sfView *view = (sfView *)sfRenderWindow_getDefaultView(app->window);
-
     if (event->type == sfEvtClosed)
         sfRenderWindow_close(app->window);
     if (event->type == sfEvtKeyPressed)
         update_debug_options(&event->key, app->debug_options);
-    drag_view(event, app->window, view);
-    zoom_view(event, app->window, view);
+    if (event->type == sfEvtResized)
+        get_letterbox_view(app->view, (sfVector2f){event->size.width,
+            event->size.height});
+    drag_view(event, app->window, app->view);
+    zoom_view(event, app->window, app->view);
 }
 
 void poll_events(app_t *app, sfEvent *event)

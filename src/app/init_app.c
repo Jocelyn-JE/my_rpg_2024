@@ -27,8 +27,6 @@ static void place_chunks(list_t *chunks, uint16_t size)
         data = current->data;
         sfTransformable_move(data->transform, cartesian_to_isometric(16 * j,
             16 * i, 0, 100));
-        data->renderstate.transform =
-            sfTransformable_getTransform(data->transform);
         i++;
         if (i == size) {
             j++;
@@ -37,23 +35,37 @@ static void place_chunks(list_t *chunks, uint16_t size)
     }
 }
 
+static sfView *create_view(sfVector2f res, uint16_t map_size[2])
+{
+    sfView *view = sfView_create();
+
+    sfView_setSize(view, (sfVector2f){res.x, res.y});
+    sfView_setCenter(view, cartesian_to_isometric(8 * map_size[0],
+        8 * map_size[1], 0, 100));
+    get_letterbox_view(view, (sfVector2f){res.x, res.y});
+    return view;
+}
+
 app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
-    sfView *view;
-    uint16_t map_size[2] = {128, 128};
+    sfVector2f res = {1920, 1080};
+    uint16_t map_size[2] = {512, 512};
 
     srand(time(NULL));
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
+    if (!app->block_atlas)
+        exit(84);
     app->map = NULL;
     for (int i = 0; i != map_size[0] * map_size[1]; i++)
         list_add(&app->map, create_chunk(app->block_atlas));
     place_chunks(app->map, map_size[1]);
     app->debug_options = init_debug_options();
-    app->window = create_window(1920, 1080, 32);
-    view = (sfView *)sfRenderWindow_getDefaultView(app->window);
-    sfView_setCenter(view, cartesian_to_isometric(0, 0, -8, 100));
-    sfRenderWindow_setView(app->window, view);
+    app->window = create_window(res, 32);
+    app->view = create_view(res, map_size);
+    if (!app->window || !app->view)
+        exit(84);
+    sfRenderWindow_setView(app->window, app->view);
     return app;
 }

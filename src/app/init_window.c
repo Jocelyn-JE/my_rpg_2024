@@ -6,10 +6,9 @@
 */
 #include "rpg.h"
 
-sfRenderWindow *create_window(unsigned int w,
-    unsigned int h, unsigned int bpp)
+sfRenderWindow *create_window(sfVector2f res, unsigned int bpp)
 {
-    sfVideoMode video_mode = {w, h, bpp};
+    sfVideoMode video_mode = {res.x, res.y, bpp};
     sfRenderWindow *new_window = sfRenderWindow_create(video_mode,
         "my_rpg", sfResize | sfClose, NULL);
     sfImage *icon = sfImage_createFromFile("./assets/icons/icon_256x256.png");

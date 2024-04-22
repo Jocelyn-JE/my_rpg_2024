@@ -19,11 +19,7 @@ static void init_chunk(chunk_t *chunk, sfTexture *atlas)
 {
     chunk->vertices = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(chunk->vertices, sfTriangles);
-    chunk->renderstate = sfRenderStates_default();
     chunk->transform = sfTransformable_create();
-    chunk->renderstate.texture = atlas;
-    chunk->renderstate.transform =
-        sfTransformable_getTransform(chunk->transform);
     chunk->blocks = create_blocks(16);
 }
 
@@ -34,7 +30,7 @@ chunk_t *create_chunk(sfTexture *atlas)
     init_chunk(new_chunk, atlas);
     for (int x = 0; x < 16; x++) {
         for (int y = 0; y < 16; y++)
-            new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_grass;
+            new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_stone;
     }
     for (int i = 0; i < powf(16, 3); i++) {
         if (new_chunk->blocks[i] != b_air)

@@ -6,7 +6,7 @@
 */
 #include "rpg.h"
 
-void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
+void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position)
 {
     sfRectangleShape *rect = sfRectangleShape_create();
@@ -16,7 +16,7 @@ void draw_bounding_box(sfRenderWindow *window, sfFloatRect box,
         box.top + position.y});
     sfRectangleShape_setOutlineColor(rect, sfRed);
     sfRectangleShape_setOutlineThickness(rect,
-        sfView_getSize(sfRenderWindow_getDefaultView(window)).x / 1000);
+        sfView_getSize(view).x / 1000);
     sfRectangleShape_setFillColor(rect, sfTransparent);
     sfRenderWindow_drawRectangleShape(window, rect, NULL);
     sfRectangleShape_destroy(rect);

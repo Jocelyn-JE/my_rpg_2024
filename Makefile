@@ -9,6 +9,7 @@ SRC =	src/main.c								\
 		src/poll_events.c						\
 		src/random.c							\
 		src/drag_view.c							\
+		src/get_letterbox_view.c				\
 		src/linked_list/add.c					\
 		src/linked_list/del.c					\
 		src/linked_list/free_list.c				\
@@ -42,6 +43,8 @@ CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
 CC	= gcc
 
+CLEAN	=	*.gcda *.gcno src/main.o vgcore* gmon.out valgrind.*
+
 VALGRIND_LOG	=	valgrind.log
 
 VALGRIND_FLAGS	=	--leak-check=full					\
@@ -64,10 +67,10 @@ prof: re $(OBJ)
 re: fclean $(NAME)
 
 clean:
-	rm -f $(OBJ) $(VALGRIND_LOG) *.gcda *.gcno src/main.o vgcore* gmon.out
+	rm -f $(OBJ) $(VALGRIND_LOG) $(CLEAN)
 
 fclean: clean
 	rm -f $(NAME)
 
 tests_run: $(NAME)
-	valgrind $(VALGRIND_FLAGS) ./$(NAME) &
+	valgrind $(VALGRIND_FLAGS)./$(NAME) &
