@@ -50,22 +50,18 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
-    uint16_t map_size[2] = {512, 512};
+    uint16_t map_size[2] = {16, 16};
 
     srand(time(NULL));
+    app->window = create_window(res, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
-    if (!app->block_atlas)
-        exit(84);
     app->map = NULL;
     for (int i = 0; i != map_size[0] * map_size[1]; i++)
         list_add(&app->map, create_chunk(app->block_atlas));
     place_chunks(app->map, map_size[1]);
     app->debug_options = init_debug_options();
-    app->window = create_window(res, 32);
     app->view = create_view(res, map_size);
-    if (!app->window || !app->view)
-        exit(84);
     sfRenderWindow_setView(app->window, app->view);
     return app;
 }
