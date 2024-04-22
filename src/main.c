@@ -6,10 +6,9 @@
 */
 #include "rpg.h"
 
-sfBool is_vertexarray_visible(sfView *view, sfVertexArray *vertices,
+sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     sfVector2f position)
 {
-    sfFloatRect bounds = sfVertexArray_getBounds(vertices);
     sfFloatRect renderdistance = sfView_getViewport(view);
     sfVector2f viewpos = sfView_getCenter(view);
     sfVector2f size = sfView_getSize(view);
@@ -36,12 +35,12 @@ static void draw_chunks(list_t *list, sfRenderWindow *window,
             sfVertexArray_setPrimitiveType(data->vertices, sfLines);
         else
             sfVertexArray_setPrimitiveType(data->vertices, sfTriangles);
-        if (is_vertexarray_visible(view, data->vertices,
+        if (is_vertexarray_visible(view, data->bounding_box,
             sfTransformable_getPosition(data->transform)))
             sfRenderWindow_drawVertexArray(window, data->vertices,
                 &data->renderstate);
         if (debug_options->bounding_box)
-            draw_bounding_box(window, sfVertexArray_getBounds(data->vertices),
+            draw_bounding_box(window, data->bounding_box,
                 sfTransformable_getPosition(data->transform));
     }
 }

@@ -30,6 +30,7 @@ typedef struct vector3uint8_s {
 
 typedef struct chunk_s {
     uint8_t *blocks;
+    sfFloatRect bounding_box;
     sfTransformable *transform;
     sfVertexArray *vertices;
     sfRenderStates renderstate;

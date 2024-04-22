@@ -41,7 +41,7 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfView *view;
-    uint16_t map_size[2] = {32, 32};
+    uint16_t map_size[2] = {128, 128};
 
     srand(time(NULL));
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
