@@ -82,8 +82,7 @@ void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks)
     int block_id = blocks[index];
     int size = 100;
 
-    if (block_id == b_air || (!(pos.z + 1 > 15 || pos.x + 1 > 15 ||
-        pos.y + 1 > 15) &&
+    if ((!(pos.z + 1 > 15 || pos.x + 1 > 15 || pos.y + 1 > 15) &&
         blocks[get_index_from_pos(pos.x + 1, pos.y + 1, pos.z + 1)] != 1))
         return;
     if (pos.z + 1 > 15 || blocks[get_index_from_pos(pos.x,
