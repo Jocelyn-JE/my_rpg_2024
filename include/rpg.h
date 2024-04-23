@@ -17,7 +17,7 @@
 
 typedef struct app_s {
     sfRenderWindow *window;
-    struct event_s *e;
+    struct event_s *event;
 } app_t;
 
 typedef struct event_s {
