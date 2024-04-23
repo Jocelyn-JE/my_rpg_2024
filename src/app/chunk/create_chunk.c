@@ -30,11 +30,13 @@ chunk_t *create_chunk(sfTexture *atlas)
     init_chunk(new_chunk, atlas);
     for (int x = 0; x < 16; x++) {
         for (int y = 0; y < 16; y++)
-            new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_stone;
+            new_chunk->blocks[get_index_from_pos(x, y, 0)] = b_grass;
     }
+    for (int z = 0; z < 8; z++)
+        new_chunk->blocks[get_index_from_pos(0, 0, z)] = b_log;
     for (int i = 0; i < powf(16, 3); i++) {
         if (new_chunk->blocks[i] != b_air)
-            add_cube(new_chunk->vertices, i, new_chunk->blocks);
+            add_cube(new_chunk->vertices, i, new_chunk->blocks, 100);
     }
     new_chunk->bounding_box = sfVertexArray_getBounds(new_chunk->vertices);
     return new_chunk;

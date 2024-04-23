@@ -50,10 +50,9 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
-    uint16_t map_size[2] = {16, 16};
+    uint16_t map_size[2] = {64, 64};
 
     srand(time(NULL));
-    app->window = create_window(res, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
@@ -62,6 +61,7 @@ app_t *create_app(void)
     place_chunks(app->map, map_size[1]);
     app->debug_options = init_debug_options();
     app->view = create_view(res, map_size);
+    app->window = create_window(res, 32);
     sfRenderWindow_setView(app->window, app->view);
     return app;
 }

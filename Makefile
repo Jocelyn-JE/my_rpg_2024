@@ -37,7 +37,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g -pg
+CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
