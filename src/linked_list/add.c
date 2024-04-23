@@ -6,9 +6,9 @@
 */
 #include "rpg.h"
 
-void add(linked_list_t **start, void *ptr)
+void list_add(list_t **start, void *ptr)
 {
-    linked_list_t *new_node = malloc(sizeof(linked_list_t));
+    list_t *new_node = malloc(sizeof(list_t));
 
     if (!new_node)
         return;

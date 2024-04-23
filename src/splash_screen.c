@@ -10,7 +10,7 @@
 void splash_screen(app_t *a)
 {
     while (sfRenderWindow_isOpen(a->window)) {
-        poll_events(a, &a->e->event);
+        poll_events(a, &a->event->event);
         sfRenderWindow_clear(a->window, sfWhite);
         sfRenderWindow_display(a->window);
     }

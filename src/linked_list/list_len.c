@@ -6,9 +6,9 @@
 */
 #include "rpg.h"
 
-int list_len(linked_list_t *start)
+int list_len(list_t *start)
 {
-    linked_list_t *current_node = start;
+    list_t *current_node = start;
     int i = 0;
 
     if (current_node == NULL)
