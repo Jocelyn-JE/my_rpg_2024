@@ -5,18 +5,18 @@
 ## Makefile
 ##
 
-SRC =	src/main.c					\
-		src/app/init_app.c			\
-		src/app/destroy_app.c		\
-		src/linked_list/add.c		\
-		src/linked_list/del.c		\
-		src/linked_list/free_list.c	\
-		src/linked_list/list_len.c	\
-		src/debug/mini_printf.c		\
-		src/debug/my_put_nbr.c		\
-		src/debug/my_strcmp.c		\
-		src/poll_events.c			\
-		src/splash_screen.c			\
+SRC =	src/main.c								\
+		src/app/init_app.c						\
+		src/app/destroy_app.c					\
+		src/linked_list/add.c					\
+		src/linked_list/del.c					\
+		src/linked_list/free_list.c				\
+		src/linked_list/list_len.c				\
+		src/debug/mini_printf.c					\
+		src/debug/my_put_nbr.c					\
+		src/debug/my_strcmp.c					\
+		src/poll_events.c						\
+		src/splash_screen/splash_screen.c		\
 		src/random.c							\
 		src/drag_view.c							\
 		src/get_letterbox_view.c				\
