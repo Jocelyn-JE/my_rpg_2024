@@ -45,11 +45,27 @@ typedef struct app_s {
     debug_t *debug_options;
     sfRenderWindow *window;
     struct event_s *event;
+    struct menu_s *menu;
+    struct buton_s *buton;
     sfView *view;
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
 } app_t;
+
+typedef struct menu_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
+} menu_t;
+
+typedef struct buton_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
+} buton_t;
 
 typedef struct event_s {
     sfEvent event;
