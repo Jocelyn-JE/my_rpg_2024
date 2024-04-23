@@ -48,9 +48,25 @@ typedef struct app_s {
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
+    struct menu_s *menu;
+    struct buton_s *buton;
     struct event_s *event;
     struct logo_s *logo;
 } app_t;
+
+typedef struct menu_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
+} menu_t;
+
+typedef struct buton_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
+} buton_t;
 
 typedef struct event_s {
     sfEvent event;

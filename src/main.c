@@ -6,21 +6,21 @@
 */
 #include "rpg.h"
 
-sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
-    sfVector2f position, sfRenderWindow *window)
-{
-    sfFloatRect renderdistance = {0, 0, 0, 0};
-    sfVector2f viewpos = sfView_getCenter(view);
-    sfVector2f size = sfView_getSize(view);
+// sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
+//     sfVector2f position, sfRenderWindow *window)
+// {
+//     sfFloatRect renderdistance = {0, 0, 0, 0};
+//     sfVector2f viewpos = sfView_getCenter(view);
+//     sfVector2f size = sfView_getSize(view);
 
-    bounds.left += position.x;
-    bounds.top += position.y;
-    renderdistance.height = size.y;
-    renderdistance.width = size.x;
-    renderdistance.left = viewpos.x - renderdistance.width / 2;
-    renderdistance.top = viewpos.y - renderdistance.height / 2;
-    return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
-}
+//     bounds.left += position.x;
+//     bounds.top += position.y;
+//     renderdistance.height = size.y;
+//     renderdistance.width = size.x;
+//     renderdistance.left = viewpos.x - renderdistance.width / 2;
+//     renderdistance.top = viewpos.y - renderdistance.height / 2;
+//     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
+// }
 
 // static void draw_chunks(list_t *list, app_t *app)
 // {
