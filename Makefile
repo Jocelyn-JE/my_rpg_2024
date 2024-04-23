@@ -76,8 +76,5 @@ fclean: clean
 tests_run: $(NAME)
 	valgrind $(VALGRIND_FLAGS)./$(NAME) &
 
-run: re
-	./$(NAME)
-
-ret: all
+run: all
 	./$(NAME)
