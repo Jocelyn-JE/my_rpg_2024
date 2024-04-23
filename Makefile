@@ -78,3 +78,6 @@ tests_run: $(NAME)
 
 run: re
 	./$(NAME)
+
+ret: all
+	./$(NAME)
