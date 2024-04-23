@@ -44,16 +44,22 @@ typedef struct debug_s {
 typedef struct app_s {
     debug_t *debug_options;
     sfRenderWindow *window;
-    struct event_s *event;
     sfView *view;
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
+    struct event_s *event;
+    struct logo_s *logo;
 } app_t;
 
 typedef struct event_s {
     sfEvent event;
 } event_t;
+
+typedef struct logo_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+} logo_t;
 // Create / init functions
 
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);

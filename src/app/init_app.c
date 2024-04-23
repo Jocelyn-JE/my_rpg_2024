@@ -53,6 +53,7 @@ app_t *create_app(void)
     uint16_t map_size[2] = {16, 16};
 
     app->event = malloc(sizeof(event_t));
+    app->logo = malloc(sizeof(logo_t));
     srand(time(NULL));
     app->window = create_window(res, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
