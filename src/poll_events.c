@@ -4,6 +4,7 @@
 ** File description:
 ** poll_events
 */
+
 #include "rpg.h"
 
 static void update_debug_options(sfKeyEvent *event, debug_t *options)

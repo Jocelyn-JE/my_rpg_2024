@@ -75,6 +75,8 @@ typedef struct event_s {
 typedef struct logo_s {
     sfSprite *sprite;
     sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
 } logo_t;
 // Create / init functions
 
@@ -98,6 +100,7 @@ sfVector2f isometric_to_cartesian(float x, float y, float size);
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 void splash_screen(app_t *a);
+void menu(app_t *app);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);

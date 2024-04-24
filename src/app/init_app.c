@@ -55,7 +55,7 @@ app_t *create_app(void)
     app->event = malloc(sizeof(event_t));
     app->logo = malloc(sizeof(logo_t));
     app->menu = malloc(sizeof(menu_t));
-    app->buton = malloc(sizeof(buton_t));
+    app->buton = malloc(3 * sizeof(buton_t));
     srand(time(NULL));
     app->window = create_window(res, 32);
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",

@@ -29,6 +29,7 @@ SRC =	src/main.c								\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\
+		src/menu/menu.c							\
 
 OBJ	=	$(SRC:.c=.o)
 
