@@ -7,17 +7,16 @@
 
 #include "rpg.h"
 
-static void animation_splash(app_t *app)
-{
-    sfColor color = sfSprite_getColor(app->logo->sprite);
+// static void animation_splash(app_t *app)
+// {
+//     sfColor color = sfSprite_getColor(app->logo->sprite);
 
-    for (int i = 1; i != 255; i++) {
-        color.a = 0 + i;
-        sfSprite_setColor(app->logo->sprite, color);
-        sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
-        usleep(20000);
-    }
-}
+//     for (int i = 1; i != 255; i++) {
+//         color.a = 0 + i;
+//         sfSprite_setColor(app->logo->sprite, color);
+//         usleep(20000);
+//     }
+// }
 
 static void create_logo(app_t *app)
 {
@@ -30,7 +29,7 @@ static void create_logo(app_t *app)
     sfSprite_setScale(app->logo->sprite, scale_logo);
     sfSprite_setPosition(app->logo->sprite, pos_logo);
     sfSprite_setTexture(app->logo->sprite, app->logo->texture, sfTrue);
-    animation_splash(app);
+    // animation_splash(app);
 }
 
 void splash_screen(app_t *a)
@@ -42,7 +41,7 @@ void splash_screen(app_t *a)
     while (sfRenderWindow_isOpen(a->window)) {
         poll_events(a, &a->event->event);
         sfRenderWindow_clear(a->window, sfWhite);
-        animation_splash(a);
+        sfRenderWindow_drawSprite(a->window, a->logo->sprite, NULL);
         sfRenderWindow_display(a->window);
         usleep(5000000);
         menu(a);
