@@ -14,4 +14,3 @@ int my_putstr(char const *str);
 void my_putchar(char c);
 int my_put_nbr(int nb);
 int my_strcmp(char const *s1, char const *s2);
-char *my_itoa(int nb);

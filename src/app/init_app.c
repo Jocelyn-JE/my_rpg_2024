@@ -17,7 +17,7 @@ static debug_t *init_debug_options(void)
     return debug_options;
 }
 
-static void place_chunks(list_t *chunks, uint16_t size)
+static void place_chunks(list_t *chunks)
 {
     int i = 0;
     int j = 0;
@@ -28,20 +28,19 @@ static void place_chunks(list_t *chunks, uint16_t size)
         sfTransformable_move(data->transform, cartesian_to_isometric(16 * j,
             16 * i, 0, 100));
         i++;
-        if (i == size) {
+        if (i == 32) {
             j++;
             i = 0;
         }
     }
 }
 
-static sfView *create_view(sfVector2f res, uint16_t map_size[2])
+static sfView *create_view(sfVector2f res)
 {
     sfView *view = sfView_create();
 
     sfView_setSize(view, (sfVector2f){res.x, res.y});
-    sfView_setCenter(view, cartesian_to_isometric(8 * map_size[0],
-        8 * map_size[1], 0, 100));
+    sfView_setCenter(view, cartesian_to_isometric(8 * 32, 8 * 32, 0, 100));
     get_letterbox_view(view, (sfVector2f){res.x, res.y});
     return view;
 }
@@ -50,17 +49,18 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
-    uint16_t map_size[2] = {64, 64};
+    int map_fd = open("tests/blocks.bin", O_RDONLY);
 
     srand(time(NULL));
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
-    for (int i = 0; i != map_size[0] * map_size[1]; i++)
-        list_add(&app->map, create_chunk(app->block_atlas));
-    place_chunks(app->map, map_size[1]);
+    for (int i = 0; i != 32 * 32; i++)
+        list_add(&app->map, create_chunk(app->block_atlas, map_fd));
+    list_reverse(&app->map);
+    place_chunks(app->map);
     app->debug_options = init_debug_options();
-    app->view = create_view(res, map_size);
+    app->view = create_view(res);
     app->window = create_window(res, 32);
     sfRenderWindow_setView(app->window, app->view);
     return app;

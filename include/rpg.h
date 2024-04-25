@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include "linked_list.h"
 #include "mystr.h"
+#include "blocks.h"
 
 // Structures
 
@@ -54,8 +55,8 @@ typedef struct app_s {
 
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
-void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks, int size);
-chunk_t *create_chunk(sfTexture *atlas);
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks);
+chunk_t *create_chunk(sfTexture *atlas, int map_fd);
 
 // Destroy / free functions
 

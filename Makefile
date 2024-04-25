@@ -14,6 +14,7 @@ SRC =	src/main.c								\
 		src/linked_list/del.c					\
 		src/linked_list/free_list.c				\
 		src/linked_list/list_len.c				\
+		src/linked_list/list_reverse.c			\
 		src/conversions/cartesian_to_iso.c		\
 		src/conversions/index_to_pos.c			\
 		src/conversions/clamp.c					\
