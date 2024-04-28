@@ -12,13 +12,14 @@
 #include <SFML/System.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 enum blocks {
     b_null,
     b_air,
     b_stone,
-    b_planks,
-    b_log,
+    b_oak_planks,
+    b_oak_log,
     b_grass,
     b_barrel,
     b_hive,
@@ -27,8 +28,28 @@ enum blocks {
 };
 
 typedef struct block_s {
-    sfVertexArray *top;
-    sfVertexArray *right;
-    sfVertexArray *left;
+    sfVertex **faces;
     bool transparent;
 } block_t;
+
+// Basic cube faces with possibility of offset
+
+sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
+    sfVector2f offset);
+sfVertex *get_left_face(sfVector2f text_pos1, sfVector2f text_pos2,
+    sfVector2f offset);
+sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
+    sfVector2f offset);
+
+// Block inits
+
+block_t *init_cactus(void);
+block_t *init_bookshelf(void);
+block_t *init_beehive(void);
+block_t *init_grass_block(void);
+block_t *init_barrel(void);
+block_t *init_oak_log(void);
+block_t *init_null(void);
+block_t *init_air(void);
+block_t *init_oak_planks(void);
+block_t *init_stone(void);

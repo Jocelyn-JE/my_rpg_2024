@@ -7,90 +7,36 @@
 #include "rpg.h"
 #include "blocks.h"
 
-static void add_top_face(sfVertexArray *vertices, vector3uint8_t pos,
-    int block_id)
+static void add_face(sfVertexArray *vertices, vector3uint8_t pos,
+    sfVertex *face, float shading_factor)
 {
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 0 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 0}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 0 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 0}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 0 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 0}});
+    for (int i = 0; i != 6; i++) {
+        sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(
+            face[i].position.x + pos.x, face[i].position.y + pos.y, pos.z,
+            100), (sfColor){face[i].color.r * shading_factor,
+            face[i].color.g * shading_factor,
+            face[i].color.b * shading_factor, face[i].color.a},
+            face[i].texCoords});
+    }
 }
 
-static void add_left_face(sfVertexArray *vertices, vector3uint8_t pos,
-    int block_id)
-{
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 0 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 0 + 32}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 16 + 32}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 0 + 32}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 0 + 32}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
-        pos.x, 2 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 16 + 32}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 16 + 32}});
-}
-
-static void add_right_face(sfVertexArray *vertices, vector3uint8_t pos,
-    int block_id)
-{
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 0 + 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
-        pos.x, 2 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 16 + 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 0 + 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 1 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 0 + 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
-        pos.x, 2 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){16 + (block_id * 16), 16 + 16}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
-        pos.x, 2 + pos.y, pos.z, 100), sfWhite,
-        (sfVector2f){0 + (block_id * 16), 16 + 16}});
-}
-
-void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks)
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
+    block_t **block_types)
 {
     vector3uint8_t pos = get_pos_from_index(index);
-    int block_id = blocks[index];
+    block_t *current_block = block_types[blocks[index]];
 
     if ((!(pos.z + 1 > 15 || pos.x + 1 > 15 || pos.y + 1 > 15) &&
-        blocks[get_index_from_pos(pos.x + 1, pos.y + 1, pos.z + 1)] != 1))
+        !block_types[blocks[get_index_from_pos(pos.x + 1, pos.y + 1, pos.z +
+        1)]]->transparent))
         return;
-    if (pos.z + 1 > 15 || blocks[get_index_from_pos(pos.x,
-        pos.y, pos.z + 1)] == b_air)
-        add_top_face(vertices, pos, block_id);
-    if (pos.x + 1 > 15 || blocks[get_index_from_pos(pos.x + 1,
-        pos.y, pos.z)] == b_air)
-        add_left_face(vertices, pos, block_id);
-    if (pos.y + 1 > 15 || blocks[get_index_from_pos(pos.x,
-        pos.y + 1, pos.z)] == b_air)
-        add_right_face(vertices, pos, block_id);
+    if (pos.z + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x,
+        pos.y, pos.z + 1)]]->transparent)
+        add_face(vertices, pos, current_block->faces[0], 1);
+    if (pos.x + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x + 1,
+        pos.y, pos.z)]]->transparent)
+        add_face(vertices, pos, current_block->faces[1], 0.6);
+    if (pos.y + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x,
+        pos.y + 1, pos.z)]]->transparent)
+        add_face(vertices, pos, current_block->faces[2], 0.8);
 }

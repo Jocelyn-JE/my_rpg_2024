@@ -25,8 +25,17 @@ SRC =	src/main.c								\
 		src/debug/draw_bounding_box.c			\
 		src/app/init_app.c						\
 		src/app/init_window.c					\
-		src/app/init_blocks.c					\
 		src/app/destroy_app.c					\
+		src/app/block_types/init_blocks.c		\
+		src/app/block_types/air.c				\
+		src/app/block_types/barrel.c			\
+		src/app/block_types/beehive.c			\
+		src/app/block_types/bookshelf.c			\
+		src/app/block_types/cactus.c			\
+		src/app/block_types/grass_block.c		\
+		src/app/block_types/oak_log.c			\
+		src/app/block_types/oak_planks.c		\
+		src/app/block_types/stone.c				\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\

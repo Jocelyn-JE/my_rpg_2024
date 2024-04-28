@@ -30,7 +30,7 @@ chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
     init_chunk(new_chunk, atlas, map_fd);
     for (int i = 0; i < powf(16, 3); i++) {
         if (new_chunk->blocks[i] != b_air)
-            add_cube(new_chunk->vertices, i, new_chunk->blocks);
+            add_cube(new_chunk->vertices, i, new_chunk->blocks, blocks);
     }
     new_chunk->bounding_box = sfVertexArray_getBounds(new_chunk->vertices);
     return new_chunk;

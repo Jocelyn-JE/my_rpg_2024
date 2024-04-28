@@ -7,7 +7,12 @@ replacement_pairs = {
     "air": 1,
     "stone": 2,
     "oak_planks": 3,
-    "grass_block": 5
+    "oak_log": 4,
+    "grass_block": 5,
+    "barrel": 6,
+    "beehive": 7,
+    "bookshelf": 8,
+    "cactus": 9
 }
 
 # Default value to write if the block is not found in replacement_pairs
