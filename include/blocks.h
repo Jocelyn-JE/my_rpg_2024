@@ -6,6 +6,12 @@
 */
 
 #pragma once
+#include <SFML/Graphics.h>
+#include <SFML/Window.h>
+#include <SFML/Audio.h>
+#include <SFML/System.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 enum blocks {
     b_null,
@@ -19,3 +25,10 @@ enum blocks {
     b_library,
     b_cactus
 };
+
+typedef struct block_s {
+    sfVertexArray *top;
+    sfVertexArray *right;
+    sfVertexArray *left;
+    bool transparent;
+} block_t;

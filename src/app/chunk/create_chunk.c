@@ -23,7 +23,7 @@ static void init_chunk(chunk_t *chunk, sfTexture *atlas, int map_fd)
     chunk->blocks = create_blocks(map_fd);
 }
 
-chunk_t *create_chunk(sfTexture *atlas, int map_fd)
+chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
 {
     chunk_t *new_chunk = malloc(sizeof(chunk_t));
 

@@ -25,6 +25,7 @@ SRC =	src/main.c								\
 		src/debug/draw_bounding_box.c			\
 		src/app/init_app.c						\
 		src/app/init_window.c					\
+		src/app/init_blocks.c					\
 		src/app/destroy_app.c					\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\

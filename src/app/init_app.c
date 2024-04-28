@@ -6,6 +6,7 @@
 */
 #include "rpg.h"
 #include <time.h>
+#include "blocks.h"
 
 static debug_t *init_debug_options(void)
 {
@@ -49,14 +50,15 @@ app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
-    int map_fd = open("tests/blocks.bin", O_RDONLY);
+    block_t **blocks = init_blocks();
+    int map_fd = open("tests/map.ioc", O_RDONLY);
 
     srand(time(NULL));
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
     for (int i = 0; i != 32 * 32; i++)
-        list_add(&app->map, create_chunk(app->block_atlas, map_fd));
+        list_add(&app->map, create_chunk(app->block_atlas, blocks, map_fd));
     list_reverse(&app->map);
     place_chunks(app->map);
     app->debug_options = init_debug_options();

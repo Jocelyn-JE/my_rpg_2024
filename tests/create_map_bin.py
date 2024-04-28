@@ -36,6 +36,6 @@ if __name__ == '__main__':
     with Pool() as pool:
         results = pool.map(process_chunk, chunk_coords)
 
-    with open("blocks.bin", "wb") as binary_file:
+    with open("map.ioc", "wb") as binary_file:
         for result in results:
             binary_file.write(result)
