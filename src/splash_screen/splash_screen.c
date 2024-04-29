@@ -7,17 +7,6 @@
 
 #include "rpg.h"
 
-// static void animation_splash(app_t *app)
-// {
-//     sfColor color = sfSprite_getColor(app->logo->sprite);
-
-//     for (int i = 1; i != 255; i++) {
-//         color.a = 0 + i;
-//         sfSprite_setColor(app->logo->sprite, color);
-//         usleep(20000);
-//     }
-// }
-
 static void create_logo(app_t *app)
 {
     sfVector2f pos_logo = {127, -100};
@@ -29,21 +18,41 @@ static void create_logo(app_t *app)
     sfSprite_setScale(app->logo->sprite, scale_logo);
     sfSprite_setPosition(app->logo->sprite, pos_logo);
     sfSprite_setTexture(app->logo->sprite, app->logo->texture, sfTrue);
-    // animation_splash(app);
 }
 
-void splash_screen(app_t *a)
+static void animation_splash(app_t *app, sfClock *clock)
+{
+    sfTime finished = sfClock_getElapsedTime(clock);
+    float seconds = sfTime_asSeconds(finished);
+
+    if (seconds < 0.03 || app->logo->color.a >= 254)
+        return;
+    if (app->logo->color.a < 255) {
+        app->logo->color.a += 2;
+        if (app->logo->color.a > 255)
+            app->logo->color.a = 255;
+        sfSprite_setColor(app->logo->sprite, app->logo->color);
+        sfClock_restart(clock);
+    }
+}
+
+void splash_screen(app_t *app)
 {
     sfView *view = sfView_createFromRect((sfFloatRect){0, 0, 1920, 1080});
+    static sfClock *clock = NULL;
 
-    sfRenderWindow_setView(a->window, view);
-    create_logo(a);
-    while (sfRenderWindow_isOpen(a->window)) {
-        poll_events(a, &a->event->event);
-        sfRenderWindow_clear(a->window, sfWhite);
-        sfRenderWindow_drawSprite(a->window, a->logo->sprite, NULL);
-        sfRenderWindow_display(a->window);
-        usleep(5000000);
-        menu(a);
+    if (clock == NULL)
+        clock = sfClock_create();
+    create_logo(app);
+    app->logo->color = sfSprite_getColor(app->logo->sprite);
+    app->logo->color.a = 0;
+    sfRenderWindow_setView(app->window, view);
+    while (sfRenderWindow_isOpen(app->window)) {
+        poll_events(app, &app->event->event);
+        sfRenderWindow_clear(app->window, sfWhite);
+        animation_splash(app, clock);
+        sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
+        sfRenderWindow_display(app->window);
+        //menu(a);
     }
 }

@@ -77,6 +77,7 @@ typedef struct logo_s {
     sfTexture *texture;
     sfVector2f *position;
     sfVector2f scale;
+    sfColor color;
 } logo_t;
 // Create / init functions
 
