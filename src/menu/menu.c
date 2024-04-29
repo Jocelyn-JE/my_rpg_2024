@@ -21,20 +21,14 @@ static void set_menu(app_t *app)
     sfSprite_setTexture(app->menu->sprite, app->menu->texture, sfTrue);
 }
 
-static void set_buton(app_t *app, int num_buttons)
+void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
+    int num_buttons)
 {
-    sfVector2f pos_buton[] = {{620, 300}, {620, 450}, {620, 600}};
-    sfVector2f scale_buton = {0.4, 0.4};
-
     for (int i = 0; i < num_buttons; i++) {
-        app->buton[i].sprite = sfSprite_create();
-        app->buton[i].texture = sfTexture_createFromFile("assets/widgets"
-            "/bouton.png", NULL);
-        app->buton[i].scale = scale_buton;
-        sfSprite_setScale(app->buton[i].sprite, app->buton[i].scale);
-        sfSprite_setPosition(app->buton[i].sprite, pos_buton[i]);
-        sfSprite_setTexture(app->buton[i].sprite,
-            app->buton[i].texture, sfTrue);
+        if (sfFloatRect_contains(&app->buton[i].hitbox,
+            mouse_event->x, mouse_event->y)) {
+            printf("Cliqué sur le bouton numéro %d\n", app->buton[i].number);
+        }
     }
 }
 

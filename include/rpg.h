@@ -66,6 +66,8 @@ typedef struct buton_s {
     sfTexture *texture;
     sfVector2f *position;
     sfVector2f scale;
+    sfFloatRect hitbox;
+    int number;
 } buton_t;
 
 typedef struct event_s {
@@ -104,6 +106,9 @@ void menu(app_t *app);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
+void set_buton(app_t *app, int num_buttons);
+void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
+    int num_buttons);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
