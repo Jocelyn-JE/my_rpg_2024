@@ -25,12 +25,16 @@ static void animation_splash(app_t *app, sfClock *clock)
     sfTime finished = sfClock_getElapsedTime(clock);
     float seconds = sfTime_asSeconds(finished);
 
-    if (seconds < 0.03 || app->logo->color.a >= 254)
+    if (seconds < 0.03)
         return;
+    if (app->logo->color.a > 254)
+        menu(app);
     if (app->logo->color.a < 255) {
-        app->logo->color.a += 2;
-        if (app->logo->color.a > 255)
+        app->logo->color.a += 1.6;
+        if (app->logo->color.a > 255) {
             app->logo->color.a = 255;
+            menu(app);
+        }
         sfSprite_setColor(app->logo->sprite, app->logo->color);
         sfClock_restart(clock);
     }
@@ -53,6 +57,5 @@ void splash_screen(app_t *app)
         animation_splash(app, clock);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
         sfRenderWindow_display(app->window);
-        //menu(a);
     }
 }
