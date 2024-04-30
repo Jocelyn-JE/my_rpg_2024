@@ -51,7 +51,7 @@ app_t *create_app(void)
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
     block_t **blocks = init_blocks();
-    int map_fd = open("tests/map.ioc", O_RDONLY);
+    int map_fd = open("tests/fmap.ioc", O_RDONLY);
 
     srand(time(NULL));
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",

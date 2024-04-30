@@ -69,7 +69,7 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
 
 block_t **init_blocks(void)
 {
-    block_t **blocks = malloc(sizeof(block_t *) * 10);
+    block_t **blocks = malloc(sizeof(block_t *) * 12);
 
     blocks[0] = init_null();
     blocks[1] = init_air();
@@ -81,5 +81,7 @@ block_t **init_blocks(void)
     blocks[7] = init_beehive();
     blocks[8] = init_bookshelf();
     blocks[9] = init_cactus();
+    blocks[10] = init_sand();
+    blocks[11] = init_dirt_path();
     return blocks;
 }

@@ -36,6 +36,8 @@ SRC =	src/main.c								\
 		src/app/block_types/oak_log.c			\
 		src/app/block_types/oak_planks.c		\
 		src/app/block_types/stone.c				\
+		src/app/block_types/sand.c				\
+		src/app/block_types/dirt_path.c			\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\

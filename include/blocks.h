@@ -24,7 +24,8 @@ enum blocks {
     b_barrel,
     b_hive,
     b_library,
-    b_cactus
+    b_cactus,
+    b_sand
 };
 
 typedef struct block_s {
@@ -53,3 +54,5 @@ block_t *init_null(void);
 block_t *init_air(void);
 block_t *init_oak_planks(void);
 block_t *init_stone(void);
+block_t *init_sand(void);
+block_t *init_dirt_path(void);

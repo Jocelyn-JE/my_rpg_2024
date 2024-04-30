@@ -12,7 +12,9 @@ replacement_pairs = {
     "barrel": 6,
     "beehive": 7,
     "bookshelf": 8,
-    "cactus": 9
+    "cactus": 9,
+    "sand": 10,
+    "dirt_path": 11
 }
 
 # Default value to write if the block is not found in replacement_pairs
@@ -26,14 +28,14 @@ def process_chunk(chunk_coords):
     for z in range(16):  # Iterate through all z-levels
         for y in range(16):
             for x in range(16):
-                block = chunk.get_block(x, z - 64, y)
+                block = chunk.get_block(x, z + 62, y) # - 64 or + 62
                 write_value = replacement_pairs.get(block.id, default_write_value)
                 data.append(write_value)
 
     return data
 
 if __name__ == '__main__':
-    region = anvil.Region.from_file('r.0.0.mca')
+    region = anvil.Region.from_file('r.0.0.mca_rpg')
 
     # Define chunk coordinates
     chunk_coords = [(x, z) for x in range(32) for z in range(32)]
@@ -41,6 +43,6 @@ if __name__ == '__main__':
     with Pool() as pool:
         results = pool.map(process_chunk, chunk_coords)
 
-    with open("map.ioc", "wb") as binary_file:
+    with open("fmap.ioc", "wb") as binary_file:
         for result in results:
             binary_file.write(result)
