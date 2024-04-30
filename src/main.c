@@ -27,7 +27,7 @@ static void draw_chunks(list_t *list, app_t *app)
     chunk_t *data;
     sfRenderStates renderstate = sfRenderStates_default();
 
-    renderstate.texture = app->block_atlas;
+    renderstate.texture = app->game_ressources->block_atlas;
     for (list_t *current = list; current != NULL; current =
         current->next) {
         data = current->data;
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
         print_framerate();
         poll_events(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        draw_chunks(app->map, app);
+        draw_chunks(app->game_ressources->map, app);
         sfRenderWindow_setView(app->window, app->view);
         sfRenderWindow_display(app->window);
     }

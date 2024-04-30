@@ -14,7 +14,10 @@ replacement_pairs = {
     "bookshelf": 8,
     "cactus": 9,
     "sand": 10,
-    "dirt_path": 11
+    "dirt_path": 11,
+    "grass": 12,
+    "cobblestone": 13,
+    "dead_bush": 14
 }
 
 # Default value to write if the block is not found in replacement_pairs
@@ -25,11 +28,13 @@ def process_chunk(chunk_coords):
     chunk = anvil.Chunk.from_region(region, chunk_x, chunk_y)
     data = bytearray()
 
-    for z in range(16):  # Iterate through all z-levels
+    for z in range(32):  # Iterate through all z-levels
         for y in range(16):
             for x in range(16):
                 block = chunk.get_block(x, z + 62, y) # - 64 or + 62
                 write_value = replacement_pairs.get(block.id, default_write_value)
+                # if block.properties:
+                #     print(f"Block properties: {block.properties}")
                 data.append(write_value)
 
     return data

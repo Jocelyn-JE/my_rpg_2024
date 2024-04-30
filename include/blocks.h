@@ -25,12 +25,15 @@ enum blocks {
     b_hive,
     b_library,
     b_cactus,
-    b_sand
+    b_sand,
+    b_cobblestone,
+    b_dead_bush
 };
 
 typedef struct block_s {
     sfVertex **faces;
     bool transparent;
+    bool solid;
 } block_t;
 
 // Basic cube faces with possibility of offset
@@ -56,3 +59,6 @@ block_t *init_oak_planks(void);
 block_t *init_stone(void);
 block_t *init_sand(void);
 block_t *init_dirt_path(void);
+block_t *init_grass(void);
+block_t *init_cobblestone(void);
+block_t *init_dead_bush(void);

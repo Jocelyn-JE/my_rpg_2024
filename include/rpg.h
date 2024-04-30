@@ -22,7 +22,6 @@
 #include "blocks.h"
 
 // Structures
-
 typedef struct vector3uint8_s {
     uint8_t x;
     uint8_t y;
@@ -42,13 +41,24 @@ typedef struct debug_s {
     bool fps;
 } debug_t;
 
-typedef struct app_s {
-    debug_t *debug_options;
-    sfRenderWindow *window;
-    sfView *view;
-    sfClock *game_clock;
+typedef struct entity_s {
+    uint32_t type;
+    sfVector2f pos;
+} entity_t;
+
+typedef struct game_s {
     sfTexture *block_atlas;
+    block_t **block_types;
+    list_t *entities;
     list_t *map;
+} game_t;
+
+typedef struct app_s {
+    sfRenderWindow *window;
+    sfClock *game_clock;
+    sfView *view;
+    debug_t *debug_options;
+    game_t *game_ressources;
 } app_t;
 
 // Create / init functions
@@ -57,12 +67,15 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
+entity_t *create_entity(sfVector2f pos, uint32_t type);
 chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
 // Destroy / free functions
 
+void destroy_entity(entity_t *entity);
 void destroy_chunk(chunk_t *chunk);
+void destroy_block(block_t *block);
 void destroy_app(app_t *app);
 
 // Coordinates conversion

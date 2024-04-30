@@ -46,21 +46,32 @@ static sfView *create_view(sfVector2f res)
     return view;
 }
 
+static game_t *init_game(void)
+{
+    game_t *new_game = malloc(sizeof(game_t));
+    int map_fd = open("tests/fmap.ioc", O_RDONLY);
+
+    new_game->block_types = init_blocks();
+    new_game->block_atlas = sfTexture_createFromFile(
+        "assets/textures/atlas.png", NULL);
+    new_game->map = NULL;
+    new_game->entities = NULL;
+    for (int i = 0; i != 32 * 32; i++)
+        list_add(&new_game->map, create_chunk(new_game->block_atlas,
+            new_game->block_types, map_fd));
+    list_reverse(&new_game->map);
+    place_chunks(new_game->map);
+    return new_game;
+}
+
 app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
-    block_t **blocks = init_blocks();
-    int map_fd = open("tests/fmap.ioc", O_RDONLY);
 
     srand(time(NULL));
-    app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
-        NULL);
-    app->map = NULL;
-    for (int i = 0; i != 32 * 32; i++)
-        list_add(&app->map, create_chunk(app->block_atlas, blocks, map_fd));
-    list_reverse(&app->map);
-    place_chunks(app->map);
+    app->game_clock = sfClock_create();
+    app->game_ressources = init_game();
     app->debug_options = init_debug_options();
     app->view = create_view(res);
     app->window = create_window(res, 32);

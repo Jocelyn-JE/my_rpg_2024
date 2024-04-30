@@ -10,7 +10,7 @@
 sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
     sfVector2f offset)
 {
-    sfVertex *vertices = malloc(sizeof(sfVertex) * 6);
+    sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){0 + offset.x, 0 + offset.y}, sfWhite,
         text_pos1};
@@ -24,13 +24,15 @@ sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
         (sfVector2f){text_pos1.x, text_pos2.y}};
     vertices[5] = (sfVertex){(sfVector2f){0 + offset.x, 0 + offset.y}, sfWhite,
         text_pos1};
+    vertices[6] = (sfVertex){(sfVector2f){0, 0},
+        (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
     return vertices;
 }
 
 sfVertex *get_left_face(sfVector2f text_pos1, sfVector2f text_pos2,
     sfVector2f offset)
 {
-    sfVertex *vertices = malloc(sizeof(sfVertex) * 6);
+    sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){1 + offset.x, 0 + offset.y}, sfWhite,
         text_pos1};
@@ -44,13 +46,15 @@ sfVertex *get_left_face(sfVector2f text_pos1, sfVector2f text_pos2,
         text_pos2};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y}, sfWhite,
         (sfVector2f){text_pos1.x, text_pos2.y}};
+    vertices[6] = (sfVertex){(sfVector2f){0, 0},
+        (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
     return vertices;
 }
 
 sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
     sfVector2f offset)
 {
-    sfVertex *vertices = malloc(sizeof(sfVertex) * 6);
+    sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y}, sfWhite,
         text_pos1};
@@ -64,12 +68,14 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
         text_pos2};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 2 + offset.y}, sfWhite,
         (sfVector2f){text_pos1.x, text_pos2.y}};
+    vertices[6] = (sfVertex){(sfVector2f){0, 0},
+        (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
     return vertices;
 }
 
 block_t **init_blocks(void)
 {
-    block_t **blocks = malloc(sizeof(block_t *) * 12);
+    block_t **blocks = malloc(sizeof(block_t *) * 16);
 
     blocks[0] = init_null();
     blocks[1] = init_air();
@@ -83,5 +89,9 @@ block_t **init_blocks(void)
     blocks[9] = init_cactus();
     blocks[10] = init_sand();
     blocks[11] = init_dirt_path();
+    blocks[12] = init_grass();
+    blocks[13] = init_cobblestone();
+    blocks[14] = init_dead_bush();
+    blocks[15] = NULL;
     return blocks;
 }

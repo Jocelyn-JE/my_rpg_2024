@@ -27,6 +27,7 @@ SRC =	src/main.c								\
 		src/app/init_window.c					\
 		src/app/destroy_app.c					\
 		src/app/block_types/init_blocks.c		\
+		src/app/block_types/destroy_block.c		\
 		src/app/block_types/air.c				\
 		src/app/block_types/barrel.c			\
 		src/app/block_types/beehive.c			\
@@ -38,9 +39,14 @@ SRC =	src/main.c								\
 		src/app/block_types/stone.c				\
 		src/app/block_types/sand.c				\
 		src/app/block_types/dirt_path.c			\
+		src/app/block_types/grass.c				\
+		src/app/block_types/cobblestone.c		\
+		src/app/block_types/dead_bush.c			\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\
+		src/app/entity/create_entity.c			\
+		src/app/entity/destroy_entity.c			\
 
 OBJ	=	$(SRC:.c=.o)
 

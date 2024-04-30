@@ -9,9 +9,9 @@
 
 static uint8_t *create_blocks(int map_fd)
 {
-    uint8_t *array = malloc(sizeof(uint8_t) * powf(16, 3));
+    uint8_t *array = malloc(sizeof(uint8_t) * (16 * 16 * 32));
 
-    read(map_fd, array, sizeof(uint8_t) * powf(16, 3));
+    read(map_fd, array, sizeof(uint8_t) * (16 * 16 * 32));
     return array;
 }
 
@@ -28,7 +28,7 @@ chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
     chunk_t *new_chunk = malloc(sizeof(chunk_t));
 
     init_chunk(new_chunk, atlas, map_fd);
-    for (int i = 0; i < powf(16, 3); i++) {
+    for (int i = 0; i < (16 * 16 * 32); i++) {
         if (new_chunk->blocks[i] != b_air)
             add_cube(new_chunk->vertices, i, new_chunk->blocks, blocks);
     }
