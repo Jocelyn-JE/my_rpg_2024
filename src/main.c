@@ -4,7 +4,7 @@
 ** File description:
 ** main
 */
-#include "rpg.h"
+#include "../include/rpg.h"
 
 sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     sfVector2f position, sfRenderWindow *window)
@@ -49,6 +49,7 @@ static void draw_chunks(list_t *list, app_t *app)
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
+    setup_inventory(app);
     sfEvent events;
 
     while (sfRenderWindow_isOpen(app->window)) {
@@ -57,6 +58,8 @@ int main(int argc, char **argv)
         sfRenderWindow_clear(app->window, sfBlack);
         draw_chunks(app->map, app);
         sfRenderWindow_setView(app->window, app->view);
+        if (app->game_state == INVENTORY)
+            draw_inventory(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);
