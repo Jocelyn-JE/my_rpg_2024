@@ -28,6 +28,8 @@ static void zoom_view(sfEvent *event, app_t *app)
 
     if (event->type == sfEvtMouseWheelScrolled) {
         zoom = event->mouseWheelScroll.delta > 0.0f ? 0.9f : 1.1f;
+        if ((app->zoom * zoom) > 5 || (app->zoom * zoom) < 0.2)
+            return;
         app->zoom *= zoom;
         sfView_zoom(app->view, zoom);
     }
