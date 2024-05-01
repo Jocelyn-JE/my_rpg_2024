@@ -24,9 +24,9 @@
 // Structures
 
 typedef enum p_items {
-    p_cables,
-    p_cleaver,
-    p_transistor,
+    p_cables = 0,
+    p_cleaver = 1,
+    p_transistor = 2,
 } p_items_t;
 
 typedef enum game_state {
@@ -37,7 +37,7 @@ typedef enum game_state {
 
 typedef struct item_s {
     p_items_t current_item;
-    sfTexture *texture;
+    sfSprite *sprite;
     int quantity;
 } item_t;
 
