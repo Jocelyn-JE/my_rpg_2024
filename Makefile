@@ -85,5 +85,10 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
+cs:		fclean
+		@coding-style . .
+		@cat coding-style-reports.log
+		@rm -f coding-style-reports.log
+
 tests_run: $(NAME)
 	valgrind $(VALGRIND_FLAGS)./$(NAME) &
