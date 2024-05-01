@@ -6,10 +6,10 @@
 */
 
 #pragma once
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
 #include <SFML/Audio.h>
+#include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Window.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>

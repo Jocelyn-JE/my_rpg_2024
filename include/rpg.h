@@ -6,20 +6,20 @@
 */
 
 #pragma once
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <SFML/Audio.h>
-#include <SFML/System.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <math.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdio.h>
+#include "blocks.h"
 #include "linked_list.h"
 #include "mystr.h"
-#include "blocks.h"
+#include <SFML/Audio.h>
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
+#include <SFML/Window.h>
+#include <fcntl.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
 // Structures
 
@@ -29,19 +29,22 @@ typedef enum p_items {
     p_transistor,
 } p_items_t;
 
+typedef enum game_state {
+    MENU,
+    GAME,
+    INVENTORY,
+} state_t;
+
 typedef struct item_s {
     p_items_t current_item;
-    sfTexture* texture;
+    sfTexture *texture;
     int quantity;
 } item_t;
 
 typedef struct inventory_s {
-    item_t* slots[24];
+    sfSprite *background;
+    item_t *slots[32];
 } inventory_t;
-
-typedef struct hotbar_s {
-    item_t* slots[8];
-} hotbar_t;
 
 typedef struct vector3uint8_s {
     uint8_t x;
@@ -63,12 +66,15 @@ typedef struct debug_s {
 } debug_t;
 
 typedef struct app_s {
+    float zoom;
     debug_t *debug_options;
     sfRenderWindow *window;
     sfView *view;
+    state_t game_state;
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
+    inventory_t *inventory;
 } app_t;
 
 // Create / init functions
@@ -107,3 +113,7 @@ void print_framerate(void);
 
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
+
+// Inventory
+void setup_inventory(app_t *app);
+void draw_inventory(app_t *app);
