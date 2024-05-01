@@ -11,5 +11,4 @@ myrpg
 my_rpg
 valgrind.log
 output*
-*.png
 valgrind.*

@@ -30,7 +30,7 @@ typedef enum p_items {
 } p_items_t;
 
 typedef struct item_s {
-    p_items current_item;
+    p_items_t current_item;
     sfTexture* texture;
     int quantity;
 } item_t;
