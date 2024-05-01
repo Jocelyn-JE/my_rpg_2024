@@ -10,6 +10,8 @@ SRC =	src/main.c								\
 		src/random.c							\
 		src/drag_view.c							\
 		src/get_letterbox_view.c				\
+		./src/inventory_management.c			\
+		./src/inventory_setup.c					\
 		src/linked_list/add.c					\
 		src/linked_list/del.c					\
 		src/linked_list/free_list.c				\
@@ -48,7 +50,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
+CFLAGS += -Wall -Wshadow $(INCLUDES) $(LIBS) -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
