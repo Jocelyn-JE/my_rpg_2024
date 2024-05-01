@@ -23,6 +23,26 @@
 
 // Structures
 
+typedef enum p_items {
+    p_cables,
+    p_cleaver,
+    p_transistor,
+} p_items_t;
+
+typedef struct item_s {
+    p_items current_item;
+    sfTexture* texture;
+    int quantity;
+} item_t;
+
+typedef struct inventory_s {
+    item_t* slots[24];
+} inventory_t;
+
+typedef struct hotbar_s {
+    item_t* slots[8];
+} hotbar_t;
+
 typedef struct vector3uint8_s {
     uint8_t x;
     uint8_t y;
