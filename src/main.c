@@ -49,9 +49,9 @@ static void draw_chunks(list_t *list, app_t *app)
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
-    setup_inventory(app);
     sfEvent events;
 
+    setup_inventory(app);
     while (sfRenderWindow_isOpen(app->window)) {
         print_framerate();
         poll_events(app, &events);

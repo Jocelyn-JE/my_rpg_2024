@@ -7,9 +7,12 @@
 
 #include "../include/rpg.h"
 
-void adjustSpriteScale(sfSprite* sprite, float baseScale, float currentZoom) {
-    float scale = baseScale *= currentZoom;
+void adjust_sprite_scale(sfSprite *sprite, float baseScale, float currentZoom)
+{
+    float scale = 0.f;
 
+    baseScale *= currentZoom;
+    scale = baseScale;
     sfSprite_setScale(sprite, (sfVector2f){scale, scale});
 }
 
@@ -22,9 +25,9 @@ void draw_inventory(app_t *app)
         sfSprite_getGlobalBounds(app->inventory->background);
 
     sfSprite_setPosition(app->inventory->background,
-                         (sfVector2f){center.x - backgroundBounds.width / 2,
-                                      center.y - backgroundBounds.height / 2});
-    adjustSpriteScale(app->inventory->background, 1.0f, app->zoom);
+        (sfVector2f){center.x - backgroundBounds.width / 2,
+            center.y - backgroundBounds.height / 2});
+    adjust_sprite_scale(app->inventory->background, 1.0f, app->zoom);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     // draw_inventory_items(window, inventory, center, size);
 }

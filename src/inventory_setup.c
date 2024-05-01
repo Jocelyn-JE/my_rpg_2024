@@ -19,10 +19,10 @@ void setup_inventory_sprites(app_t *app)
 {
     sfTexture *inventoryBackgroundTexture =
         sfTexture_createFromFile("assets/textures/inventory_bg.png", NULL);
-    app->inventory->background = sfSprite_create();
 
-    sfSprite_setTexture(app->inventory->background, inventoryBackgroundTexture,
-                        sfTrue);
+    app->inventory->background = sfSprite_create();
+    sfSprite_setTexture(app->inventory->background,
+        inventoryBackgroundTexture, sfTrue);
 }
 
 void setup_inventory(app_t *app)

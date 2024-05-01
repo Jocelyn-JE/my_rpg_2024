@@ -62,6 +62,6 @@ static void handle_events(app_t *app, sfEvent *event)
 void poll_events(app_t *app, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(app->window, event) &&
-           sfRenderWindow_hasFocus(app->window))
+        sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
 }
