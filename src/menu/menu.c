@@ -12,13 +12,13 @@ static void set_menu(app_t *app)
     sfVector2f pos_menu = {0, 0};
     sfVector2f scale_menu = {1.5, 1.5};
 
-    app->menu->sprite = sfSprite_create();
-    app->menu->texture = sfTexture_createFromFile("assets/widgets/"
+    app->menu->backsprite = sfSprite_create();
+    app->menu->backtexture = sfTexture_createFromFile("assets/widgets/"
         "menu.png", NULL);
-    app->menu->scale = scale_menu;
-    sfSprite_setScale(app->menu->sprite, app->menu->scale);
-    sfSprite_setPosition(app->menu->sprite, pos_menu);
-    sfSprite_setTexture(app->menu->sprite, app->menu->texture, sfTrue);
+    app->menu->backscale = scale_menu;
+    sfSprite_setScale(app->menu->backsprite, app->menu->backscale);
+    sfSprite_setPosition(app->menu->backsprite, pos_menu);
+    sfSprite_setTexture(app->menu->backsprite, app->menu->backtexture, sfTrue);
 }
 
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
@@ -54,7 +54,7 @@ void menu(app_t *app)
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);
-        sfRenderWindow_drawSprite(app->window, app->menu->sprite, NULL);
+        sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
         for (int i = 0; i < 3; i++)
             sfRenderWindow_drawSprite(app->window, app->buton[i].sprite, NULL);

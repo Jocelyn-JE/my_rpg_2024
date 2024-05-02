@@ -55,10 +55,10 @@ typedef struct app_s {
 } app_t;
 
 typedef struct menu_s {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f *position;
-    sfVector2f scale;
+    sfSprite *backsprite;
+    sfTexture *backtexture;
+    sfVector2f *backposition;
+    sfVector2f backscale;
 } menu_t;
 
 typedef struct buton_s {
