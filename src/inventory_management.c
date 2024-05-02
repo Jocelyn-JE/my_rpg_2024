@@ -21,6 +21,8 @@ void draw_inventory_items(sfRenderWindow *window, inventory_t *inventory,
         x = start_x + (i % 8) * 50;
         y = start_y + (i / 8) * 50;
         if (inventory->slots[i] != NULL) {
+            sfSprite_setScale(inventory->slots[i]->sprite,
+                (sfVector2f){0.5f, 0.5f});
             sfSprite_setPosition(inventory->slots[i]->sprite,
                 (sfVector2f){x, y});
             sfRenderWindow_drawSprite(window,
@@ -29,13 +31,33 @@ void draw_inventory_items(sfRenderWindow *window, inventory_t *inventory,
     }
 }
 
-void adjust_sprite_scale(sfSprite *sprite, float baseScale, float currentZoom)
+void adjust_sprite_scale(inventory_t *inventory,
+    float baseScale, float currentZoom)
 {
     float scale = 0.f;
 
     baseScale *= currentZoom;
     scale = baseScale;
-    sfSprite_setScale(sprite, (sfVector2f){scale, scale});
+    sfSprite_setScale(inventory->background, (sfVector2f){scale, scale});
+    for (size_t i = 0; i < 32; i++) {
+        if (inventory->slots[i] != NULL) {
+            sfSprite_setScale(inventory->slots[i]->sprite,
+                (sfVector2f){scale, scale});
+        }
+    }
+}
+
+void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
+{
+    sfRectangleShape *shape = sfRectangleShape_create();
+    sfVector2f view_top_left = sfRenderWindow_mapPixelToCoords(window,
+        (sfVector2i){0, 0}, view);
+
+    sfRectangleShape_setPosition(shape, view_top_left);
+    sfRectangleShape_setSize(shape, (sfVector2f){10000, 10000});
+    sfRectangleShape_setFillColor(shape, (sfColor){0, 0, 0, 170});
+    sfRenderWindow_drawRectangleShape(window, shape, NULL);
+    sfRectangleShape_destroy(shape);
 }
 
 void draw_inventory(app_t *app)
@@ -49,7 +71,8 @@ void draw_inventory(app_t *app)
     sfSprite_setPosition(app->inventory->background,
         (sfVector2f){center.x - backgroundBounds.width / 2,
             center.y - backgroundBounds.height / 2});
-    adjust_sprite_scale(app->inventory->background, 1.0f, app->zoom);
+    adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
+    draw_semi_transparent_rect(app->window, view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     draw_inventory_items(app->window, app->inventory, center, size);
 }

@@ -21,7 +21,7 @@
 #include <string.h>
 #include <unistd.h>
 
-// Structures
+// Enumerations
 
 typedef enum p_items {
     p_cables = 0,
@@ -34,6 +34,8 @@ typedef enum game_state {
     GAME,
     INVENTORY,
 } state_t;
+
+// Structures
 
 typedef struct item_s {
     p_items_t current_item;
