@@ -24,11 +24,17 @@ static void set_menu(app_t *app)
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
     int num_buttons)
 {
-    for (int i = 0; i < num_buttons; i++) {
-        if (sfFloatRect_contains(&app->buton[i].hitbox,
-            mouse_event->x, mouse_event->y)) {
-            printf("Cliqué sur le bouton numéro %d\n", app->buton[i].number);
-        }
+    if (sfFloatRect_contains(&app->buton[0].hitbox,
+        mouse_event->x, mouse_event->y)) {
+        printf("Cliqué sur le bouton play\n");
+    }
+    if (sfFloatRect_contains(&app->buton[1].hitbox,
+        mouse_event->x, mouse_event->y)) {
+        printf("Cliqué sur le bouton setting\n");
+    }
+    if (sfFloatRect_contains(&app->buton[2].hitbox,
+        mouse_event->x, mouse_event->y)) {
+        exit (1);
     }
 }
 
@@ -46,18 +52,25 @@ static void set_title(app_t *app)
     sfSprite_setTexture(app->logo->sprite, app->logo->texture, sfTrue);
 }
 
+static void draw_buton(app_t *app)
+{
+    sfRenderWindow_drawSprite(app->window, app->buton[0].sprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->buton[1].sprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->buton[2].sprite, NULL);
+}
+
 void menu(app_t *app)
 {
     set_menu(app);
-    set_buton(app, 3);
+    set_buton(app);
     set_title(app);
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);
         sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
-        for (int i = 0; i < 3; i++)
-            sfRenderWindow_drawSprite(app->window, app->buton[i].sprite, NULL);
+        draw_buton(app);
+        assert(app->window != NULL);
         sfRenderWindow_display(app->window);
     }
 }

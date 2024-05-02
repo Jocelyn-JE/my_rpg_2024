@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
 #include "linked_list.h"
 #include "mystr.h"
 
@@ -107,7 +108,7 @@ void menu(app_t *app);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
-void set_buton(app_t *app, int num_buttons);
+void set_buton(app_t *app);
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
     int num_buttons);
 
