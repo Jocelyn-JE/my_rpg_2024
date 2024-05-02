@@ -39,20 +39,20 @@ static void draw_sprite(app_t *app, int i, float x, float y)
 void draw_inventory_items(app_t *app, sfVector2f center,
     sfVector2f size, float scale)
 {
-    const float offsetX = 715 * scale;
-    const float offsetY = 680 * scale;
-    const float slotWidth = 64 * scale;
-    const float slotHeight = 65 * scale;
+    const float offsetX = 645 * scale;
+    const float offsetY = 548 * scale;
+    const float slotWidth = 72 * scale;
+    const float slotHeight = 72 * scale;
     float start_x = center.x - size.x / 2 + offsetX;
     float start_y = center.y - size.y / 2 + offsetY;
     float x = 0;
     float y = 0;
 
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 36; i++) {
         if (app->inventory->slots[i] == NULL)
             continue;
-        x = start_x + (i % 8) * slotWidth;
-        y = start_y + (i / 8) * slotHeight;
+        x = start_x + (i % 9) * slotWidth;
+        y = start_y + (i / 9) * slotHeight;
         draw_sprite(app, i, x, y);
     }
 }

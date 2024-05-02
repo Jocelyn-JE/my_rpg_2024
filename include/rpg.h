@@ -24,9 +24,15 @@
 // Enumerations
 
 typedef enum p_items {
-    p_cables = 0,
-    p_cleaver = 1,
-    p_transistor = 2,
+    p_apple = 0,
+    p_arrow = 1,
+    p_diamond_axe = 2,
+    p_diamond_pickaxe = 3,
+    p_diamond_sword = 4,
+    p_diamond_helmet = 5,
+    p_diamond_chestplate = 6,
+    p_diamond_leggings = 7,
+    p_diamond_boots = 8,
 } p_items_t;
 
 typedef enum game_state {
@@ -45,7 +51,7 @@ typedef struct item_s {
 
 typedef struct inventory_s {
     sfSprite *background;
-    item_t *slots[32];
+    item_t *slots[36];
 } inventory_t;
 
 typedef struct vector3uint8_s {
