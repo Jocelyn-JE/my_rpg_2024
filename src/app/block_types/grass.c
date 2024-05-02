@@ -7,28 +7,28 @@
 #include "rpg.h"
 #include "blocks.h"
 
-static sfColor soft_green(void)
+sfColor grass_green(void)
 {
-    return (sfColor){126, 255, 0, 255};
+    return (sfColor){145, 189, 89, 255};
 }
 
-sfVertex *get_diagonal_face(sfVector2f text_pos1, sfVector2f text_pos2,
+static sfVertex *get_diagonal_face(sfVector2f text_pos1, sfVector2f text_pos2,
     sfVector2f offset)
 {
     sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){1 + offset.x, 0 + offset.y},
-        soft_green(), text_pos1};
+        grass_green(), text_pos1};
     vertices[1] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y},
-        soft_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
     vertices[2] = (sfVertex){(sfVector2f){0 + offset.x, 1 + offset.y},
-        soft_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
     vertices[3] = (sfVertex){(sfVector2f){0 + offset.x, 1 + offset.y},
-        soft_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
     vertices[4] = (sfVertex){(sfVector2f){1 + offset.x, 2 + offset.y},
-        soft_green(), text_pos2};
+        grass_green(), text_pos2};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y},
-        soft_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
     vertices[6] = (sfVertex){(sfVector2f){0, 0},
         (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
     return vertices;

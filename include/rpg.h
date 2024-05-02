@@ -36,7 +36,6 @@ typedef struct chunk_s {
 } chunk_t;
 
 typedef struct debug_s {
-    bool wireframe;
     bool bounding_box;
     bool fps;
 } debug_t;
@@ -46,11 +45,16 @@ typedef struct entity_s {
     sfVector2f pos;
 } entity_t;
 
+typedef struct player_s {
+    sfVector2f pos;
+} player_t;
+
 typedef struct game_s {
     sfTexture *block_atlas;
     block_t **block_types;
     list_t *entities;
     chunk_t **map;
+    player_t *player;
 } game_t;
 
 typedef struct app_s {
@@ -90,7 +94,8 @@ void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
-void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities);
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
+    int chunk_index);
 void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
 
 // Debug
@@ -102,3 +107,5 @@ void print_framerate(void);
 
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
+int get_chunk_index_from_coordinates(int x, int y);
+sfVector2f get_chunk_coordinates_from_index(int index);

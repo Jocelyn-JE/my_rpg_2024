@@ -8,10 +8,6 @@
 
 static void update_debug_options(sfKeyEvent *event, debug_t *options)
 {
-    if (event->code == sfKeyW && options->wireframe)
-        options->wireframe = false;
-    else if (event->code == sfKeyW)
-        options->wireframe = true;
     if (event->code == sfKeyX && options->bounding_box)
         options->bounding_box = false;
     else if (event->code == sfKeyX)
@@ -32,6 +28,30 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
     }
 }
 
+static void handle_movement(app_t *app, sfKeyEvent *key)
+{
+    if (key->code == sfKeyLeft) {
+        app->game_ressources->player->pos.x -= 0.1f;
+        app->game_ressources->player->pos.y += 0.1f;
+    }
+    if (key->code == sfKeyRight) {
+        app->game_ressources->player->pos.x += 0.1f;
+        app->game_ressources->player->pos.y -= 0.1f;
+    }
+    if (key->code == sfKeyUp) {
+        app->game_ressources->player->pos.y -= 0.1f;
+        app->game_ressources->player->pos.x -= 0.1f;
+    }
+    if (key->code == sfKeyDown) {
+        app->game_ressources->player->pos.y += 0.1f;
+        app->game_ressources->player->pos.x += 0.1f;
+    }
+    ((entity_t *)(app->game_ressources->entities->data))->pos.x =
+        app->game_ressources->player->pos.x;
+    ((entity_t *)(app->game_ressources->entities->data))->pos.y =
+        app->game_ressources->player->pos.y;
+}
+
 static void handle_events(app_t *app, sfEvent *event)
 {
     if (event->type == sfEvtClosed)
@@ -41,6 +61,8 @@ static void handle_events(app_t *app, sfEvent *event)
     if (event->type == sfEvtResized)
         get_letterbox_view(app->view, (sfVector2f){event->size.width,
             event->size.height});
+    if (event->type == sfEvtKeyPressed)
+        handle_movement(app, &event->key);
     drag_view(event, app->window, app->view);
     zoom_view(event, app->window, app->view);
 }

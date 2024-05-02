@@ -18,7 +18,14 @@ replacement_pairs = {
     "grass": 12,
     "cobblestone": 13,
     "dead_bush": 14,
-    "sandstone": 15
+    "sandstone": 15,
+    "smooth_sandstone": 16,
+    "cut_sandstone": 17,
+    "ice": 18,
+    "water": 19,
+    "jungle_log": 20,
+    "mossy_cobblestone": 21,
+    "fern": 22
 }
 
 # Default value to write if the block is not found in replacement_pairs

@@ -43,6 +43,11 @@ SRC =	src/main.c								\
 		src/app/block_types/cobblestone.c		\
 		src/app/block_types/dead_bush.c			\
 		src/app/block_types/sandstone.c			\
+		src/app/block_types/ice.c				\
+		src/app/block_types/water.c				\
+		src/app/block_types/jungle_log.c		\
+		src/app/block_types/mossy_cobblestone.c	\
+		src/app/block_types/fern.c				\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\

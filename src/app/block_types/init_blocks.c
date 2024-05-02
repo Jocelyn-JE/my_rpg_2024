@@ -73,26 +73,39 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
     return vertices;
 }
 
+const init_func_t init_block_functions[] = {
+    {init_null},
+    {init_air},
+    {init_stone},
+    {init_oak_planks},
+    {init_oak_log},
+    {init_grass_block},
+    {init_barrel},
+    {init_beehive},
+    {init_bookshelf},
+    {init_cactus},
+    {init_sand},
+    {init_dirt_path},
+    {init_grass},
+    {init_cobblestone},
+    {init_dead_bush},
+    {init_sandstone},
+    {init_smooth_sandstone},
+    {init_cut_sandstone},
+    {init_ice},
+    {init_water},
+    {init_jungle_log},
+    {init_mossy_cobblestone},
+    {init_fern}
+};
+
 block_t **init_blocks(void)
 {
-    block_t **blocks = malloc(sizeof(block_t *) * 17);
+    block_t **blocks = malloc(sizeof(block_t *) * 24);
 
-    blocks[0] = init_null();
-    blocks[1] = init_air();
-    blocks[2] = init_stone();
-    blocks[3] = init_oak_planks();
-    blocks[4] = init_oak_log();
-    blocks[5] = init_grass_block();
-    blocks[6] = init_barrel();
-    blocks[7] = init_beehive();
-    blocks[8] = init_bookshelf();
-    blocks[9] = init_cactus();
-    blocks[10] = init_sand();
-    blocks[11] = init_dirt_path();
-    blocks[12] = init_grass();
-    blocks[13] = init_cobblestone();
-    blocks[14] = init_dead_bush();
-    blocks[15] = init_sandstone();
-    blocks[16] = NULL;
+    for (int i = 0; i != 23; i++) {
+        blocks[i] = init_block_functions[i].function();
+    }
+    blocks[23] = NULL;
     return blocks;
 }

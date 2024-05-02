@@ -10,6 +10,8 @@
 static void add_face(sfVertexArray *vertices, vector3uint8_t pos,
     sfVertex *face, float shading_factor)
 {
+    if (!face)
+        return;
     for (int i = 0; i != 6; i++) {
         sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(
             face[i].position.x + pos.x, face[i].position.y + pos.y, pos.z,

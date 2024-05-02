@@ -30,14 +30,10 @@ static void draw_chunks(chunk_t **list, app_t *app)
     for (int i = 0; list[i] != NULL; i++) {
         renderstate.transform =
             sfTransformable_getTransform(list[i]->transform);
-        if (app->debug_options->wireframe)
-            sfVertexArray_setPrimitiveType(list[i]->vertices, sfLines);
-        else
-            sfVertexArray_setPrimitiveType(list[i]->vertices, sfTriangles);
         if (is_vertexarray_visible(app->view, list[i]->bounding_box,
             sfTransformable_getPosition(list[i]->transform), app->window)) {
             update_chunk(list[i], app->game_ressources->block_types,
-                app->game_ressources->entities);
+                app->game_ressources->entities, i);
             sfRenderWindow_drawVertexArray(app->window, list[i]->vertices,
                 &renderstate);
         }

@@ -13,7 +13,6 @@ static debug_t *init_debug_options(void)
     debug_t *debug_options = malloc(sizeof(debug_t));
 
     debug_options->bounding_box = false;
-    debug_options->wireframe = false;
     debug_options->fps = false;
     return debug_options;
 }
@@ -40,6 +39,15 @@ static sfView *create_view(sfVector2f res)
     return view;
 }
 
+static player_t *init_player(void)
+{
+    player_t *new_player = malloc(sizeof(player_t));
+
+    new_player->pos.x = 0.0f;
+    new_player->pos.y = 0.0f;
+    return new_player;
+}
+
 static game_t *init_game(void)
 {
     game_t *new_game = malloc(sizeof(game_t));
@@ -50,6 +58,7 @@ static game_t *init_game(void)
         "assets/textures/atlas.png", NULL);
     new_game->map = malloc(sizeof(chunk_t *) * (32 * 32 + 1));
     new_game->entities = NULL;
+    new_game->player = init_player();
     list_add(&new_game->entities, create_entity((sfVector2f){0, 0}, e_player));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_atlas,

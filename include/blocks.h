@@ -28,7 +28,14 @@ enum blocks {
     b_sand,
     b_cobblestone,
     b_dead_bush,
-    b_sandstone
+    b_sandstone,
+    b_smooth_sandstone,
+    b_cut_sandstone,
+    b_ice,
+    b_water,
+    b_jungle_log,
+    b_mossy_cobblestone,
+    b_fern
 };
 
 enum entities {
@@ -47,6 +54,10 @@ typedef struct block_s {
     bool transparent;
     bool solid;
 } block_t;
+
+typedef struct init_func_s {
+    block_t *(*function)();
+} init_func_t;
 
 // Basic cube faces with possibility of offset
 
@@ -75,3 +86,15 @@ block_t *init_grass(void);
 block_t *init_cobblestone(void);
 block_t *init_dead_bush(void);
 block_t *init_sandstone(void);
+block_t *init_smooth_sandstone(void);
+block_t *init_cut_sandstone(void);
+block_t *init_ice(void);
+block_t *init_water(void);
+block_t *init_jungle_log(void);
+block_t *init_mossy_cobblestone(void);
+block_t *init_fern(void);
+
+// Colors
+
+sfColor grass_green(void);
+sfColor water_blue(void);
