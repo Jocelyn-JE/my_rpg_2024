@@ -67,4 +67,6 @@ void setup_inventory(app_t *app)
     init_inventory(app);
     setup_inventory_sprites(app);
     add_item_to_inventory(app->inventory, create_item(p_cables), -1);
+    add_item_to_inventory(app->inventory, create_item(p_cleaver), -1);
+    add_item_to_inventory(app->inventory, create_item(p_transistor), -1);
 }
