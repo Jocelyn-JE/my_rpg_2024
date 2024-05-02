@@ -50,7 +50,7 @@ typedef struct game_s {
     sfTexture *block_atlas;
     block_t **block_types;
     list_t *entities;
-    list_t *map;
+    chunk_t **map;
 } game_t;
 
 typedef struct app_s {
@@ -90,6 +90,8 @@ void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities);
+void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,

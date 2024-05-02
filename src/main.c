@@ -22,27 +22,28 @@ sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-static void draw_chunks(list_t *list, app_t *app)
+static void draw_chunks(chunk_t **list, app_t *app)
 {
-    chunk_t *data;
     sfRenderStates renderstate = sfRenderStates_default();
 
     renderstate.texture = app->game_ressources->block_atlas;
-    for (list_t *current = list; current != NULL; current =
-        current->next) {
-        data = current->data;
-        renderstate.transform = sfTransformable_getTransform(data->transform);
+    for (int i = 0; list[i] != NULL; i++) {
+        renderstate.transform =
+            sfTransformable_getTransform(list[i]->transform);
         if (app->debug_options->wireframe)
-            sfVertexArray_setPrimitiveType(data->vertices, sfLines);
+            sfVertexArray_setPrimitiveType(list[i]->vertices, sfLines);
         else
-            sfVertexArray_setPrimitiveType(data->vertices, sfTriangles);
-        if (is_vertexarray_visible(app->view, data->bounding_box,
-            sfTransformable_getPosition(data->transform), app->window))
-            sfRenderWindow_drawVertexArray(app->window, data->vertices,
+            sfVertexArray_setPrimitiveType(list[i]->vertices, sfTriangles);
+        if (is_vertexarray_visible(app->view, list[i]->bounding_box,
+            sfTransformable_getPosition(list[i]->transform), app->window)) {
+            update_chunk(list[i], app->game_ressources->block_types,
+                app->game_ressources->entities);
+            sfRenderWindow_drawVertexArray(app->window, list[i]->vertices,
                 &renderstate);
+        }
         if (app->debug_options->bounding_box)
-            draw_bounding_box(app->window, app->view, data->bounding_box,
-                sfTransformable_getPosition(data->transform));
+            draw_bounding_box(app->window, app->view, list[i]->bounding_box,
+                sfTransformable_getPosition(list[i]->transform));
     }
 }
 

@@ -42,11 +42,13 @@ SRC =	src/main.c								\
 		src/app/block_types/grass.c				\
 		src/app/block_types/cobblestone.c		\
 		src/app/block_types/dead_bush.c			\
+		src/app/block_types/sandstone.c			\
 		src/app/chunk/add_cube.c				\
 		src/app/chunk/create_chunk.c			\
 		src/app/chunk/destroy_chunk.c			\
 		src/app/entity/create_entity.c			\
 		src/app/entity/destroy_entity.c			\
+		src/app/entity/add_entity.c				\
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -23,6 +23,20 @@ static void init_chunk(chunk_t *chunk, sfTexture *atlas, int map_fd)
     chunk->blocks = create_blocks(map_fd);
 }
 
+static void add_entities(sfVertexArray *vertices, int index, list_t *entities)
+{
+    vector3uint8_t pos = get_pos_from_index(index);
+    entity_t *data = (entity_t *)entities->data;
+
+    for (list_t *current = entities; current != NULL;
+        current = current->next) {
+        data = current->data;
+        if (floor(data->pos.x) == pos.x && floor(data->pos.y) == pos.y &&
+            pos.z == 0)
+            add_entity(vertices, index, data);
+    }
+}
+
 chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
 {
     chunk_t *new_chunk = malloc(sizeof(chunk_t));
@@ -34,4 +48,15 @@ chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
     }
     new_chunk->bounding_box = sfVertexArray_getBounds(new_chunk->vertices);
     return new_chunk;
+}
+
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities)
+{
+    sfVertexArray_clear(chunk->vertices);
+    for (int i = 0; i < (16 * 16 * 32); i++) {
+        add_entities(chunk->vertices, i, entities);
+        if (chunk->blocks[i] != b_air)
+            add_cube(chunk->vertices, i, chunk->blocks, blocks);
+    }
+    chunk->bounding_box = sfVertexArray_getBounds(chunk->vertices);
 }

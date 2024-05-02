@@ -18,21 +18,15 @@ static debug_t *init_debug_options(void)
     return debug_options;
 }
 
-static void place_chunks(list_t *chunks)
+static void place_chunks(chunk_t **chunks)
 {
-    int i = 0;
     int j = 0;
-    chunk_t *data;
 
-    for (list_t *current = chunks; current != NULL; current = current->next) {
-        data = current->data;
-        sfTransformable_move(data->transform, cartesian_to_isometric(16 * j,
-            16 * i, 0, 100));
-        i++;
-        if (i == 32) {
+    for (int i = 0; chunks[i] != NULL; i++) {
+        if (i % 32 == 0)
             j++;
-            i = 0;
-        }
+        sfTransformable_move(chunks[i]->transform,
+            cartesian_to_isometric(16 * j, 16 * (i % 32), 0, 100));
     }
 }
 
@@ -54,12 +48,13 @@ static game_t *init_game(void)
     new_game->block_types = init_blocks();
     new_game->block_atlas = sfTexture_createFromFile(
         "assets/textures/atlas.png", NULL);
-    new_game->map = NULL;
+    new_game->map = malloc(sizeof(chunk_t *) * (32 * 32 + 1));
     new_game->entities = NULL;
+    list_add(&new_game->entities, create_entity((sfVector2f){0, 0}, e_player));
     for (int i = 0; i != 32 * 32; i++)
-        list_add(&new_game->map, create_chunk(new_game->block_atlas,
-            new_game->block_types, map_fd));
-    list_reverse(&new_game->map);
+        new_game->map[i] = create_chunk(new_game->block_atlas,
+            new_game->block_types, map_fd);
+    new_game->map[1024] = NULL;
     place_chunks(new_game->map);
     return new_game;
 }

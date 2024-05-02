@@ -9,7 +9,9 @@
 static void destroy_game_ressources(game_t *game)
 {
     sfTexture_destroy(game->block_atlas);
-    free_list(game->map, destroy_chunk);
+    for (int i = 0; game->map[i] != NULL; i++)
+        destroy_chunk(game->map[i]);
+    free(game->map);
     free_list(game->entities, destroy_entity);
     for (int i = 0; game->block_types[i] != NULL; i++)
         destroy_block(game->block_types[i]);

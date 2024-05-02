@@ -27,7 +27,19 @@ enum blocks {
     b_cactus,
     b_sand,
     b_cobblestone,
-    b_dead_bush
+    b_dead_bush,
+    b_sandstone
+};
+
+enum entities {
+    e_player,
+    e_villager,
+    e_skeleton,
+    e_zombie,
+    e_enderman,
+    e_pig,
+    e_cow,
+    e_sheep
 };
 
 typedef struct block_s {
@@ -62,3 +74,4 @@ block_t *init_dirt_path(void);
 block_t *init_grass(void);
 block_t *init_cobblestone(void);
 block_t *init_dead_bush(void);
+block_t *init_sandstone(void);
