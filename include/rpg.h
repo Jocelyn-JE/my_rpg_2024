@@ -43,6 +43,18 @@ typedef enum game_state {
 
 // Structures
 
+typedef struct inventory_params_s {
+    sfVector2f world_pos;
+    sfVector2f center;
+    sfVector2f size;
+    float scale;
+    float offset_X;
+    float offset_Y;
+    float slot_width;
+    float slot_height;
+    float spacing;
+} inventory_params_t;
+
 typedef struct item_s {
     p_items_t current_item;
     sfSprite *sprite;

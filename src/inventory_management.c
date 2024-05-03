@@ -55,6 +55,10 @@ void draw_inventory_items(app_t *app, sfVector2f center,
         y = start_y + (i / 9) * slotHeight;
         draw_sprite(app, i, x, y);
     }
+    if (app->inventory->dragged_item != NULL) {
+        sfRenderWindow_drawSprite(app->window,
+            app->inventory->dragged_item->sprite, NULL);
+    }
 }
 
 float adjust_sprite_scale(inventory_t *inventory, float baseScale,
@@ -96,10 +100,4 @@ void draw_inventory(app_t *app)
     draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     draw_inventory_items(app, center, size, scale);
-    if (app->inventory->dragged_item != NULL) {
-        sfRenderWindow_drawSprite(app->window,
-            app->inventory->dragged_item->sprite, NULL);
-        sfVector2f pos = sfSprite_getPosition(
-            app->inventory->dragged_item->sprite);
-    }
 }
