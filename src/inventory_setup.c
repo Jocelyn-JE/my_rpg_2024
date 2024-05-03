@@ -52,7 +52,13 @@ item_t *create_item(p_items_t item_type)
 
 static void init_inventory(app_t *app)
 {
+    sfTexture* selection_texture =
+        sfTexture_createFromFile("assets/hotbar_selection.png", NULL);
+
     app->inventory = malloc(sizeof(inventory_t));
+    app->inventory->selected_slot = 0;
+    app->inventory->selection = sfSprite_create();
+    sfSprite_setTexture(app->inventory->selection, selection_texture, sfTrue);
     for (int i = 0; i < 36; i++) {
         app->inventory->slots[i] = NULL;
     }

@@ -47,6 +47,25 @@ void manage_inventory_input(app_t *app, sfEvent *event)
     }
 }
 
+void handle_mouse_wheel(app_t *app, sfEvent event)
+{
+    if (sfKeyboard_isKeyPressed(sfKeyLShift))
+        return;
+    if (event.type != sfEvtMouseWheelScrolled || app->game_state != GAME)
+        return;
+    if (event.mouseWheelScroll.delta > 0) {
+        app->inventory->selected_slot--;
+        if (app->inventory->selected_slot < 0) {
+            app->inventory->selected_slot = 8;
+        }
+    } else {
+        app->inventory->selected_slot++;
+        if (app->inventory->selected_slot > 8) {
+            app->inventory->selected_slot = 0;
+        }
+    }
+}
+
 static void handle_events(app_t *app, sfEvent *event)
 {
     if (event->type == sfEvtResized)
@@ -59,6 +78,7 @@ static void handle_events(app_t *app, sfEvent *event)
         return;
     if (event->type == sfEvtKeyPressed)
         update_debug_options(&event->key, app->debug_options);
+    handle_mouse_wheel(app, *event);
     drag_view(event, app->window, app->view);
     zoom_view(event, app);
 }

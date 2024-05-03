@@ -51,8 +51,9 @@ typedef struct item_s {
 
 typedef struct inventory_s {
     sfSprite *background;
-    sfSprite *selected_slot;
+    int selected_slot;
     sfSprite *hotbar;
+    sfSprite *selection;
     item_t *slots[36];
 } inventory_t;
 
