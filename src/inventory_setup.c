@@ -50,7 +50,7 @@ item_t *create_item(p_items_t item_type)
     return new_item;
 }
 
-void init_inventory(app_t *app)
+static void init_inventory(app_t *app)
 {
     app->inventory = malloc(sizeof(inventory_t));
     for (int i = 0; i < 36; i++) {
@@ -68,10 +68,21 @@ void setup_inventory_sprites(app_t *app)
         inventoryBackgroundTexture, sfTrue);
 }
 
+void setup_hotbar_sprites(app_t *app)
+{
+    sfTexture *hotbarBackgroundTexture =
+        sfTexture_createFromFile("assets/hotbar.png", NULL);
+
+    app->inventory->hotbar = sfSprite_create();
+    sfSprite_setTexture(app->inventory->hotbar,
+        hotbarBackgroundTexture, sfTrue);
+}
+
 void setup_inventory(app_t *app)
 {
     init_inventory(app);
     setup_inventory_sprites(app);
+    setup_hotbar_sprites(app);
     add_item_to_inventory(app->inventory, create_item(p_apple), -1);
     add_item_to_inventory(app->inventory, create_item(p_arrow), -1);
     add_item_to_inventory(app->inventory, create_item(p_diamond_axe), -1);
@@ -82,4 +93,10 @@ void setup_inventory(app_t *app)
         create_item(p_diamond_chestplate), -1);
     add_item_to_inventory(app->inventory, create_item(p_diamond_leggings), -1);
     add_item_to_inventory(app->inventory, create_item(p_diamond_boots), -1);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 27);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 28);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 29);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 33);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 34);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 35);
 }

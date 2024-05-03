@@ -60,6 +60,8 @@ int main(int argc, char **argv)
         sfRenderWindow_setView(app->window, app->view);
         if (app->game_state == INVENTORY)
             draw_inventory(app);
+        else
+            draw_hotbar(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

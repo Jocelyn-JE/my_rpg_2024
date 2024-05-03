@@ -26,6 +26,8 @@ static void zoom_view(sfEvent *event, app_t *app)
 {
     float zoom = 0;
 
+    if (!sfKeyboard_isKeyPressed(sfKeyLShift))
+        return;
     if (event->type == sfEvtMouseWheelScrolled) {
         zoom = event->mouseWheelScroll.delta > 0.0f ? 0.9f : 1.1f;
         if ((app->zoom * zoom) > 5 || (app->zoom * zoom) < 0.2)

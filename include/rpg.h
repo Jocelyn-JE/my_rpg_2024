@@ -51,6 +51,8 @@ typedef struct item_s {
 
 typedef struct inventory_s {
     sfSprite *background;
+    sfSprite *selected_slot;
+    sfSprite *hotbar;
     item_t *slots[36];
 } inventory_t;
 
@@ -125,3 +127,5 @@ vector3uint8_t get_pos_from_index(int i);
 // Inventory
 void setup_inventory(app_t *app);
 void draw_inventory(app_t *app);
+void draw_hotbar(app_t *app);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);

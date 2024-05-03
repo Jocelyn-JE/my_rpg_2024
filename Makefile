@@ -12,6 +12,7 @@ SRC =	src/main.c								\
 		src/get_letterbox_view.c				\
 		./src/inventory_management.c			\
 		./src/inventory_setup.c					\
+		./src/hotbar_management.c				\
 		src/linked_list/add.c					\
 		src/linked_list/del.c					\
 		src/linked_list/free_list.c				\
