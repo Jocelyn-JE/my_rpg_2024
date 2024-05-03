@@ -31,35 +31,11 @@ static void set_buton_hitbox(app_t *app, int index, sfFloatRect hitbox)
     app->buton[index].hitbox = hitbox;
 }
 
-static void set_buton_play(app_t *app, int index)
+static void buton(app_t *app, int index, int x, int y)
 {
-    sfVector2f pos_buton = {620, 300};
+    sfVector2f pos_buton = {x, y};
     sfVector2f scale_buton = {0.4, 0.4};
-    sfFloatRect hitbox = {213, 523, 1227, 122};
-
-    create_buton_sprite(app, index, "assets/widgets/bouton.png");
-    set_buton_scale(app, index, scale_buton);
-    set_buton_position(app, index, pos_buton);
-    set_buton_hitbox(app, index, hitbox);
-}
-
-static void set_buton_setting(app_t *app, int index)
-{
-    sfVector2f pos_buton = {620, 450};
-    sfVector2f scale_buton = {0.4, 0.4};
-    sfFloatRect hitbox = {213, 523, 1227, 122};
-
-    create_buton_sprite(app, index, "assets/widgets/bouton.png");
-    set_buton_scale(app, index, scale_buton);
-    set_buton_position(app, index, pos_buton);
-    set_buton_hitbox(app, index, hitbox);
-}
-
-static void set_buton_leave(app_t *app, int index)
-{
-    sfVector2f pos_buton = {620, 600};
-    sfVector2f scale_buton = {0.4, 0.4};
-    sfFloatRect hitbox = {213, 523, 1227, 122};
+    sfFloatRect hitbox = {x, y, 490.8, 48.8};
 
     create_buton_sprite(app, index, "assets/widgets/bouton.png");
     set_buton_scale(app, index, scale_buton);
@@ -69,15 +45,14 @@ static void set_buton_leave(app_t *app, int index)
 
 void set_buton(app_t *app)
 {
-    set_buton_play(app, 0);
-    set_buton_setting(app, 1);
-    set_buton_leave(app, 2);
+    buton(app, 0, 700, 500);
+    buton(app, 1, 700, 650);
+    buton(app, 2, 700, 800);
+}
 
-
-    // for (int i = 0; i < num_buttons; i++) {
-    //     create_buton_sprite(app, i, "assets/widgets/bouton.png");
-    //     set_buton_scale(app, i, scale_buton);
-    //     set_buton_position(app, i, pos_buton[i]);
-    //     set_buton_hitbox(app, i, hitbox);
-    // }
+void set_buton_setting(app_t *app)
+{
+    buton(app, 3, 350, 500);
+    buton(app, 4, 1050, 500);
+    buton(app, 5, 700, 700);
 }

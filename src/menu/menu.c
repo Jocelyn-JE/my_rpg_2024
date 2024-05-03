@@ -21,23 +21,6 @@ static void set_menu(app_t *app)
     sfSprite_setTexture(app->menu->backsprite, app->menu->backtexture, sfTrue);
 }
 
-void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event,
-    int num_buttons)
-{
-    if (sfFloatRect_contains(&app->buton[0].hitbox,
-        mouse_event->x, mouse_event->y)) {
-        printf("Cliqué sur le bouton play\n");
-    }
-    if (sfFloatRect_contains(&app->buton[1].hitbox,
-        mouse_event->x, mouse_event->y)) {
-        printf("Cliqué sur le bouton setting\n");
-    }
-    if (sfFloatRect_contains(&app->buton[2].hitbox,
-        mouse_event->x, mouse_event->y)) {
-        exit (1);
-    }
-}
-
 static void set_title(app_t *app)
 {
     sfVector2f pos_title = {127, -300};
@@ -55,8 +38,11 @@ static void set_title(app_t *app)
 static void draw_buton(app_t *app)
 {
     sfRenderWindow_drawSprite(app->window, app->buton[0].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[0].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->buton[1].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[1].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->buton[2].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[2].text, NULL);
 }
 
 void menu(app_t *app)
@@ -64,6 +50,7 @@ void menu(app_t *app)
     set_menu(app);
     set_buton(app);
     set_title(app);
+    text_menu(app);
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);

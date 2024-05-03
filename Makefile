@@ -31,6 +31,9 @@ SRC =	src/main.c								\
 		src/app/chunk/destroy_chunk.c			\
 		src/menu/menu.c							\
 		src/menu/set_button.c					\
+		src/menu/click_buton.c					\
+		src/menu/set_text.c						\
+		src/setting/setting.c					\
 
 OBJ	=	$(SRC:.c=.o)
 

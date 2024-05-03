@@ -35,6 +35,8 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
 
 static void handle_events(app_t *app, sfEvent *event)
 {
+    sfMouseButtonEvent mouse_event = event->mouseButton;
+
     if (event->type == sfEvtClosed)
         sfRenderWindow_close(app->window);
     if (event->type == sfEvtKeyPressed)
@@ -43,9 +45,8 @@ static void handle_events(app_t *app, sfEvent *event)
         get_letterbox_view(app->view, (sfVector2f){event->size.width,
             event->size.height});
     if (event->type == sfEvtMouseButtonPressed) {
-        sfMouseButtonEvent mouse_event = event->mouseButton;
         if (mouse_event.button == sfMouseLeft) {
-            handle_button_click(app, &mouse_event, 3);
+            handle_button_click(app, &mouse_event);
         }
     }
     drag_view(event, app->window, app->view);
