@@ -58,6 +58,8 @@ static void init_inventory(app_t *app)
     app->inventory = malloc(sizeof(inventory_t));
     app->inventory->selected_slot = 0;
     app->inventory->selection = sfSprite_create();
+    app->inventory->dragging_slot = -1;
+    app->inventory->dragged_item = NULL;
     sfSprite_setTexture(app->inventory->selection, selection_texture, sfTrue);
     for (int i = 0; i < 36; i++) {
         app->inventory->slots[i] = NULL;

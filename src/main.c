@@ -53,7 +53,6 @@ int main(int argc, char **argv)
 
     setup_inventory(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        print_framerate();
         poll_events(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
         draw_chunks(app->map, app);

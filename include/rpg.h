@@ -54,6 +54,8 @@ typedef struct inventory_s {
     int selected_slot;
     sfSprite *hotbar;
     sfSprite *selection;
+    int dragging_slot;
+    item_t *dragged_item;
     item_t *slots[36];
 } inventory_t;
 
@@ -130,3 +132,4 @@ void setup_inventory(app_t *app);
 void draw_inventory(app_t *app);
 void draw_hotbar(app_t *app);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
+float adjust_sprite_scale(inventory_t *, float, float);

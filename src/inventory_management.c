@@ -14,7 +14,7 @@ void draw_bounds(sfRenderWindow *window, sfSprite *sprite, float scale)
 
     sfRectangleShape_setPosition(shape, (sfVector2f){bounds.left, bounds.top});
     sfRectangleShape_setSize(shape, (sfVector2f){bounds.width, bounds.height});
-    sfRectangleShape_setOutlineThickness(shape, (-1.0f * scale));
+    sfRectangleShape_setOutlineThickness(shape, (2.0f * scale));
     sfRectangleShape_setOutlineColor(shape, sfRed);
     sfRectangleShape_setFillColor(shape, sfTransparent);
     sfRenderWindow_drawRectangleShape(window, shape, NULL);
@@ -84,9 +84,8 @@ void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
 void draw_inventory(app_t *app)
 {
     float scale = 0.f;
-    const sfView *view = sfRenderWindow_getView(app->window);
-    sfVector2f center = sfView_getCenter(view);
-    sfVector2f size = sfView_getSize(view);
+    sfVector2f center = sfView_getCenter(app->view);
+    sfVector2f size = sfView_getSize(app->view);
     sfFloatRect backgroundBounds =
         sfSprite_getGlobalBounds(app->inventory->background);
 
@@ -94,7 +93,13 @@ void draw_inventory(app_t *app)
         (sfVector2f){center.x - backgroundBounds.width / 2,
             center.y - backgroundBounds.height / 2});
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
-    draw_semi_transparent_rect(app->window, view);
+    draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     draw_inventory_items(app, center, size, scale);
+    if (app->inventory->dragged_item != NULL) {
+        sfRenderWindow_drawSprite(app->window,
+            app->inventory->dragged_item->sprite, NULL);
+        sfVector2f pos = sfSprite_getPosition(
+            app->inventory->dragged_item->sprite);
+    }
 }
