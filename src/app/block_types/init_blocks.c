@@ -73,6 +73,17 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
     return vertices;
 }
 
+block_t **init_blocks(void)
+{
+    block_t **blocks = malloc(sizeof(block_t *) * 24);
+
+    for (int i = 0; i != 23; i++) {
+        blocks[i] = init_block_functions[i].function();
+    }
+    blocks[23] = NULL;
+    return blocks;
+}
+
 const init_func_t init_block_functions[] = {
     {init_null},
     {init_air},
@@ -98,14 +109,3 @@ const init_func_t init_block_functions[] = {
     {init_mossy_cobblestone},
     {init_fern}
 };
-
-block_t **init_blocks(void)
-{
-    block_t **blocks = malloc(sizeof(block_t *) * 24);
-
-    for (int i = 0; i != 23; i++) {
-        blocks[i] = init_block_functions[i].function();
-    }
-    blocks[23] = NULL;
-    return blocks;
-}
