@@ -7,6 +7,32 @@
 #include "blocks.h"
 #include "rpg.h"
 
+const init_func_t init_block_functions[] = {
+    {init_null},
+    {init_air},
+    {init_stone},
+    {init_oak_planks},
+    {init_oak_log},
+    {init_grass_block},
+    {init_barrel},
+    {init_beehive},
+    {init_bookshelf},
+    {init_cactus},
+    {init_sand},
+    {init_dirt_path},
+    {init_grass},
+    {init_cobblestone},
+    {init_dead_bush},
+    {init_sandstone},
+    {init_smooth_sandstone},
+    {init_cut_sandstone},
+    {init_ice},
+    {init_water},
+    {init_jungle_log},
+    {init_mossy_cobblestone},
+    {init_fern}
+};
+
 sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
     sfVector2f offset)
 {
@@ -75,37 +101,12 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
 
 block_t **init_blocks(void)
 {
-    block_t **blocks = malloc(sizeof(block_t *) * 24);
+    uint8_t block_count = 23;
+    block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
-    for (int i = 0; i != 23; i++) {
+    for (int i = 0; i != block_count; i++) {
         blocks[i] = init_block_functions[i].function();
     }
-    blocks[23] = NULL;
+    blocks[block_count] = NULL;
     return blocks;
 }
-
-const init_func_t init_block_functions[] = {
-    {init_null},
-    {init_air},
-    {init_stone},
-    {init_oak_planks},
-    {init_oak_log},
-    {init_grass_block},
-    {init_barrel},
-    {init_beehive},
-    {init_bookshelf},
-    {init_cactus},
-    {init_sand},
-    {init_dirt_path},
-    {init_grass},
-    {init_cobblestone},
-    {init_dead_bush},
-    {init_sandstone},
-    {init_smooth_sandstone},
-    {init_cut_sandstone},
-    {init_ice},
-    {init_water},
-    {init_jungle_log},
-    {init_mossy_cobblestone},
-    {init_fern}
-};
