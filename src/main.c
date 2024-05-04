@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     sfEvent events;
 
     setup_inventory(app);
+    initialize_event_handlers();
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);

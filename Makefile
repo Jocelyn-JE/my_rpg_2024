@@ -5,43 +5,49 @@
 ## Makefile
 ##
 
-SRC =	src/main.c								\
-		src/poll_events.c						\
-		src/random.c							\
-		src/drag_view.c							\
-		src/get_letterbox_view.c				\
-		./src/inventory_management.c			\
-		./src/inventory_setup.c					\
-		./src/hotbar_management.c				\
-		src/linked_list/add.c					\
-		src/linked_list/del.c					\
-		src/linked_list/free_list.c				\
-		src/linked_list/list_len.c				\
-		src/linked_list/list_reverse.c			\
-		src/conversions/cartesian_to_iso.c		\
-		src/conversions/index_to_pos.c			\
-		src/conversions/clamp.c					\
-		src/debug/print_fps.c					\
-		src/debug/mini_printf.c					\
-		src/debug/my_put_nbr.c					\
-		src/debug/my_strcmp.c					\
-		src/debug/draw_bounding_box.c			\
-		src/app/init_app.c						\
-		src/app/init_window.c					\
-		src/app/destroy_app.c					\
-		src/app/block_types/init_blocks.c		\
-		src/app/block_types/air.c				\
-		src/app/block_types/barrel.c			\
-		src/app/block_types/beehive.c			\
-		src/app/block_types/bookshelf.c			\
-		src/app/block_types/cactus.c			\
-		src/app/block_types/grass_block.c		\
-		src/app/block_types/oak_log.c			\
-		src/app/block_types/oak_planks.c		\
-		src/app/block_types/stone.c				\
-		src/app/chunk/add_cube.c				\
-		src/app/chunk/create_chunk.c			\
-		src/app/chunk/destroy_chunk.c			\
+SRC =	./src/main.c							\
+		./src/poll_events.c						\
+		./src/random.c							\
+		./src/events/drag_view.c				\
+		./src/events/get_letterbox_view.c		\
+		./src/events/handle_closed.c			\
+		./src/events/handle_key_pressed.c		\
+		./src/events/handle_mouse_button_pressed.c \
+		./src/events/handle_mouse_moved.c		\
+		./src/events/handle_mouse_wheel.c		\
+		./src/events/handle_resized.c			\
+		./src/app/inventory/inventory_management.c \
+		./src/app/inventory/inventory_setup.c	\
+		./src/app/inventory/hotbar_management.c \
+		./src/linked_list/add.c					\
+		./src/linked_list/del.c					\
+		./src/linked_list/free_list.c			\
+		./src/linked_list/list_len.c			\
+		./src/linked_list/list_reverse.c		\
+		./src/conversions/cartesian_to_iso.c	\
+		./src/conversions/index_to_pos.c		\
+		./src/conversions/clamp.c				\
+		./src/debug/print_fps.c					\
+		./src/debug/mini_printf.c				\
+		./src/debug/my_put_nbr.c				\
+		./src/debug/my_strcmp.c					\
+		./src/debug/draw_bounding_box.c			\
+		./src/app/init_app.c					\
+		./src/app/init_window.c					\
+		./src/app/destroy_app.c					\
+		./src/app/block_types/init_blocks.c		\
+		./src/app/block_types/air.c				\
+		./src/app/block_types/barrel.c			\
+		./src/app/block_types/beehive.c			\
+		./src/app/block_types/bookshelf.c		\
+		./src/app/block_types/cactus.c			\
+		./src/app/block_types/grass_block.c		\
+		./src/app/block_types/oak_log.c			\
+		./src/app/block_types/oak_planks.c		\
+		./src/app/block_types/stone.c			\
+		./src/app/chunk/add_cube.c				\
+		./src/app/chunk/create_chunk.c			\
+		./src/app/chunk/destroy_chunk.c			\
 
 OBJ	=	$(SRC:.c=.o)
 

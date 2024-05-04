@@ -102,8 +102,11 @@ typedef struct app_s {
     inventory_t *inventory;
 } app_t;
 
-// Create / init functions
+// Handlers
 
+typedef void (*event_handler_t)(sfEvent *event, app_t *app);
+
+// Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
@@ -112,17 +115,14 @@ chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
 // Destroy / free functions
-
 void destroy_chunk(chunk_t *chunk);
 void destroy_app(app_t *app);
 
 // Coordinates conversion
-
 sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 // Other
-
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
@@ -135,7 +135,6 @@ void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
 void print_framerate(void);
 
 // Conversions
-
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 
@@ -145,3 +144,12 @@ void draw_inventory(app_t *app);
 void draw_hotbar(app_t *app);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 float adjust_sprite_scale(inventory_t *, float, float);
+
+//Events
+void initialize_event_handlers(void);
+void handle_mouse_button(sfEvent *, app_t *);
+void handle_closed(sfEvent *, app_t *);
+void handle_resized(sfEvent *, app_t *);
+void handle_mouse_wheeling(sfEvent *, app_t *);
+void handle_key_pressed(sfEvent *, app_t *);
+void handle_mouse_moved(sfEvent *, app_t *);
