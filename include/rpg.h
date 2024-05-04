@@ -72,6 +72,7 @@ typedef struct inventory_s {
     int dragging_slot;
     item_t *dragged_item;
     item_t *slots[36];
+    int current_slot;
 } inventory_t;
 
 typedef struct vector3uint8_s {
@@ -148,6 +149,7 @@ void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 float adjust_sprite_scale(inventory_t *, float, float);
+inventory_params_t setup_inventory_params(int, int, app_t *);
 
 //Events
 void initialize_event_handlers(void);

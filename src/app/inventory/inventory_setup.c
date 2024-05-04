@@ -102,6 +102,7 @@ static void init_inventory(app_t *app)
 
     app->inventory = malloc(sizeof(inventory_t));
     app->inventory->selected_slot = 0;
+    app->inventory->current_slot = -1;
     app->inventory->selection = sfSprite_create();
     app->inventory->dragging_slot = -1;
     app->inventory->dragged_item = NULL;

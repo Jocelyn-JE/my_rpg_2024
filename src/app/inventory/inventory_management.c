@@ -69,6 +69,28 @@ static void draw_dragged_item(app_t *app)
     }
 }
 
+static void draw_inventory_highlight(sfRenderWindow *window,
+    app_t *app, int slot_index)
+{
+        int row = slot_index / 9;
+        int column = slot_index % 9;
+        inventory_params_t params = setup_inventory_params(0, 0, app);
+        float slot_x = params.center.x - params.size.x / 2 + params.offset_X +
+            column * (params.slot_width + params.spacing);
+        float slot_y = params.center.y - params.size.y / 2 + params.offset_Y +
+            row * (params.slot_height + params.spacing);
+        sfRectangleShape* highlight_rect = sfRectangleShape_create();
+
+        sfRectangleShape_setPosition(highlight_rect,
+            (sfVector2f){slot_x, slot_y});
+        sfRectangleShape_setSize(highlight_rect,
+            (sfVector2f){params.slot_width, params.slot_height});
+        sfRectangleShape_setFillColor(highlight_rect,
+            sfColor_fromRGBA(255, 255, 255, 128));
+        sfRenderWindow_drawRectangleShape(window, highlight_rect, NULL);
+        sfRectangleShape_destroy(highlight_rect);
+}
+
 void draw_inventory_items(app_t *app, sfVector2f center,
     sfVector2f size, float scale)
 {
@@ -88,6 +110,9 @@ void draw_inventory_items(app_t *app, sfVector2f center,
         draw_sprite(app, i, pos);
         draw_item_quantity(app, app->inventory->slots[i], pos, scale);
     }
+    if (app->inventory->current_slot != -1)
+        draw_inventory_highlight(app->window,
+        app, app->inventory->current_slot);
     draw_dragged_item(app);
 }
 

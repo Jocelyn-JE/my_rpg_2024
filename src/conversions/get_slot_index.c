@@ -7,7 +7,7 @@
 
 #include "../../include/rpg.h"
 
-static inventory_params_t setup_inventory_params(int x, int y, app_t *app)
+inventory_params_t setup_inventory_params(int x, int y, app_t *app)
 {
     inventory_params_t params;
 
@@ -16,11 +16,11 @@ static inventory_params_t setup_inventory_params(int x, int y, app_t *app)
     params.center = sfView_getCenter(app->view);
     params.size = sfView_getSize(app->view);
     params.scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
-    params.offset_X = 645 * params.scale;
-    params.offset_Y = 548 * params.scale;
-    params.slot_width = 72 * params.scale;
-    params.slot_height = 72 * params.scale;
-    params.spacing = 1.35 * params.scale;
+    params.offset_X = 639 * params.scale;
+    params.offset_Y = 542.5 * params.scale;
+    params.slot_width = 66.5 * params.scale;
+    params.slot_height = 66.5 * params.scale;
+    params.spacing = 5.3 * params.scale;
     return params;
 }
 
