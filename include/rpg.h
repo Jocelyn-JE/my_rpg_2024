@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 // Enumerations
 
@@ -58,6 +59,8 @@ typedef struct inventory_params_s {
 typedef struct item_s {
     p_items_t current_item;
     sfSprite *sprite;
+    sfText *quantity_text;
+    int limit;
     int quantity;
 } item_t;
 

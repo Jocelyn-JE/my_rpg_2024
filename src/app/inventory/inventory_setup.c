@@ -5,7 +5,7 @@
 ** inventory management file
 */
 
-#include "../include/rpg.h"
+#include "../../../include/rpg.h"
 
 const char *item_file_paths[] = {
     "assets/final_items/apple.png",
@@ -22,6 +22,8 @@ const char *item_file_paths[] = {
 bool add_item_to_inventory(inventory_t *inventory, item_t *item,
     int fixed_place)
 {
+    if (item == NULL)
+        return false;
     if (fixed_place != -1) {
         inventory->slots[fixed_place] = item;
         return true;
@@ -35,18 +37,26 @@ bool add_item_to_inventory(inventory_t *inventory, item_t *item,
     return false;
 }
 
-item_t *create_item(p_items_t item_type)
+item_t *create_item(p_items_t item_type, int limit, int quantity)
 {
     item_t *new_item = malloc(sizeof(item_t));
+    sfFont *font = sfFont_createFromFile
+        ("assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
     sfTexture *texture =
         sfTexture_createFromFile(item_file_paths[item_type], NULL);
 
-    if (!new_item)
+    if (!new_item || quantity < 0 || quantity > limit)
         return NULL;
-    new_item->quantity = 0;
+    new_item->quantity = quantity;
+    new_item->limit = limit;
     new_item->sprite = sfSprite_create();
     sfSprite_setTexture(new_item->sprite, texture, sfTrue);
     new_item->current_item = item_type;
+    if (limit <= 1)
+        return new_item;
+    new_item->quantity_text = sfText_create();
+    sfText_setFont(new_item->quantity_text, font);
+    sfText_setColor(new_item->quantity_text, sfWhite);
     return new_item;
 }
 
@@ -91,20 +101,20 @@ void setup_inventory(app_t *app)
     init_inventory(app);
     setup_inventory_sprites(app);
     setup_hotbar_sprites(app);
-    add_item_to_inventory(app->inventory, create_item(p_apple), -1);
-    add_item_to_inventory(app->inventory, create_item(p_arrow), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_axe), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_pickaxe), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_sword), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_helmet), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 64), -1);
+    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 32), -1);
     add_item_to_inventory(app->inventory,
-        create_item(p_diamond_chestplate), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_leggings), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 27);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 28);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 29);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 33);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 34);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_boots), 35);
+        create_item(p_diamond_axe, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_sword, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_helmet, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_chestplate, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_boots, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_boots, 1, 1), 27);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_boots, 1, 1), 35);
 }

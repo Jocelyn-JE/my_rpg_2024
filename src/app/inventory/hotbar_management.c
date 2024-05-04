@@ -4,7 +4,7 @@
 ** File description:
 ** manage hotbar
 */
-#include "../include/rpg.h"
+#include "../../../include/rpg.h"
 
 static float adjust_texture_scale(inventory_t *inventory, float baseScale,
     float currentZoom)
@@ -46,26 +46,45 @@ static void draw_selection(app_t *app, float scale,
     sfRenderWindow_drawSprite(app->window, app->inventory->selection, NULL);
 }
 
+static void draw_item_quantity(app_t *app, int i,
+    sfVector2f pos, float scale)
+{
+    char quantity[10];
+    item_t *item = app->inventory->slots[i + 27];
+
+    if (item->limit <= 1)
+        return;
+    sprintf(quantity, "%d", item->quantity);
+    sfText_setString(item->quantity_text, quantity);
+    sfText_setCharacterSize(item->quantity_text, (12 * scale));
+    sfText_setPosition(item->quantity_text,
+        (sfVector2f){pos.x + (16 * scale) + (i * 45.3) *
+            scale, pos.y + 19 * scale});
+    sfRenderWindow_drawText(app->window, item->quantity_text, NULL);
+}
+
 static void draw_hotbar_items(app_t *app, float scale)
 {
-    sfFloatRect hotbarBounds =
+    sfFloatRect bounds =
         sfSprite_getGlobalBounds(app->inventory->hotbar);
     const sfVector2f center = sfView_getCenter(app->view);
     const sfVector2f size = sfView_getSize(app->view);
-    float hotbarX = center.x - ((hotbarBounds.width - 18 * scale) / 2);
-    float hotbarY = center.y + (size.y / 2) - hotbarBounds.height + 10 * scale;
+    sfVector2f hotbar_pos = {center.x - ((bounds.width - 18 * scale) / 2),
+        center.y + (size.y / 2) - bounds.height + 10 * scale};
 
     for (int i = 0; i < 9; i++) {
         if (app->inventory->slots[i + 27] == NULL)
             continue;
         sfSprite_setPosition(app->inventory->slots[i + 27]->sprite,
-            (sfVector2f){hotbarX + (i * 45.3 * scale), hotbarY});
+            (sfVector2f){hotbar_pos.x + (i * 45.3 * scale), hotbar_pos.y});
         sfSprite_setScale(app->inventory->slots[i + 27]->sprite,
             (sfVector2f){scale, scale});
         sfRenderWindow_drawSprite(app->window,
             app->inventory->slots[i + 27]->sprite, NULL);
+        draw_item_quantity(app, i,
+            hotbar_pos, scale);
     }
-    draw_selection(app, scale, hotbarX, hotbarY);
+    draw_selection(app, scale, hotbar_pos.x, hotbar_pos.y);
 }
 
 float calculate_scale(inventory_t *inventory, float baseScale,

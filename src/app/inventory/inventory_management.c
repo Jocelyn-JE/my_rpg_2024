@@ -5,7 +5,7 @@
 ** inventory related queries
 */
 
-#include "../include/rpg.h"
+#include "../../../include/rpg.h"
 
 void draw_bounds(sfRenderWindow *window, sfSprite *sprite, float scale)
 {
@@ -21,7 +21,7 @@ void draw_bounds(sfRenderWindow *window, sfSprite *sprite, float scale)
     sfRectangleShape_destroy(shape);
 }
 
-static void draw_sprite(app_t *app, int i, float x, float y)
+static void draw_sprite(app_t *app, int i, sfVector2f pos)
 {
     float scale = 0.f;
     float baseScale = 1.0f;
@@ -29,11 +29,38 @@ static void draw_sprite(app_t *app, int i, float x, float y)
     baseScale *= app->zoom;
     scale = baseScale;
     scale *= 1.6f;
-    sfSprite_setPosition(app->inventory->slots[i]->sprite, (sfVector2f){x, y});
+    sfSprite_setPosition(app->inventory->slots[i]->sprite,
+        (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->slots[i]->sprite,
         (sfVector2f){scale, scale});
     sfRenderWindow_drawSprite(app->window,
         app->inventory->slots[i]->sprite, NULL);
+}
+
+static void draw_dragged_item(app_t *app)
+{
+    if (app->inventory->dragged_item != NULL) {
+        sfRenderWindow_drawSprite(app->window,
+        app->inventory->dragged_item->sprite, NULL);
+        if (app->inventory->dragged_item->limit > 1)
+            sfRenderWindow_drawText(app->window,
+            app->inventory->dragged_item->quantity_text, NULL);
+    }
+}
+
+static void draw_item_quantity(app_t *app, item_t *item,
+    sfVector2f pos, float scale)
+{
+    char quantity[10];
+
+    if (item->limit <= 1)
+        return;
+    sprintf(quantity, "%d", item->quantity);
+    sfText_setString(item->quantity_text, quantity);
+    sfText_setCharacterSize(item->quantity_text, (20.5 * scale));
+    sfText_setPosition(item->quantity_text, (sfVector2f){pos.x + (29 * scale),
+        pos.y + (34 * scale)});
+    sfRenderWindow_drawText(app->window, item->quantity_text, NULL);
 }
 
 void draw_inventory_items(app_t *app, sfVector2f center,
@@ -45,20 +72,17 @@ void draw_inventory_items(app_t *app, sfVector2f center,
     const float slotHeight = 72 * scale;
     float start_x = center.x - size.x / 2 + offsetX;
     float start_y = center.y - size.y / 2 + offsetY;
-    float x = 0;
-    float y = 0;
+    sfVector2f pos = {0, 0};
 
     for (int i = 0; i < 36; i++) {
         if (app->inventory->slots[i] == NULL)
             continue;
-        x = start_x + (i % 9) * slotWidth;
-        y = start_y + (i / 9) * slotHeight;
-        draw_sprite(app, i, x, y);
+        pos.x = start_x + (i % 9) * slotWidth;
+        pos.y = start_y + (i / 9) * slotHeight;
+        draw_sprite(app, i, pos);
+        draw_item_quantity(app, app->inventory->slots[i], pos, scale);
     }
-    if (app->inventory->dragged_item != NULL) {
-        sfRenderWindow_drawSprite(app->window,
-            app->inventory->dragged_item->sprite, NULL);
-    }
+    draw_dragged_item(app);
 }
 
 float adjust_sprite_scale(inventory_t *inventory, float baseScale,
