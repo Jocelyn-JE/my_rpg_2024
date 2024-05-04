@@ -37,17 +37,6 @@ static void draw_sprite(app_t *app, int i, sfVector2f pos)
         app->inventory->slots[i]->sprite, NULL);
 }
 
-static void draw_dragged_item(app_t *app)
-{
-    if (app->inventory->dragged_item != NULL) {
-        sfRenderWindow_drawSprite(app->window,
-        app->inventory->dragged_item->sprite, NULL);
-        if (app->inventory->dragged_item->limit > 1)
-            sfRenderWindow_drawText(app->window,
-            app->inventory->dragged_item->quantity_text, NULL);
-    }
-}
-
 static void draw_item_quantity(app_t *app, item_t *item,
     sfVector2f pos, float scale)
 {
@@ -61,6 +50,23 @@ static void draw_item_quantity(app_t *app, item_t *item,
     sfText_setPosition(item->quantity_text, (sfVector2f){pos.x + (29 * scale),
         pos.y + (34 * scale)});
     sfRenderWindow_drawText(app->window, item->quantity_text, NULL);
+}
+
+static void draw_dragged_item(app_t *app)
+{
+    char quantity[10];
+
+    if (app->inventory->dragged_item != NULL) {
+        sfRenderWindow_drawSprite(app->window,
+        app->inventory->dragged_item->sprite, NULL);
+        if (app->inventory->dragged_item->limit > 1) {
+            sprintf(quantity, "%d", app->inventory->dragged_item->quantity);
+            sfText_setString(app->inventory->dragged_item->quantity_text,
+                quantity);
+            sfRenderWindow_drawText(app->window,
+            app->inventory->dragged_item->quantity_text, NULL);
+        }
+    }
 }
 
 void draw_inventory_items(app_t *app, sfVector2f center,

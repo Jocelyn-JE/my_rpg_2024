@@ -19,15 +19,50 @@ const char *item_file_paths[] = {
     "assets/final_items/diamond_boots.png",
 };
 
+static bool case_same_item(inventory_t *inventory, item_t *item, int i)
+{
+    int diff = inventory->slots[i]->limit - inventory->slots[i]->quantity;
+
+    if (diff >= item->quantity) {
+        inventory->slots[i]->quantity += item->quantity;
+        return true;
+    }
+    inventory->slots[i]->quantity += diff;
+    item->quantity -= diff;
+    return false;
+}
+
+static bool manage_stacking(inventory_t *inventory, item_t *item)
+{
+    bool return_value = false;
+
+    for (int i = 0; i < 36; i++) {
+        if (inventory->slots[i] == NULL)
+            continue;
+        if (inventory->slots[i]->current_item == item->current_item
+            && inventory->slots[i]->quantity < inventory->slots[i]->limit) {
+            return_value = case_same_item(inventory, item, i);
+        }
+        if (return_value)
+            return true;
+    }
+    return false;
+}
+
 bool add_item_to_inventory(inventory_t *inventory, item_t *item,
     int fixed_place)
 {
+    int return_value = 0;
+
     if (item == NULL)
         return false;
     if (fixed_place != -1) {
         inventory->slots[fixed_place] = item;
         return true;
     }
+    return_value = manage_stacking(inventory, item);
+    if (return_value)
+        return true;
     for (int i = 0; i < 36; i++) {
         if (inventory->slots[i] == NULL) {
             inventory->slots[i] = item;
@@ -45,7 +80,7 @@ item_t *create_item(p_items_t item_type, int limit, int quantity)
     sfTexture *texture =
         sfTexture_createFromFile(item_file_paths[item_type], NULL);
 
-    if (!new_item || quantity < 0 || quantity > limit)
+    if (!new_item || limit > 64 || quantity < 0 || quantity > limit)
         return NULL;
     new_item->quantity = quantity;
     new_item->limit = limit;
@@ -101,20 +136,28 @@ void setup_inventory(app_t *app)
     init_inventory(app);
     setup_inventory_sprites(app);
     setup_hotbar_sprites(app);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 64), -1);
-    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 32), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32), -1);
+    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 27), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_axe, 1, 1), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_sword, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_helmet, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_apple, 64, 37), -1);
+    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 18), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_chestplate, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_boots, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_boots, 1, 1), 27);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_boots, 1, 1), 35);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 64), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32), 33);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 12), 34);
 }

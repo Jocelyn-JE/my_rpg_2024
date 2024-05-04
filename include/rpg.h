@@ -140,11 +140,12 @@ void print_framerate(void);
 // Conversions
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
+int get_slot_index(int, int, app_t *);
 
 // Inventory
-void setup_inventory(app_t *app);
-void draw_inventory(app_t *app);
-void draw_hotbar(app_t *app);
+void setup_inventory(app_t *);
+void draw_inventory(app_t *);
+void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 float adjust_sprite_scale(inventory_t *, float, float);
 
