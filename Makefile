@@ -16,9 +16,12 @@ SRC =	./src/main.c							\
 		./src/events/handle_mouse_moved.c		\
 		./src/events/handle_mouse_wheel.c		\
 		./src/events/handle_resized.c			\
+		./src/events/manage_armor_slots.c		\
 		./src/app/inventory/inventory_management.c \
 		./src/app/inventory/inventory_setup.c	\
 		./src/app/inventory/hotbar_management.c \
+		./src/app/inventory/is_armor.c			\
+		./src/app/inventory/draw_highlighted_slot.c \
 		./src/linked_list/add.c					\
 		./src/linked_list/del.c					\
 		./src/linked_list/free_list.c			\
@@ -28,6 +31,7 @@ SRC =	./src/main.c							\
 		./src/conversions/index_to_pos.c		\
 		./src/conversions/clamp.c				\
 		./src/conversions/get_slot_index.c		\
+		./src/conversions/get_armor_index.c		\
 		./src/debug/print_fps.c					\
 		./src/debug/mini_printf.c				\
 		./src/debug/my_put_nbr.c				\

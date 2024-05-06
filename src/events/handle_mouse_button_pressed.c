@@ -9,7 +9,7 @@
 
 void case_picking(app_t *app, int slot_index)
 {
-    if (slot_index != -1 && app->inventory->slots[slot_index] != NULL) {
+    if (app->inventory->slots[slot_index] != NULL) {
         app->inventory->dragging_slot = slot_index;
         app->inventory->dragged_item = app->inventory->slots[slot_index];
         app->inventory->slots[slot_index] = NULL;
@@ -37,8 +37,6 @@ void case_dropping(app_t *app, int slot_index)
 {
     item_t *temp = NULL;
 
-    if (slot_index == -1)
-        return;
     if (app->inventory->slots[slot_index] == NULL) {
         app->inventory->slots[slot_index] = app->inventory->dragged_item;
         app->inventory->dragged_item = NULL;
@@ -62,6 +60,10 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
     int slot_index =
         get_slot_index(event->mouseButton.x, event->mouseButton.y, app);
 
+    if (slot_index == -1) {
+        manage_armor_slots(app, event);
+        return;
+    }
     if (app->inventory->dragged_item == NULL) {
         case_picking(app, slot_index);
     } else {

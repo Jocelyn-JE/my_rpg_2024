@@ -71,8 +71,10 @@ typedef struct inventory_s {
     sfSprite *selection;
     int dragging_slot;
     item_t *dragged_item;
+    item_t *armor[4];
     item_t *slots[36];
-    int current_slot;
+    int current_item_slot;
+    int current_armor_slot;
 } inventory_t;
 
 typedef struct vector3uint8_s {
@@ -142,6 +144,7 @@ void print_framerate(void);
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 int get_slot_index(int, int, app_t *);
+int get_armor_index(int, int, app_t *);
 
 // Inventory
 void setup_inventory(app_t *);
@@ -150,6 +153,12 @@ void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 float adjust_sprite_scale(inventory_t *, float, float);
 inventory_params_t setup_inventory_params(int, int, app_t *);
+inventory_params_t setup_armor_params(int, int, app_t *);
+bool is_helmet(p_items_t);
+bool is_chestplate(p_items_t);
+bool is_leggings(p_items_t);
+bool is_boots(p_items_t);
+void draw_highlighted_slot(app_t *);
 
 //Events
 void initialize_event_handlers(void);
@@ -159,3 +168,4 @@ void handle_resized(sfEvent *, app_t *);
 void handle_mouse_wheeling(sfEvent *, app_t *);
 void handle_key_pressed(sfEvent *, app_t *);
 void handle_mouse_moved(sfEvent *, app_t *);
+void manage_armor_slots(app_t *, sfEvent *);

@@ -49,6 +49,27 @@ static bool manage_stacking(inventory_t *inventory, item_t *item)
     return false;
 }
 
+static bool manage_armor(inventory_t *inventory, item_t *item)
+{
+    for (int i = 0; i < 4; i++) {
+        if (inventory->armor[i] == NULL) {
+            inventory->armor[i] = item;
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool add_item_at_position(inventory_t *inventory, item_t *item,
+    int position)
+{
+    if (inventory->slots[position] == NULL) {
+        inventory->slots[position] = item;
+        return true;
+    }
+    return false;
+}
+
 bool add_item_to_inventory(inventory_t *inventory, item_t *item,
     int fixed_place)
 {
@@ -56,18 +77,19 @@ bool add_item_to_inventory(inventory_t *inventory, item_t *item,
 
     if (item == NULL)
         return false;
-    if (fixed_place != -1) {
-        inventory->slots[fixed_place] = item;
+    if (fixed_place != -1)
+        return add_item_at_position(inventory, item, fixed_place);
+    if (is_helmet(item->current_item) || is_chestplate(item->current_item)
+        || is_leggings(item->current_item) || is_boots(item->current_item))
+        return_value = manage_armor(inventory, item);
+    if (return_value)
         return true;
-    }
     return_value = manage_stacking(inventory, item);
     if (return_value)
         return true;
     for (int i = 0; i < 36; i++) {
-        if (inventory->slots[i] == NULL) {
-            inventory->slots[i] = item;
-            return true;
-        }
+        if (inventory->slots[i] == NULL)
+            return add_item_at_position(inventory, item, i);
     }
     return false;
 }
@@ -102,14 +124,16 @@ static void init_inventory(app_t *app)
 
     app->inventory = malloc(sizeof(inventory_t));
     app->inventory->selected_slot = 0;
-    app->inventory->current_slot = -1;
+    app->inventory->current_item_slot = -1;
+    app->inventory->current_armor_slot = -1;
     app->inventory->selection = sfSprite_create();
     app->inventory->dragging_slot = -1;
     app->inventory->dragged_item = NULL;
     sfSprite_setTexture(app->inventory->selection, selection_texture, sfTrue);
-    for (int i = 0; i < 36; i++) {
+    for (int i = 0; i < 36; i++)
         app->inventory->slots[i] = NULL;
-    }
+    for (int i = 0; i < 4; i++)
+        app->inventory->armor[i] = NULL;
 }
 
 void setup_inventory_sprites(app_t *app)
@@ -153,6 +177,8 @@ void setup_inventory(app_t *app)
         create_item(p_diamond_chestplate, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_boots, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_diamond_leggings, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_boots, 1, 1), 27);
     add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18), -1);

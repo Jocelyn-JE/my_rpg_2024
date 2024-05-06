@@ -26,16 +26,18 @@ void manage_dragged_item(app_t *app, sfVector2f world_pos, float scale,
 void handle_mouse_moved(sfEvent *event, app_t *app)
 {
     float scale = 0.f;
-    float base_scale = 1.0f;
     int slot_index = 0;
     sfVector2i pixel_pos = {event->mouseMove.x, event->mouseMove.y};
     sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(
         app->window, pixel_pos, app->view);
 
     if (app->game_state == INVENTORY) {
-        manage_dragged_item(app, world_pos, scale, base_scale);
+        manage_dragged_item(app, world_pos, scale, 1.0f);
         slot_index = get_slot_index(event->mouseMove.x,
         event->mouseMove.y, app);
-        app->inventory->current_slot = slot_index;
+        app->inventory->current_item_slot = slot_index;
+        slot_index = get_armor_index(event->mouseMove.x,
+        event->mouseMove.y, app);
+        app->inventory->current_armor_slot = slot_index;
     }
 }

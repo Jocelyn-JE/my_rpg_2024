@@ -69,35 +69,12 @@ static void draw_dragged_item(app_t *app)
     }
 }
 
-static void draw_inventory_highlight(sfRenderWindow *window,
-    app_t *app, int slot_index)
-{
-        int row = slot_index / 9;
-        int column = slot_index % 9;
-        inventory_params_t params = setup_inventory_params(0, 0, app);
-        float slot_x = params.center.x - params.size.x / 2 + params.offset_X +
-            column * (params.slot_width + params.spacing);
-        float slot_y = params.center.y - params.size.y / 2 + params.offset_Y +
-            row * (params.slot_height + params.spacing);
-        sfRectangleShape* highlight_rect = sfRectangleShape_create();
-
-        sfRectangleShape_setPosition(highlight_rect,
-            (sfVector2f){slot_x, slot_y});
-        sfRectangleShape_setSize(highlight_rect,
-            (sfVector2f){params.slot_width, params.slot_height});
-        sfRectangleShape_setFillColor(highlight_rect,
-            sfColor_fromRGBA(255, 255, 255, 128));
-        sfRenderWindow_drawRectangleShape(window, highlight_rect, NULL);
-        sfRectangleShape_destroy(highlight_rect);
-}
-
-void draw_inventory_items(app_t *app, sfVector2f center,
+static void draw_inventory_items(app_t *app, sfVector2f center,
     sfVector2f size, float scale)
 {
     const float offsetX = 645 * scale;
     const float offsetY = 548 * scale;
-    const float slotWidth = 72 * scale;
-    const float slotHeight = 72 * scale;
+    const float slot_len = 72 * scale;
     float start_x = center.x - size.x / 2 + offsetX;
     float start_y = center.y - size.y / 2 + offsetY;
     sfVector2f pos = {0, 0};
@@ -105,14 +82,47 @@ void draw_inventory_items(app_t *app, sfVector2f center,
     for (int i = 0; i < 36; i++) {
         if (app->inventory->slots[i] == NULL)
             continue;
-        pos.x = start_x + (i % 9) * slotWidth;
-        pos.y = start_y + (i / 9) * slotHeight;
+        pos.x = start_x + (i % 9) * slot_len;
+        pos.y = start_y + (i / 9) * slot_len;
         draw_sprite(app, i, pos);
         draw_item_quantity(app, app->inventory->slots[i], pos, scale);
     }
-    if (app->inventory->current_slot != -1)
-        draw_inventory_highlight(app->window,
-        app, app->inventory->current_slot);
+    draw_highlighted_slot(app);
+}
+
+void draw_sprite_armor(app_t *app, int i, sfVector2f pos)
+{
+    float scale = 0.f;
+    float baseScale = 1.0f;
+
+    baseScale *= app->zoom;
+    scale = baseScale;
+    scale *= 1.6f;
+    sfSprite_setPosition(app->inventory->armor[i]->sprite,
+        (sfVector2f){pos.x, pos.y});
+    sfSprite_setScale(app->inventory->armor[i]->sprite,
+        (sfVector2f){scale, scale});
+    sfRenderWindow_drawSprite(app->window,
+        app->inventory->armor[i]->sprite, NULL);
+}
+
+static void draw_armor_items(app_t *app, sfVector2f center,
+    sfVector2f size, float scale)
+{
+    const float offsetX = 645 * scale;
+    const float offsetY = 245 * scale;
+    const float slot_len = 72 * scale;
+    float start_x = center.x - size.x / 2 + offsetX;
+    float start_y = center.y - size.y / 2 + offsetY;
+    sfVector2f pos = {0, 0};
+
+    for (int i = 0; i < 4; i++) {
+        if (app->inventory->armor[i] == NULL)
+            continue;
+        pos.x = start_x;
+        pos.y = start_y + i * slot_len;
+        draw_sprite_armor(app, i, pos);
+    }
     draw_dragged_item(app);
 }
 
@@ -155,4 +165,5 @@ void draw_inventory(app_t *app)
     draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     draw_inventory_items(app, center, size, scale);
+    draw_armor_items(app, center, size, scale);
 }
