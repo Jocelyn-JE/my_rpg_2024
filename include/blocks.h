@@ -20,12 +20,14 @@ enum blocks {
     b_stone,
     b_oak_planks,
     b_oak_log,
-    b_grass,
+    b_grass_block,
     b_barrel,
-    b_hive,
-    b_library,
+    b_beehive,
+    b_bookshelf,
     b_cactus,
     b_sand,
+    b_dirt_path,
+    b_grass,
     b_cobblestone,
     b_dead_bush,
     b_sandstone,
@@ -35,7 +37,8 @@ enum blocks {
     b_water,
     b_jungle_log,
     b_mossy_cobblestone,
-    b_fern
+    b_fern,
+    b_snowy_grass_block
 };
 
 enum entities {
@@ -93,8 +96,15 @@ block_t *init_water(void);
 block_t *init_jungle_log(void);
 block_t *init_mossy_cobblestone(void);
 block_t *init_fern(void);
+block_t *init_snowy_grass_block(void);
 
 // Colors
 
 sfColor grass_green(void);
 sfColor water_blue(void);
+
+// Other
+
+bool is_null_vertex(sfVertex vertex);
+sfVertex null_vertex(void);
+void cat_vertex_array(sfVertex *arr1, sfVertex *arr2);

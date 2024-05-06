@@ -16,6 +16,7 @@ static void destroy_game_ressources(game_t *game)
     for (int i = 0; game->block_types[i] != NULL; i++)
         destroy_block(game->block_types[i]);
     free(game->block_types);
+    free(game->player);
     free(game);
 }
 

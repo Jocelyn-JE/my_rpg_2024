@@ -40,9 +40,12 @@ def process_chunk(chunk_coords):
         for y in range(16):
             for x in range(16):
                 block = chunk.get_block(x, z + 62, y) # - 64 or + 62
-                write_value = replacement_pairs.get(block.id, default_write_value)
-                # if block.properties:
-                #     print(f"Block properties: {block.properties}")
+                if (block.id == "grass_block" and str(block.properties.get('snowy')) == "true"):
+                    write_value = 23
+                else:
+                    write_value = replacement_pairs.get(block.id, default_write_value)
+                # if str(block.properties.get('snowy')) == "true":
+                #     print(f"Block properties: {str(block.properties.get('snowy'))}")
                 data.append(write_value)
 
     return data

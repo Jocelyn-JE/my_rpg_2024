@@ -30,7 +30,8 @@ const init_func_t init_block_functions[] = {
     {init_water},
     {init_jungle_log},
     {init_mossy_cobblestone},
-    {init_fern}
+    {init_fern},
+    {init_snowy_grass_block}
 };
 
 sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
@@ -101,7 +102,7 @@ sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
 
 block_t **init_blocks(void)
 {
-    uint8_t block_count = 23;
+    uint8_t block_count = 24;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
     for (int i = 0; i != block_count; i++) {
