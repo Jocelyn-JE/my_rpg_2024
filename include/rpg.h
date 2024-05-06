@@ -183,6 +183,7 @@ bool is_chestplate(p_items_t);
 bool is_leggings(p_items_t);
 bool is_boots(p_items_t);
 void draw_highlighted_slot(app_t *);
+void manage_dragged_item(app_t *, sfVector2f, float, float);
 
 //Events
 void initialize_event_handlers(void);

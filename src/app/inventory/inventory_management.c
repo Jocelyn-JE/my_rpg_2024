@@ -14,11 +14,10 @@ static void draw_sprite(app_t *app, int i, sfVector2f pos)
 
     base_scale *= app->zoom;
     scale = base_scale;
-    scale *= 1.6f;
     sfSprite_setPosition(app->inventory->slots[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->slots[i]->sprite,
-        (sfVector2f){scale, scale});
+        (sfVector2f){scale * 1.87f, scale * 1.94f});
     sfRenderWindow_drawSprite(app->window,
         app->inventory->slots[i]->sprite, NULL);
 }
@@ -33,8 +32,8 @@ static void draw_item_quantity(app_t *app, item_t *item,
     sprintf(quantity, "%d", item->quantity);
     sfText_setString(item->quantity_text, quantity);
     sfText_setCharacterSize(item->quantity_text, (20.5 * scale));
-    sfText_setPosition(item->quantity_text, (sfVector2f){pos.x + (29 * scale),
-        pos.y + (34 * scale)});
+    sfText_setPosition(item->quantity_text, (sfVector2f){pos.x + (31 * scale),
+        pos.y + (39 * scale)});
     sfRenderWindow_drawText(app->window, item->quantity_text, NULL);
 }
 
@@ -58,9 +57,10 @@ static void draw_dragged_item(app_t *app)
 static void draw_inventory_items(app_t *app, sfVector2f center,
     sfVector2f size, float scale)
 {
-    const float offsetX = 645 * scale;
-    const float offsetY = 548 * scale;
-    const float slot_len = 72 * scale;
+    const float offsetX = 642 * scale;
+    const float offsetY = 554 * scale;
+    const float slot_x = 72 * scale;
+    const float slot_y = 74.4 * scale;
     float start_x = center.x - size.x / 2 + offsetX;
     float start_y = center.y - size.y / 2 + offsetY;
     sfVector2f pos = {0, 0};
@@ -68,8 +68,8 @@ static void draw_inventory_items(app_t *app, sfVector2f center,
     for (int i = 0; i < 36; i++) {
         if (app->inventory->slots[i] == NULL)
             continue;
-        pos.x = start_x + (i % 9) * slot_len;
-        pos.y = start_y + (i / 9) * slot_len;
+        pos.x = start_x + (i % 9) * slot_x;
+        pos.y = start_y + (i / 9) * slot_y;
         draw_sprite(app, i, pos);
         draw_item_quantity(app, app->inventory->slots[i], pos, scale);
     }
@@ -83,11 +83,10 @@ void draw_sprite_armor(app_t *app, int i, sfVector2f pos)
 
     base_scale *= app->zoom;
     scale = base_scale;
-    scale *= 1.6f;
     sfSprite_setPosition(app->inventory->armor[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->armor[i]->sprite,
-        (sfVector2f){scale, scale});
+        (sfVector2f){scale * 1.87f, scale* 1.94f});
     sfRenderWindow_drawSprite(app->window,
         app->inventory->armor[i]->sprite, NULL);
 }
@@ -95,9 +94,9 @@ void draw_sprite_armor(app_t *app, int i, sfVector2f pos)
 static void draw_armor_items(app_t *app, sfVector2f center,
     sfVector2f size, float scale)
 {
-    const float offsetX = 645 * scale;
-    const float offsetY = 245 * scale;
-    const float slot_len = 72 * scale;
+    const float offsetX = 642 * scale;
+    const float offsetY = 241 * scale;
+    const float slot_len = 74.4 * scale;
     float start_x = center.x - size.x / 2 + offsetX;
     float start_y = center.y - size.y / 2 + offsetY;
     sfVector2f pos = {0, 0};
@@ -119,7 +118,8 @@ float adjust_sprite_scale(inventory_t *inventory, float baseScale,
 
     baseScale *= currentZoom;
     scale = baseScale;
-    sfSprite_setScale(inventory->background, (sfVector2f){scale, scale});
+    sfSprite_setScale(inventory->background,
+        (sfVector2f){scale * 4.0057, scale * 4.1173});
     sfSprite_setScale(inventory->trash,
         (sfVector2f){scale * 1.88, scale * 1.88});
     return (scale);

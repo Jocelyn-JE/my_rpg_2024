@@ -13,6 +13,7 @@ static float adjust_texture_scale(inventory_t *inventory, float baseScale,
 
     baseScale *= currentZoom;
     scale = baseScale;
+    scale *= 3.8462f;
     sfSprite_setScale(inventory->hotbar, (sfVector2f){scale, scale});
     return (scale);
 }

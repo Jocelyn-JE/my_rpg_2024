@@ -14,7 +14,7 @@ void draw_bounds(sfRenderWindow *window, sfSprite *sprite, float scale)
 
     sfRectangleShape_setPosition(shape, (sfVector2f){bounds.left, bounds.top});
     sfRectangleShape_setSize(shape, (sfVector2f){bounds.width, bounds.height});
-    sfRectangleShape_setOutlineThickness(shape, (2.0f * scale));
+    sfRectangleShape_setOutlineThickness(shape, (2.f * scale));
     sfRectangleShape_setOutlineColor(shape, sfRed);
     sfRectangleShape_setFillColor(shape, sfTransparent);
     sfRenderWindow_drawRectangleShape(window, shape, NULL);

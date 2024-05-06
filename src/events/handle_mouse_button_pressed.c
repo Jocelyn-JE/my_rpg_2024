@@ -7,16 +7,17 @@
 
 #include "../../include/rpg.h"
 
-void case_picking(app_t *app, int slot_index)
+void case_picking(app_t *app, int slot_index, sfVector2f world_pos)
 {
     if (app->inventory->slots[slot_index] != NULL) {
         app->inventory->dragging_slot = slot_index;
         app->inventory->dragged_item = app->inventory->slots[slot_index];
         app->inventory->slots[slot_index] = NULL;
+        manage_dragged_item(app, world_pos, 0.f, 1.f);
     }
 }
 
-static void manage_same_item(app_t *app, int slot_index)
+static void manage_same_item(app_t *app, int slot_index, sfVector2f world_pos)
 {
     int diff = app->inventory->slots[slot_index]->limit -
         app->inventory->slots[slot_index]->quantity;
@@ -30,10 +31,11 @@ static void manage_same_item(app_t *app, int slot_index)
         app->inventory->dragged_item->quantity -= diff;
         app->inventory->slots[slot_index]->quantity =
             app->inventory->slots[slot_index]->limit;
+        manage_dragged_item(app, world_pos, 0.f, 1.f);
     }
 }
 
-void case_dropping(app_t *app, int slot_index)
+void case_dropping(app_t *app, int slot_index, sfVector2f world_pos)
 {
     item_t *temp = NULL;
 
@@ -44,12 +46,13 @@ void case_dropping(app_t *app, int slot_index)
     } else {
         if (app->inventory->slots[slot_index]->current_item ==
             app->inventory->dragged_item->current_item) {
-            manage_same_item(app, slot_index);
+            manage_same_item(app, slot_index, world_pos);
         } else {
             temp = app->inventory->slots[slot_index];
             app->inventory->slots[slot_index] = app->inventory->dragged_item;
             app->inventory->dragged_item = temp;
             app->inventory->dragging_slot = slot_index;
+            manage_dragged_item(app, world_pos, 0.f, 1.f);
         }
     }
 }
@@ -68,6 +71,9 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
 {
     int slot_index =
         get_slot_index(event->mouseButton.x, event->mouseButton.y, app);
+    sfVector2i pixel_pos = {event->mouseButton.x, event->mouseButton.y};
+    sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(
+        app->window, pixel_pos, app->view);
 
     if (slot_index == -1) {
         manage_armor_slots(app, event);
@@ -78,9 +84,9 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
         return;
     }
     if (app->inventory->dragged_item == NULL) {
-        case_picking(app, slot_index);
+        case_picking(app, slot_index, world_pos);
     } else {
-        case_dropping(app, slot_index);
+        case_dropping(app, slot_index, world_pos);
     }
 }
 

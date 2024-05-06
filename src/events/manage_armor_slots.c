@@ -7,12 +7,17 @@
 
 #include "../../include/rpg.h"
 
-void case_picking_armor(app_t *app, int slot_index)
+void case_picking_armor(app_t *app, int slot_index, sfEvent *event)
 {
+    sfVector2i pixel_pos = {event->mouseButton.x, event->mouseButton.y};
+    sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(
+        app->window, pixel_pos, app->view);
+
     if (slot_index != -1 && app->inventory->armor[slot_index] != NULL) {
         app->inventory->dragging_slot = slot_index;
         app->inventory->dragged_item = app->inventory->armor[slot_index];
         app->inventory->armor[slot_index] = NULL;
+        manage_dragged_item(app, world_pos, 0.f, 1.f);
     }
 }
 
@@ -80,7 +85,7 @@ void manage_armor_slots(app_t *app, sfEvent *event)
     if (armor_index == -1)
         return;
     if (app->inventory->dragged_item == NULL) {
-        case_picking_armor(app, armor_index);
+        case_picking_armor(app, armor_index, event);
     } else {
         case_dropping_armor(app, armor_index);
     }
