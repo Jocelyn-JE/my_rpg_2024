@@ -18,6 +18,27 @@ const char *item_file_paths[] = {
     "assets/final_items/diamond_chestplate.png",
     "assets/final_items/diamond_leggings.png",
     "assets/final_items/diamond_boots.png",
+    "assets/final_items/iron_axe.png",
+    "assets/final_items/iron_pickaxe.png",
+    "assets/final_items/iron_sword.png",
+    "assets/final_items/iron_helmet.png",
+    "assets/final_items/iron_chestplate.png",
+    "assets/final_items/iron_leggings.png",
+    "assets/final_items/iron_boots.png",
+    "assets/final_items/gold_axe.png",
+    "assets/final_items/gold_pickaxe.png",
+    "assets/final_items/gold_sword.png",
+    "assets/final_items/gold_helmet.png",
+    "assets/final_items/gold_chestplate.png",
+    "assets/final_items/gold_leggings.png",
+    "assets/final_items/gold_boots.png",
+    "assets/final_items/netherite_axe.png",
+    "assets/final_items/netherite_pickaxe.png",
+    "assets/final_items/netherite_sword.png",
+    "assets/final_items/netherite_helmet.png",
+    "assets/final_items/netherite_chestplate.png",
+    "assets/final_items/netherite_leggings.png",
+    "assets/final_items/netherite_boots.png",
 };
 
 static bool case_same_item(inventory_t *inventory, item_t *item, int i)
@@ -192,4 +213,8 @@ void setup_inventory(app_t *app)
     add_item_to_inventory(app->inventory, create_item(p_apple, 64, 64), -1);
     add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32), 33);
     add_item_to_inventory(app->inventory, create_item(p_apple, 64, 12), 34);
+    add_item_to_inventory(app->inventory,
+        create_item(p_netherite_boots, 1, 1), -1);
+    add_item_to_inventory(app->inventory,
+        create_item(p_netherite_chestplate, 1, 1), -1);
 }
