@@ -152,6 +152,7 @@ void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 float adjust_sprite_scale(inventory_t *, float, float);
+bool add_item_to_inventory(inventory_t *, item_t *, int);
 inventory_params_t setup_inventory_params(int, int, app_t *);
 inventory_params_t setup_armor_params(int, int, app_t *);
 bool is_helmet(p_items_t);
