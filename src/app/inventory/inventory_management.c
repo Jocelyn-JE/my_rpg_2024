@@ -7,27 +7,13 @@
 
 #include "../../../include/rpg.h"
 
-void draw_bounds(sfRenderWindow *window, sfSprite *sprite, float scale)
-{
-    sfFloatRect bounds = sfSprite_getGlobalBounds(sprite);
-    sfRectangleShape *shape = sfRectangleShape_create();
-
-    sfRectangleShape_setPosition(shape, (sfVector2f){bounds.left, bounds.top});
-    sfRectangleShape_setSize(shape, (sfVector2f){bounds.width, bounds.height});
-    sfRectangleShape_setOutlineThickness(shape, (2.0f * scale));
-    sfRectangleShape_setOutlineColor(shape, sfRed);
-    sfRectangleShape_setFillColor(shape, sfTransparent);
-    sfRenderWindow_drawRectangleShape(window, shape, NULL);
-    sfRectangleShape_destroy(shape);
-}
-
 static void draw_sprite(app_t *app, int i, sfVector2f pos)
 {
     float scale = 0.f;
-    float baseScale = 1.0f;
+    float base_scale = 1.0f;
 
-    baseScale *= app->zoom;
-    scale = baseScale;
+    base_scale *= app->zoom;
+    scale = base_scale;
     scale *= 1.6f;
     sfSprite_setPosition(app->inventory->slots[i]->sprite,
         (sfVector2f){pos.x, pos.y});
@@ -93,10 +79,10 @@ static void draw_inventory_items(app_t *app, sfVector2f center,
 void draw_sprite_armor(app_t *app, int i, sfVector2f pos)
 {
     float scale = 0.f;
-    float baseScale = 1.0f;
+    float base_scale = 1.0f;
 
-    baseScale *= app->zoom;
-    scale = baseScale;
+    base_scale *= app->zoom;
+    scale = base_scale;
     scale *= 1.6f;
     sfSprite_setPosition(app->inventory->armor[i]->sprite,
         (sfVector2f){pos.x, pos.y});
@@ -134,6 +120,8 @@ float adjust_sprite_scale(inventory_t *inventory, float baseScale,
     baseScale *= currentZoom;
     scale = baseScale;
     sfSprite_setScale(inventory->background, (sfVector2f){scale, scale});
+    sfSprite_setScale(inventory->trash,
+        (sfVector2f){scale * 1.88, scale * 1.88});
     return (scale);
 }
 
@@ -155,15 +143,18 @@ void draw_inventory(app_t *app)
     float scale = 0.f;
     sfVector2f center = sfView_getCenter(app->view);
     sfVector2f size = sfView_getSize(app->view);
-    sfFloatRect backgroundBounds =
+    sfFloatRect background_bounds =
         sfSprite_getGlobalBounds(app->inventory->background);
 
     sfSprite_setPosition(app->inventory->background,
-        (sfVector2f){center.x - backgroundBounds.width / 2,
-            center.y - backgroundBounds.height / 2});
+        (sfVector2f){center.x - background_bounds.width / 2,
+            center.y - background_bounds.height / 2});
+    sfSprite_setPosition(app->inventory->trash,
+        (sfVector2f){center.x + 398, center.y + 218.8});
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
     draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
+    sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
     draw_inventory_items(app, center, size, scale);
     draw_armor_items(app, center, size, scale);
 }

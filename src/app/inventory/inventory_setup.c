@@ -6,6 +6,7 @@
 */
 
 #include "../../../include/rpg.h"
+#include <SFML/Graphics/Types.h>
 
 const char *item_file_paths[] = {
     "assets/final_items/apple.png",
@@ -138,22 +139,26 @@ static void init_inventory(app_t *app)
 
 void setup_inventory_sprites(app_t *app)
 {
-    sfTexture *inventoryBackgroundTexture =
+    sfTexture *inventory_background_texture =
         sfTexture_createFromFile("assets/inventory.png", NULL);
+    sfTexture *trash_can_texture =
+        sfTexture_createFromFile("assets/tab_inventory.png", NULL);
 
     app->inventory->background = sfSprite_create();
     sfSprite_setTexture(app->inventory->background,
-        inventoryBackgroundTexture, sfTrue);
+        inventory_background_texture, sfTrue);
+    app->inventory->trash = sfSprite_create();
+    sfSprite_setTexture(app->inventory->trash, trash_can_texture, sfTrue);
 }
 
 void setup_hotbar_sprites(app_t *app)
 {
-    sfTexture *hotbarBackgroundTexture =
+    sfTexture *hotbar_background_texture =
         sfTexture_createFromFile("assets/hotbar.png", NULL);
 
     app->inventory->hotbar = sfSprite_create();
     sfSprite_setTexture(app->inventory->hotbar,
-        hotbarBackgroundTexture, sfTrue);
+        hotbar_background_texture, sfTrue);
 }
 
 void setup_inventory(app_t *app)

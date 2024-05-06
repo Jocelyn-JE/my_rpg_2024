@@ -54,6 +54,15 @@ void case_dropping(app_t *app, int slot_index)
     }
 }
 
+static void manage_trash_can(app_t *app)
+{
+    if (app->inventory->dragged_item != NULL) {
+        free(app->inventory->dragged_item);
+        app->inventory->dragged_item = NULL;
+        app->inventory->dragging_slot = -1;
+    }
+}
+
 void handle_mouse_button_pressed(sfRenderWindow *window,
     sfEvent *event, app_t *app)
 {
@@ -62,6 +71,10 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
 
     if (slot_index == -1) {
         manage_armor_slots(app, event);
+        return;
+    }
+    if (slot_index == 1000) {
+        manage_trash_can(app);
         return;
     }
     if (app->inventory->dragged_item == NULL) {

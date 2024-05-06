@@ -69,6 +69,7 @@ typedef struct inventory_s {
     int selected_slot;
     sfSprite *hotbar;
     sfSprite *selection;
+    sfSprite *trash;
     int dragging_slot;
     item_t *dragged_item;
     item_t *armor[4];
@@ -139,6 +140,7 @@ void get_letterbox_view(sfView *view, sfVector2f size);
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);
 
 // Conversions
 int get_index_from_pos(int x, int y, int z);

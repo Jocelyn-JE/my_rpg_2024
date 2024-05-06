@@ -37,6 +37,7 @@ SRC =	./src/main.c							\
 		./src/debug/my_put_nbr.c				\
 		./src/debug/my_strcmp.c					\
 		./src/debug/draw_bounding_box.c			\
+		./src/debug/draw_bounds.c				\
 		./src/app/init_app.c					\
 		./src/app/init_window.c					\
 		./src/app/destroy_app.c					\

@@ -50,10 +50,17 @@ static int calculate_slot_index(inventory_params_t params)
         (params.slot_width + params.spacing));
     int row = (int)((params.world_pos.y - start_y) /
         (params.slot_height + params.spacing));
+    float trash_canX = start_x + 10 * (params.slot_width + params.spacing);
+    float trash_canY = start_y + 3 * (params.slot_height + params.spacing);
 
-    if (row >= 0 && row < 4 && column >= 0 && column < 9) {
-        return thing_indexing(start_cor, column, row, params);
+    if (params.world_pos.x >= trash_canX && params.world_pos.x
+        <= trash_canX + params.slot_width &&
+        params.world_pos.y >= trash_canY &&
+        params.world_pos.y <= trash_canY + params.slot_height) {
+        return 1000;
     }
+    if (row >= 0 && row < 4 && column >= 0 && column < 9)
+        return thing_indexing(start_cor, column, row, params);
     return -1;
 }
 
