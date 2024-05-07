@@ -68,6 +68,8 @@ void poll_events_menu(app_t *app, sfEvent *event)
 
 void menu(app_t *app)
 {
+    sfTexture_destroy(app->logo->texture);
+    sfSprite_destroy(app->logo->sprite);
     set_menu(app);
     set_buton(app);
     set_title(app);
