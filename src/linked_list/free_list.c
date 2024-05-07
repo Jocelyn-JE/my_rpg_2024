@@ -6,14 +6,14 @@
 */
 #include "rpg.h"
 
-void free_list(linked_list_t *list)
+void free_list(list_t *begin, void (*free_func)())
 {
-    linked_list_t *current_node = list;
-    linked_list_t *cpy;
+    list_t *current_node = begin;
+    list_t *cpy;
 
     for (int i = 0; current_node != NULL; i++) {
         cpy = current_node->next;
-        free(current_node->data);
+        free_func(current_node->data);
         free(current_node);
         current_node = cpy;
     }

@@ -6,29 +6,193 @@
 */
 
 #pragma once
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <SFML/Audio.h>
-#include <SFML/System.h>
+#include "blocks.h"
 #include "linked_list.h"
 #include "mystr.h"
+#include <SFML/Audio.h>
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
+#include <SFML/Window.h>
+#include <fcntl.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+// Enumerations
+
+typedef enum p_items {
+    p_apple = 0,
+    p_arrow = 1,
+    p_diamond_axe = 2,
+    p_diamond_pickaxe = 3,
+    p_diamond_sword = 4,
+    p_diamond_helmet = 5,
+    p_diamond_chestplate = 6,
+    p_diamond_leggings = 7,
+    p_diamond_boots = 8,
+    p_iron_axe = 9,
+    p_iron_pickaxe = 10,
+    p_iron_sword = 11,
+    p_iron_helmet = 12,
+    p_iron_chestplate = 13,
+    p_iron_leggings = 14,
+    p_iron_boots = 15,
+    p_gold_axe = 16,
+    p_gold_pickaxe = 17,
+    p_gold_sword = 18,
+    p_gold_helmet = 19,
+    p_gold_chestplate = 20,
+    p_gold_leggings = 21,
+    p_gold_boots = 22,
+    p_netherite_axe = 23,
+    p_netherite_pickaxe = 24,
+    p_netherite_sword = 25,
+    p_netherite_helmet = 26,
+    p_netherite_chestplate = 27,
+    p_netherite_leggings = 28,
+    p_netherite_boots = 29,
+} p_items_t;
+
+typedef enum game_state {
+    MENU,
+    GAME,
+    INVENTORY,
+} state_t;
 
 // Structures
 
+typedef struct inventory_params_s {
+    sfVector2f world_pos;
+    sfVector2f center;
+    sfVector2f size;
+    float scale;
+    float offset_X;
+    float offset_Y;
+    float slot_width;
+    float slot_height;
+    float spacing;
+} inventory_params_t;
+
+typedef struct item_s {
+    p_items_t current_item;
+    sfSprite *sprite;
+    sfText *quantity_text;
+    int limit;
+    int quantity;
+} item_t;
+
+typedef struct inventory_s {
+    sfSprite *background;
+    int selected_slot;
+    sfSprite *hotbar;
+    sfSprite *selection;
+    sfSprite *trash;
+    int dragging_slot;
+    item_t *dragged_item;
+    item_t *armor[4];
+    item_t *slots[36];
+    int current_item_slot;
+    int current_armor_slot;
+} inventory_t;
+
+typedef struct vector3uint8_s {
+    uint8_t x;
+    uint8_t y;
+    uint8_t z;
+} vector3uint8_t;
+
+typedef struct chunk_s {
+    uint8_t *blocks;
+    sfFloatRect bounding_box;
+    sfTransformable *transform;
+    sfVertexArray *vertices;
+} chunk_t;
+
+typedef struct debug_s {
+    bool wireframe;
+    bool bounding_box;
+    bool fps;
+} debug_t;
+
 typedef struct app_s {
+    float zoom;
+    debug_t *debug_options;
     sfRenderWindow *window;
+    sfView *view;
+    state_t game_state;
+    sfClock *game_clock;
+    sfTexture *block_atlas;
+    list_t *map;
+    inventory_t *inventory;
 } app_t;
 
-// Create / init functions
+// Handlers
 
-sfRenderWindow *create_window(unsigned int w,
-    unsigned int h, unsigned int bpp);
+typedef void (*event_handler_t)(sfEvent *event, app_t *app);
+
+// Create / init functions
+sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
+    block_t **block_types);
+chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
+block_t **init_blocks(void);
 
 // Destroy / free functions
-
+void destroy_chunk(chunk_t *chunk);
 void destroy_app(app_t *app);
 
-// Other
+// Coordinates conversion
+sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
+sfVector2f isometric_to_cartesian(float x, float y, float size);
 
+// Other
+int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
+double clamp(double d, double min, double max);
+void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
+void get_letterbox_view(sfView *view, sfVector2f size);
+
+// Debug
+void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
+    sfVector2f position);
+void print_framerate(void);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);
+
+// Conversions
+int get_index_from_pos(int x, int y, int z);
+vector3uint8_t get_pos_from_index(int i);
+int get_slot_index(int, int, app_t *);
+int get_armor_index(int, int, app_t *);
+
+// Inventory
+void setup_inventory(app_t *);
+void draw_inventory(app_t *);
+void draw_hotbar(app_t *);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);
+float adjust_sprite_scale(inventory_t *, float, float);
+bool add_item_to_inventory(inventory_t *, item_t *, int);
+inventory_params_t setup_inventory_params(int, int, app_t *);
+inventory_params_t setup_armor_params(int, int, app_t *);
+bool is_helmet(p_items_t);
+bool is_chestplate(p_items_t);
+bool is_leggings(p_items_t);
+bool is_boots(p_items_t);
+void draw_highlighted_slot(app_t *);
+void manage_dragged_item(app_t *, sfVector2f, float, float);
+void free_item(item_t *);
+void free_inventory(inventory_t *);
+
+//Events
+void initialize_event_handlers(void);
+void handle_mouse_button(sfEvent *, app_t *);
+void handle_closed(sfEvent *, app_t *);
+void handle_resized(sfEvent *, app_t *);
+void handle_mouse_wheeling(sfEvent *, app_t *);
+void handle_key_pressed(sfEvent *, app_t *);
+void handle_mouse_moved(sfEvent *, app_t *);
+void manage_armor_slots(app_t *, sfEvent *);

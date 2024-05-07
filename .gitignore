@@ -4,6 +4,11 @@
 *.a
 *.gcno
 *.gcda
+*.out
 vgcore*
 disp.c
 myrpg
+my_rpg
+valgrind.log
+output*
+valgrind.*

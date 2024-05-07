@@ -5,19 +5,56 @@
 ## Makefile
 ##
 
-SRC =	src/main.c					\
-		src/window/init.c			\
-		src/app/init_app.c			\
-		src/app/destroy_app.c		\
-		src/linked_list/add.c		\
-		src/linked_list/del.c		\
-		src/linked_list/free_list.c	\
-		src/linked_list/list_len.c	\
-		src/debug/mini_printf.c		\
-		src/debug/my_itoa.c			\
-		src/debug/my_put_nbr.c		\
-		src/debug/my_strcmp.c		\
-		src/poll_events.c			\
+SRC =	./src/main.c							\
+		./src/poll_events.c						\
+		./src/random.c							\
+		./src/events/drag_view.c				\
+		./src/events/get_letterbox_view.c		\
+		./src/events/handle_closed.c			\
+		./src/events/handle_key_pressed.c		\
+		./src/events/handle_mouse_button_pressed.c \
+		./src/events/handle_mouse_moved.c		\
+		./src/events/handle_mouse_wheel.c		\
+		./src/events/handle_resized.c			\
+		./src/events/manage_armor_slots.c		\
+		./src/app/inventory/inventory_management.c \
+		./src/app/inventory/inventory_setup.c	\
+		./src/app/inventory/hotbar_management.c \
+		./src/app/inventory/is_armor.c			\
+		./src/app/inventory/draw_highlighted_slot.c \
+		./src/app/inventory/free_functions.c	\
+		./src/linked_list/add.c					\
+		./src/linked_list/del.c					\
+		./src/linked_list/free_list.c			\
+		./src/linked_list/list_len.c			\
+		./src/linked_list/list_reverse.c		\
+		./src/conversions/cartesian_to_iso.c	\
+		./src/conversions/index_to_pos.c		\
+		./src/conversions/clamp.c				\
+		./src/conversions/get_slot_index.c		\
+		./src/conversions/get_armor_index.c		\
+		./src/debug/print_fps.c					\
+		./src/debug/mini_printf.c				\
+		./src/debug/my_put_nbr.c				\
+		./src/debug/my_strcmp.c					\
+		./src/debug/draw_bounding_box.c			\
+		./src/debug/draw_bounds.c				\
+		./src/app/init_app.c					\
+		./src/app/init_window.c					\
+		./src/app/destroy_app.c					\
+		./src/app/block_types/init_blocks.c		\
+		./src/app/block_types/air.c				\
+		./src/app/block_types/barrel.c			\
+		./src/app/block_types/beehive.c			\
+		./src/app/block_types/bookshelf.c		\
+		./src/app/block_types/cactus.c			\
+		./src/app/block_types/grass_block.c		\
+		./src/app/block_types/oak_log.c			\
+		./src/app/block_types/oak_planks.c		\
+		./src/app/block_types/stone.c			\
+		./src/app/chunk/add_cube.c				\
+		./src/app/chunk/create_chunk.c			\
+		./src/app/chunk/destroy_chunk.c			\
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -25,25 +62,47 @@ INCLUDES	=	-I ./include
 
 LIBS	= -L ./libs -lm
 
-NAME	=	myrpg
+NAME	=	my_rpg
 
-CFLAGS += -Wall -Werror -Wshadow $(INCLUDES) $(LIBS) -g
+CFLAGS += -Wall -Wshadow $(INCLUDES) $(LIBS) -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
 CC	= gcc
 
-.PHONY	=	all re clean fclean lib
+CLEAN	=	*.gcda *.gcno src/main.o vgcore* gmon.out valgrind.*
+
+VALGRIND_LOG	=	valgrind.log
+
+VALGRIND_FLAGS	=	--leak-check=full					\
+					--show-leak-kinds=definite			\
+					--track-origins=yes					\
+					--errors-for-leak-kinds=definite	\
+					--log-file="$(VALGRIND_LOG)"		\
+
+.PHONY	=	all re clean fclean lib tests_run prof
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CSFML)
 
+prof: re $(OBJ)
+	./$(NAME)
+	gprof $(NAME) | gprof2dot | dot -Tpng -o output.png
+
 re: fclean $(NAME)
 
 clean:
-	rm -f $(OBJ) *.gcda *.gcno src/main.o vgcore*
+	rm -f $(OBJ) $(VALGRIND_LOG) $(CLEAN)
 
 fclean: clean
 	rm -f $(NAME)
+
+cs:		fclean
+		@coding-style . .
+		@cat coding-style-reports.log
+		@rm -f coding-style-reports.log
+
+tests_run: $(NAME)
+	valgrind $(VALGRIND_FLAGS)./$(NAME) &

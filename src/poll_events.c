@@ -4,24 +4,30 @@
 ** File description:
 ** poll_events
 */
-#include "rpg.h"
+#include "../include/rpg.h"
 
-static void handle_events(app_t *app, sfEvent *event, sfVector2f old_mouse_pos,
-    sfVector2f mouse_pos)
+event_handler_t event_handlers[sfEvtCount];
+
+void initialize_event_handlers(void)
 {
-    if (event->type == sfEvtClosed)
-        sfRenderWindow_close(app->window);
+    for (int i = 0; i < sfEvtCount; i++)
+        event_handlers[i] = NULL;
+    event_handlers[sfEvtClosed] = handle_closed;
+    event_handlers[sfEvtResized] = handle_resized;
+    event_handlers[sfEvtMouseButtonPressed] = handle_mouse_button;
+    event_handlers[sfEvtMouseMoved] = handle_mouse_moved;
+    event_handlers[sfEvtKeyPressed] = handle_key_pressed;
+    event_handlers[sfEvtMouseWheelScrolled] = handle_mouse_wheeling;
 }
 
 void poll_events(app_t *app, sfEvent *event)
 {
-    static sfVector2f old_mouse_pos = {0, 0};
-    static sfVector2f mouse_pos = {0, 0};
-
-    mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
-        sfMouse_getPositionRenderWindow(app->window), NULL);
-    while (sfRenderWindow_pollEvent(app->window, event) &&
-        sfRenderWindow_hasFocus(app->window))
-        handle_events(app, event, old_mouse_pos, mouse_pos);
-    old_mouse_pos = mouse_pos;
+    while (sfRenderWindow_pollEvent(app->window, event)) {
+        if (event->type >= 0 && event->type < sfEvtCount &&
+            event_handlers[event->type] != NULL) {
+            event_handlers[event->type](event, app);
+        }
+    }
+    if (app->game_state == GAME)
+        drag_view(event, app->window, app->view);
 }
