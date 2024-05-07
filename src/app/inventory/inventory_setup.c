@@ -118,11 +118,9 @@ bool add_item_to_inventory(inventory_t *inventory, item_t *item,
     return false;
 }
 
-item_t *create_item(p_items_t item_type, int limit, int quantity)
+item_t *create_item(p_items_t item_type, int limit, int quantity, sfFont *font)
 {
     item_t *new_item = malloc(sizeof(item_t));
-    sfFont *font = sfFont_createFromFile
-        ("assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
     sfTexture *texture =
         sfTexture_createFromFile(item_file_paths[item_type], NULL);
 
@@ -189,13 +187,16 @@ void setup_inventory(app_t *app)
     init_inventory(app);
     setup_inventory_sprites(app);
     setup_hotbar_sprites(app);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32), -1);
-    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 27), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_axe, 1, 1), -1);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_sword, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_helmet, 1, 1), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 27,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_axe, 1, 1,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_sword, 1, 1,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_diamond_helmet, 1, 1,
+        app->fonts[0]), -1);
 }

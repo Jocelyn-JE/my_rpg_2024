@@ -20,7 +20,6 @@ static float adjust_texture_scale(inventory_t *inventory, float baseScale,
 
 static void draw_texture_hotbar(app_t *app)
 {
-    float scale = 0.f;
     sfVector2f center = sfView_getCenter(app->view);
     sfVector2f size = sfView_getSize(app->view);
     sfFloatRect backgroundBounds =
@@ -30,7 +29,7 @@ static void draw_texture_hotbar(app_t *app)
 
     sfSprite_setPosition(app->inventory->hotbar,
         (sfVector2f){hotbarX, hotbarY});
-    scale = adjust_texture_scale(app->inventory, 1.0f, app->zoom);
+    adjust_texture_scale(app->inventory, 1.0f, app->zoom);
     sfRenderWindow_drawSprite(app->window, app->inventory->hotbar, NULL);
 }
 
