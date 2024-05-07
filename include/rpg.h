@@ -133,6 +133,8 @@ typedef struct app_s {
 // Handlers
 
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
+typedef int (*game_logic_t)(app_t *app);
+typedef int (*game_event_t)(app_t *app, sfEvent *event);
 
 // Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
