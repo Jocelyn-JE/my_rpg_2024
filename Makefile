@@ -6,17 +6,19 @@
 ##
 
 SRC =	./src/main.c							\
-		./src/poll_events.c						\
+		./src/app/inventory/events/manage_inventory_events.c \
 		./src/random.c							\
-		./src/events/drag_view.c				\
+		./src/app/game/events/manage_game_events.c \
+		./src/app/game/events/drag_view.c		\
 		./src/events/get_letterbox_view.c		\
 		./src/events/handle_closed.c			\
-		./src/events/handle_key_pressed.c		\
-		./src/events/handle_mouse_button_pressed.c \
-		./src/events/handle_mouse_moved.c		\
-		./src/events/handle_mouse_wheel.c		\
+		./src/app/game/events/handle_key_pressed.c \
+		./src/app/inventory/events/handle_key_pressed.c		\
+		./src/app/inventory/events/handle_mouse_button_pressed.c \
+		./src/app/inventory/events/handle_mouse_moved.c		\
+		./src/app/game/events/handle_mouse_wheel.c \
 		./src/events/handle_resized.c			\
-		./src/events/manage_armor_slots.c		\
+		./src/app/inventory/events/manage_armor_slots.c		\
 		./src/app/inventory/inventory_management.c \
 		./src/app/inventory/inventory_setup.c	\
 		./src/app/inventory/hotbar_management.c \

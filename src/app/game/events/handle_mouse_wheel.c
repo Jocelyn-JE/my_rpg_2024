@@ -5,7 +5,7 @@
 ** functions for handling mouse wheel events
 */
 
-#include "../../include/rpg.h"
+#include "../../../../include/rpg.h"
 
 static void zoom_view(sfEvent *event, app_t *app)
 {
@@ -39,8 +39,6 @@ void handle_mouse_wheel(app_t *app, sfEvent event)
 
 void handle_mouse_wheeling(sfEvent *event, app_t *app)
 {
-    if (app->game_state == GAME) {
-        handle_mouse_wheel(app, *event);
-        zoom_view(event, app);
-    }
+    handle_mouse_wheel(app, *event);
+    zoom_view(event, app);
 }

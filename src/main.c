@@ -46,22 +46,41 @@ static void draw_chunks(list_t *list, app_t *app)
     }
 }
 
+void draw_game(app_t *app)
+{
+    draw_chunks(app->map, app);
+    draw_hotbar(app);
+}
+
+void setup_global_handlers(app_t *app)
+{
+    app->game_handler = draw_game;
+    app->event_handler = manage_game_events;
+}
+
+void poll_events(app_t *app, sfEvent *events)
+{
+    if (events->type == sfEvtClosed)
+        handle_closed(events, app);
+    if (events->type == sfEvtResized)
+        handle_resized(events, app);
+    app->event_handler(app, events);
+}
+
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
     sfEvent events;
 
     setup_inventory(app);
-    initialize_event_handlers();
+    setup_global_handlers(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        poll_events(app, &events);
+        while (sfRenderWindow_pollEvent(app->window, &events)) {
+            poll_events(app, &events);
+        }
         sfRenderWindow_clear(app->window, sfBlack);
-        draw_chunks(app->map, app);
         sfRenderWindow_setView(app->window, app->view);
-        if (app->game_state == INVENTORY)
-            draw_inventory(app);
-        else
-            draw_hotbar(app);
+        app->game_handler(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

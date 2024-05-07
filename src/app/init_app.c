@@ -57,7 +57,6 @@ app_t *create_app(void)
     app->block_atlas = sfTexture_createFromFile("assets/textures/atlas.png",
         NULL);
     app->map = NULL;
-    app->game_state = GAME;
     app->zoom = 1.0f;
     for (int i = 0; i != 32 * 32; i++)
         list_add(&app->map, create_chunk(app->block_atlas, blocks, map_fd));

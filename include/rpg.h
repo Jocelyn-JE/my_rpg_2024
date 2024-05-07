@@ -57,12 +57,6 @@ typedef enum p_items {
     p_netherite_boots = 29,
 } p_items_t;
 
-typedef enum game_state {
-    MENU,
-    GAME,
-    INVENTORY,
-} state_t;
-
 // Structures
 
 typedef struct inventory_params_s {
@@ -123,18 +117,18 @@ typedef struct app_s {
     debug_t *debug_options;
     sfRenderWindow *window;
     sfView *view;
-    state_t game_state;
     sfClock *game_clock;
     sfTexture *block_atlas;
     list_t *map;
     inventory_t *inventory;
+    void (*game_handler)(struct app_s *);
+    void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
 
 // Handlers
 
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
-typedef int (*game_logic_t)(app_t *app);
-typedef int (*game_event_t)(app_t *app, sfEvent *event);
+void draw_game(app_t *app);
 
 // Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
@@ -198,3 +192,6 @@ void handle_mouse_wheeling(sfEvent *, app_t *);
 void handle_key_pressed(sfEvent *, app_t *);
 void handle_mouse_moved(sfEvent *, app_t *);
 void manage_armor_slots(app_t *, sfEvent *);
+void manage_game_events(app_t *, sfEvent *);
+void manage_invent_events(app_t *, sfEvent *);
+void handle_key_pressed_game(sfEvent *, app_t *);

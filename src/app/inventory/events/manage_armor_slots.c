@@ -5,7 +5,7 @@
 ** functions for managing armor slots recognition
 */
 
-#include "../../include/rpg.h"
+#include "../../../../include/rpg.h"
 
 void case_picking_armor(app_t *app, int slot_index, sfEvent *event)
 {

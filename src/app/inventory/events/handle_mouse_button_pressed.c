@@ -5,7 +5,7 @@
 ** functions for mouse button pressed
 */
 
-#include "../../include/rpg.h"
+#include "../../../../include/rpg.h"
 
 void case_picking(app_t *app, int slot_index, sfVector2f world_pos)
 {
@@ -93,7 +93,6 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
 
 void handle_mouse_button(sfEvent *event, app_t *app)
 {
-    if (event->mouseButton.button == sfMouseLeft &&
-        app->game_state == INVENTORY)
+    if (event->mouseButton.button == sfMouseLeft)
         handle_mouse_button_pressed(app->window, event, app);
 }
