@@ -16,26 +16,26 @@ static void draw_setting_buton(app_t *app)
 
     sfRenderWindow_drawSprite(app->window, sprite, NULL);
     sfSprite_destroy(sprite);
-    sfRenderWindow_drawSprite(app->window, app->buton[9].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[10].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->buton[10].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[11].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->buton[11].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[12].text, NULL);
+    sfRenderWindow_drawSprite(app->window, app->buton[6].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[7].text, NULL);
+    sfRenderWindow_drawSprite(app->window, app->buton[7].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[8].text, NULL);
+    sfRenderWindow_drawSprite(app->window, app->buton[8].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[9].text, NULL);
 }
 
-static void handle_volume_video(app_t *app, sfMouseButtonEvent *mouse_event)
+static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
 {
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (sfFloatRect_contains(&app->buton[10].hitbox,
+    if (sfFloatRect_contains(&app->buton[6].hitbox,
         mouse_pos.x, mouse_pos.y))
         printf("caca\n");
-    if (sfFloatRect_contains(&app->buton[9].hitbox,
+    if (sfFloatRect_contains(&app->buton[7].hitbox,
         mouse_pos.x, mouse_pos.y))
         printf("pipi\n");
-    if (sfFloatRect_contains(&app->buton[5].hitbox,
+    if (sfFloatRect_contains(&app->buton[8].hitbox,
         mouse_pos.x, mouse_pos.y))
         setting(app);
 }
@@ -46,7 +46,7 @@ static void handle_events_video(app_t *app, sfEvent *event)
 
     if (event->type == sfEvtMouseButtonPressed) {
         if (mouse_event.button == sfMouseLeft) {
-            handle_volume_video(app, &mouse_event);
+            handle_video_click(app, &mouse_event);
         }
     }
 }

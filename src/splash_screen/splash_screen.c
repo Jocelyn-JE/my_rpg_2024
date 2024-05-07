@@ -53,7 +53,9 @@ void splash_screen(app_t *app)
     sfView *view = sfView_createFromRect((sfFloatRect){0, 0, 1920, 1080});
     static sfClock *clock = NULL;
 
-    app->sound->volume = 0;
+    app->sound->volume_general = 0;
+    app->sound->volume_music = 0;
+    app->sound->volume_effect = 0;
     if (clock == NULL)
         clock = sfClock_create();
     create_logo(app);

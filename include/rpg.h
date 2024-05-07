@@ -10,6 +10,7 @@
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
 #include <SFML/System.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdbool.h>
@@ -66,7 +67,9 @@ typedef struct menu_s {
 
 typedef struct sound_s {
     sfMusic *music;
-    int volume;
+    int volume_general;
+    int volume_music;
+    int volume_effect;
 } sound_t;
 
 typedef struct buton_s {
@@ -134,7 +137,7 @@ void set_buton_video(app_t *app);
 void text_setting(app_t *app);
 void text_sound(app_t *app);
 void text_video(app_t *app);
-void set_sound(app_t *app);
+void set_music(app_t *app);
 void parameter_sound(app_t *app);
 void parameter_video(app_t *app);
 sfSprite* create_sprite(const char *texture_path,

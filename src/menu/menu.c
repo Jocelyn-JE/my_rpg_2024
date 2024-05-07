@@ -37,6 +37,8 @@ static void set_title(app_t *app)
 
 static void draw_buton(app_t *app)
 {
+    sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
     sfRenderWindow_drawSprite(app->window, app->buton[0].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[0].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->buton[1].sprite, NULL);
@@ -74,12 +76,10 @@ void menu(app_t *app)
     set_buton(app);
     set_title(app);
     text_menu(app);
-    set_sound(app);
+    set_music(app);
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events_menu(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);
-        sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
-        sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
         draw_buton(app);
         sfRenderWindow_display(app->window);
     }

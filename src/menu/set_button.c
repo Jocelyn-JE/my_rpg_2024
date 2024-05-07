@@ -57,16 +57,20 @@ void set_buton_setting(app_t *app)
     buton(app, 5, 690, 700);
 }
 
-void set_buton_sound(app_t *app)
+void set_buton_video(app_t *app)
 {
     buton(app, 6, 350, 500);
     buton(app, 7, 1050, 500);
     buton(app, 8, 690, 700);
 }
 
-void set_buton_video(app_t *app)
+void set_buton_sound(app_t *app)
 {
-    buton(app, 9, 350, 500);
-    buton(app, 10, 1050, 500);
-    buton(app, 11, 690, 700);
+    buton(app, 9, 350, 200);
+    buton(app, 10, 1050, 200);
+    buton(app, 11, 350, 350);
+    buton(app, 12, 1050, 350);
+    buton(app, 13, 350, 500);
+    buton(app, 14, 1050, 500);
+    buton(app, 15, 690, 700);
 }
