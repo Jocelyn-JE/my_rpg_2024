@@ -4,7 +4,7 @@
 ** File description:
 ** drag_view
 */
-#include "rpg.h"
+#include "../../../../include/rpg.h"
 
 static void update_drag_state(sfEvent *event, sfRenderWindow *window,
     bool *moving, sfVector2f *oldpos)

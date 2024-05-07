@@ -4,7 +4,7 @@
 ** File description:
 ** destroy_app
 */
-#include "rpg.h"
+#include "../../include/rpg.h"
 
 static void destroy_game_ressources(game_t *game)
 {
@@ -26,6 +26,9 @@ void destroy_app(app_t *app)
     sfView_destroy(app->view);
     sfClock_destroy(app->game_clock);
     destroy_game_ressources(app->game_ressources);
+    free_inventory(app->inventory);
+    sfFont_destroy(app->fonts[0]);
+    free(app->fonts);
     free(app->debug_options);
     free(app);
 }

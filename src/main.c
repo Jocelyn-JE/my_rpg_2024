@@ -4,7 +4,7 @@
 ** File description:
 ** main
 */
-#include "rpg.h"
+#include "../include/rpg.h"
 
 sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     sfVector2f position, sfRenderWindow *window)
@@ -22,7 +22,7 @@ sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-static void draw_chunks(chunk_t **list, app_t *app)
+void draw_chunks(chunk_t **list, app_t *app)
 {
     sfRenderStates renderstate = sfRenderStates_default();
 
@@ -43,17 +43,29 @@ static void draw_chunks(chunk_t **list, app_t *app)
     }
 }
 
+void draw_game(app_t *app)
+{
+    draw_chunks(app->game_ressources->map, app);
+    draw_hotbar(app);
+}
+
+static void setup_global_handlers(app_t *app)
+{
+    app->game_handler = draw_game;
+    app->event_handler = manage_game_events;
+}
+
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
     sfEvent events;
 
+    setup_global_handlers(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        print_framerate();
-        poll_events(app, &events);
+        app->event_handler(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        draw_chunks(app->game_ressources->map, app);
         sfRenderWindow_setView(app->window, app->view);
+        app->game_handler(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

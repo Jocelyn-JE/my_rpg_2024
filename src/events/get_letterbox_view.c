@@ -4,7 +4,7 @@
 ** File description:
 ** get_letterbox_view
 */
-#include "rpg.h"
+#include "../include/rpg.h"
 
 void get_letterbox_view(sfView *view, sfVector2f size)
 {

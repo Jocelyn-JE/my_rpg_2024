@@ -4,7 +4,7 @@
 ** File description:
 ** random.c
 */
-#include "rpg.h"
+#include "../include/rpg.h"
 
 int get_random_nb(int min_value, int max_value)
 {

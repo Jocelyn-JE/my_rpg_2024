@@ -4,9 +4,9 @@
 ** File description:
 ** init_app
 */
-#include "rpg.h"
+#include "../../include/rpg.h"
 #include <time.h>
-#include "blocks.h"
+#include "../../include/blocks.h"
 
 static debug_t *init_debug_options(void)
 {
@@ -76,9 +76,14 @@ app_t *create_app(void)
     srand(time(NULL));
     app->game_clock = sfClock_create();
     app->game_ressources = init_game();
+    app->zoom = 1.0f;
     app->debug_options = init_debug_options();
     app->view = create_view(res, app->game_ressources->player->pos);
     app->window = create_window(res, 32);
+    app->fonts = malloc(sizeof(sfFont *) * 1);
+    app->fonts[0] = sfFont_createFromFile
+        ("assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
     sfRenderWindow_setView(app->window, app->view);
+    setup_inventory(app);
     return app;
 }
