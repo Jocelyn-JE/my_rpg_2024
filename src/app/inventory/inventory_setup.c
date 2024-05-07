@@ -89,6 +89,7 @@ static bool add_item_at_position(inventory_t *inventory, item_t *item,
         inventory->slots[position] = item;
         return true;
     }
+    free_item(item);
     return false;
 }
 
@@ -113,6 +114,7 @@ bool add_item_to_inventory(inventory_t *inventory, item_t *item,
         if (inventory->slots[i] == NULL)
             return add_item_at_position(inventory, item, i);
     }
+    free_item(item);
     return false;
 }
 
@@ -196,25 +198,4 @@ void setup_inventory(app_t *app)
         create_item(p_diamond_sword, 1, 1), -1);
     add_item_to_inventory(app->inventory,
         create_item(p_diamond_helmet, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_apple, 64, 37), -1);
-    add_item_to_inventory(app->inventory, create_item(p_arrow, 32, 18), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_chestplate, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_boots, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_leggings, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_boots, 1, 1), 27);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 18), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_diamond_boots, 1, 1), 35);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 64), -1);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 32), 33);
-    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 12), 34);
-    add_item_to_inventory(app->inventory,
-        create_item(p_netherite_boots, 1, 1), -1);
-    add_item_to_inventory(app->inventory,
-        create_item(p_netherite_chestplate, 1, 1), -1);
 }

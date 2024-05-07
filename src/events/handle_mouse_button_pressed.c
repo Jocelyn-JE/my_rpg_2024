@@ -25,6 +25,7 @@ static void manage_same_item(app_t *app, int slot_index, sfVector2f world_pos)
     if (diff >= app->inventory->dragged_item->quantity) {
         app->inventory->slots[slot_index]->quantity +=
             app->inventory->dragged_item->quantity;
+        free_item(app->inventory->dragged_item);
         app->inventory->dragged_item = NULL;
         app->inventory->dragging_slot = -1;
     } else {
@@ -60,7 +61,7 @@ void case_dropping(app_t *app, int slot_index, sfVector2f world_pos)
 static void manage_trash_can(app_t *app)
 {
     if (app->inventory->dragged_item != NULL) {
-        free(app->inventory->dragged_item);
+        free_item(app->inventory->dragged_item);
         app->inventory->dragged_item = NULL;
         app->inventory->dragging_slot = -1;
     }

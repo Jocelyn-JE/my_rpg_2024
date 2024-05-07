@@ -184,6 +184,8 @@ bool is_leggings(p_items_t);
 bool is_boots(p_items_t);
 void draw_highlighted_slot(app_t *);
 void manage_dragged_item(app_t *, sfVector2f, float, float);
+void free_item(item_t *);
+void free_inventory(inventory_t *);
 
 //Events
 void initialize_event_handlers(void);

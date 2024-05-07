@@ -22,6 +22,7 @@ SRC =	./src/main.c							\
 		./src/app/inventory/hotbar_management.c \
 		./src/app/inventory/is_armor.c			\
 		./src/app/inventory/draw_highlighted_slot.c \
+		./src/app/inventory/free_functions.c	\
 		./src/linked_list/add.c					\
 		./src/linked_list/del.c					\
 		./src/linked_list/free_list.c			\

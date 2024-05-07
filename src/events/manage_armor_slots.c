@@ -29,6 +29,7 @@ static void manage_same_item(app_t *app, int slot_index)
     if (diff >= app->inventory->dragged_item->quantity) {
         app->inventory->armor[slot_index]->quantity +=
             app->inventory->dragged_item->quantity;
+        free_item(app->inventory->dragged_item);
         app->inventory->dragged_item = NULL;
         app->inventory->dragging_slot = -1;
     } else {

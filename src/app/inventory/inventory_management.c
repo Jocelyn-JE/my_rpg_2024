@@ -7,13 +7,8 @@
 
 #include "../../../include/rpg.h"
 
-static void draw_sprite(app_t *app, int i, sfVector2f pos)
+static void draw_sprite(app_t *app, int i, sfVector2f pos, float scale)
 {
-    float scale = 0.f;
-    float base_scale = 1.0f;
-
-    base_scale *= app->zoom;
-    scale = base_scale;
     sfSprite_setPosition(app->inventory->slots[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->slots[i]->sprite,
@@ -70,19 +65,14 @@ static void draw_inventory_items(app_t *app, sfVector2f center,
             continue;
         pos.x = start_x + (i % 9) * slot_x;
         pos.y = start_y + (i / 9) * slot_y;
-        draw_sprite(app, i, pos);
+        draw_sprite(app, i, pos, scale);
         draw_item_quantity(app, app->inventory->slots[i], pos, scale);
     }
     draw_highlighted_slot(app);
 }
 
-void draw_sprite_armor(app_t *app, int i, sfVector2f pos)
+void draw_sprite_armor(app_t *app, int i, sfVector2f pos, float scale)
 {
-    float scale = 0.f;
-    float base_scale = 1.0f;
-
-    base_scale *= app->zoom;
-    scale = base_scale;
     sfSprite_setPosition(app->inventory->armor[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->armor[i]->sprite,
@@ -106,7 +96,7 @@ static void draw_armor_items(app_t *app, sfVector2f center,
             continue;
         pos.x = start_x;
         pos.y = start_y + i * slot_len;
-        draw_sprite_armor(app, i, pos);
+        draw_sprite_armor(app, i, pos, scale);
     }
     draw_dragged_item(app);
 }
