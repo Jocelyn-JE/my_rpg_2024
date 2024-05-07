@@ -26,6 +26,7 @@ SRC =	src/main.c									\
 		src/app/init_app.c							\
 		src/app/init_window.c						\
 		src/app/destroy_app.c						\
+		src/app/movement.c							\
 		src/app/block_types/init_blocks.c			\
 		src/app/block_types/rotated_faces.c			\
 		src/app/block_types/vertex_util.c			\

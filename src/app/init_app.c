@@ -34,7 +34,6 @@ static sfView *create_view(sfVector2f res, sfVector2f pos)
     sfView *view = sfView_create();
 
     sfView_setSize(view, (sfVector2f){res.x, res.y});
-    sfView_setCenter(view, cartesian_to_isometric(pos.x, pos.y, 0, 100));
     get_letterbox_view(view, (sfVector2f){res.x, res.y});
     return view;
 }
@@ -43,8 +42,8 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 1.0f;
-    new_player->pos.y = 510.0f;
+    new_player->pos.x = 74.0f;
+    new_player->pos.y = 441.0f;
     return new_player;
 }
 

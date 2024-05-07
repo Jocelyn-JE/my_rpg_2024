@@ -17,7 +17,7 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp)
         my_putstr("Window failed to load\n");
     if (!icon)
         my_putstr("Icon failed to load\n");
-    sfRenderWindow_setFramerateLimit(new_window, 0);
+    sfRenderWindow_setFramerateLimit(new_window, 60);
     sfRenderWindow_setIcon(new_window, 256, 256, sfImage_getPixelsPtr(icon));
     sfImage_destroy(icon);
     return (new_window);

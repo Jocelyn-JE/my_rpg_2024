@@ -28,36 +28,6 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
     }
 }
 
-static void handle_movement(player_t *player, entity_t *player_entity)
-{
-    if (sfKeyboard_isKeyPressed(sfKeyLeft) && (round((player->pos.x - 0.1f))
-        > 0 && round((player->pos.y + 0.1f)) > 0) && (round((player->pos.x +
-        0.1f)) <= 512.f && round((player->pos.y + 0.1f)) < 512.f)) {
-        player->pos.x -= 0.1f;
-        player->pos.y += 0.1f;
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyRight) && (round((player->pos.x + 0.1f))
-        > 0 && round((player->pos.y - 0.1f)) > 0) && (round((player->pos.x +
-        0.1f)) < 512.f && round((player->pos.y + 0.1f)) <= 512.f)) {
-        player->pos.x += 0.1f;
-        player->pos.y -= 0.1f;
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyUp) && (round((player->pos.x - 0.1f))
-        > 0 && round((player->pos.y - 0.1f)) > 0) && (round((player->pos.x +
-        0.1f)) <= 512.f && round((player->pos.y + 0.1f)) <= 512.f)) {
-        player->pos.y -= 0.1f;
-        player->pos.x -= 0.1f;
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyDown) && (round((player->pos.x + 0.1f))
-        > 0 && round((player->pos.y + 0.1f)) > 0) && (round((player->pos.x +
-        0.1f)) < 512.f && round((player->pos.y + 0.1f)) < 512.f)) {
-        player->pos.y += 0.1f;
-        player->pos.x += 0.1f;
-    }
-    player_entity->pos.x = player->pos.x;
-    player_entity->pos.y = player->pos.y;
-}
-
 static void handle_events(app_t *app, sfEvent *event)
 {
     if (event->type == sfEvtClosed)
@@ -67,7 +37,6 @@ static void handle_events(app_t *app, sfEvent *event)
     if (event->type == sfEvtResized)
         get_letterbox_view(app->view, (sfVector2f){event->size.width,
             event->size.height});
-    drag_view(event, app->window, app->view);
     zoom_view(event, app->window, app->view);
 }
 
@@ -77,5 +46,9 @@ void poll_events(app_t *app, sfEvent *event)
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
     handle_movement(app->game_ressources->player,
-        app->game_ressources->entities->data);
+        app->game_ressources->entities->data,
+        sfClock_getElapsedTime(app->game_clock));
+    sfView_setCenter(app->view,
+        cartesian_to_isometric(app->game_ressources->player->pos.x + 16,
+        app->game_ressources->player->pos.y, 2, 100));
 }
