@@ -30,26 +30,32 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
 
 static void handle_movement(app_t *app, sfKeyEvent *key)
 {
-    if (key->code == sfKeyLeft) {
-        app->game_ressources->player->pos.x -= 0.1f;
-        app->game_ressources->player->pos.y += 0.1f;
+    player_t *player = app->game_ressources->player;
+
+    if (key->code == sfKeyLeft && (player->pos.x - 0.1f > 0 &&
+        player->pos.y + 0.1f > 0)) {
+        player->pos.x -= 0.1f;
+        player->pos.y += 0.1f;
     }
-    if (key->code == sfKeyRight) {
-        app->game_ressources->player->pos.x += 0.1f;
-        app->game_ressources->player->pos.y -= 0.1f;
+    if (key->code == sfKeyRight && (player->pos.x + 0.1f > 0 &&
+        player->pos.y - 0.1f > 0)) {
+        player->pos.x += 0.1f;
+        player->pos.y -= 0.1f;
     }
-    if (key->code == sfKeyUp) {
-        app->game_ressources->player->pos.y -= 0.1f;
-        app->game_ressources->player->pos.x -= 0.1f;
+    if (key->code == sfKeyUp && (player->pos.x - 0.1f > 0 &&
+        player->pos.y - 0.1f > 0)) {
+        player->pos.y -= 0.1f;
+        player->pos.x -= 0.1f;
     }
-    if (key->code == sfKeyDown) {
-        app->game_ressources->player->pos.y += 0.1f;
-        app->game_ressources->player->pos.x += 0.1f;
+    if (key->code == sfKeyDown && (player->pos.x + 0.1f > 0 &&
+        player->pos.y + 0.1f > 0)) {
+        player->pos.y += 0.1f;
+        player->pos.x += 0.1f;
     }
     ((entity_t *)(app->game_ressources->entities->data))->pos.x =
-        app->game_ressources->player->pos.x;
+        player->pos.x;
     ((entity_t *)(app->game_ressources->entities->data))->pos.y =
-        app->game_ressources->player->pos.y;
+        player->pos.y;
 }
 
 static void handle_events(app_t *app, sfEvent *event)

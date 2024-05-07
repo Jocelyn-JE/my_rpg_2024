@@ -108,4 +108,4 @@ void print_framerate(void);
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 int get_chunk_index_from_coordinates(int x, int y);
-sfVector2f get_chunk_coordinates_from_index(int index);
+sfVector2i get_chunk_coordinates_from_index(int index);

@@ -28,14 +28,17 @@ static void add_entities(sfVertexArray *vertices, int index, list_t *entities,
     int chunk_index)
 {
     vector3uint8_t pos = get_pos_from_index(index);
+    sfVector2i chunk_coords = get_chunk_coordinates_from_index(chunk_index);
     entity_t *data = (entity_t *)entities->data;
 
     for (list_t *current = entities; current != NULL;
         current = current->next) {
         data = current->data;
         if (floor(data->pos.x) == pos.x && floor(data->pos.y) == pos.y &&
-            pos.z == 0)
+            pos.z == 0 && (floor(data->pos.x / 16) == chunk_coords.x &&
+            floor(data->pos.y / 16) == chunk_coords.y)) {
             add_entity(vertices, index, data);
+        }
     }
 }
 

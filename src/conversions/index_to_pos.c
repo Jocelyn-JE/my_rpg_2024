@@ -21,10 +21,10 @@ int get_chunk_index_from_coordinates(int x, int y)
     return y * 32 + x;
 }
 
-sfVector2f get_chunk_coordinates_from_index(int index)
+sfVector2i get_chunk_coordinates_from_index(int index)
 {
     int x = index % 32;
     int y = index / 32;
 
-    return (sfVector2f){x, y};
+    return (sfVector2i){x, y};
 }
