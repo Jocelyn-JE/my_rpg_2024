@@ -40,6 +40,14 @@ static void animation_splash(app_t *app, sfClock *clock)
     }
 }
 
+void poll_events_splashscreen(app_t *app, sfEvent *event)
+{
+    while (sfRenderWindow_pollEvent(app->window, event) &&
+        sfRenderWindow_hasFocus(app->window))
+        if (event->type == sfEvtClosed)
+            sfRenderWindow_close(app->window);
+}
+
 void splash_screen(app_t *app)
 {
     sfView *view = sfView_createFromRect((sfFloatRect){0, 0, 1920, 1080});
@@ -53,7 +61,7 @@ void splash_screen(app_t *app)
     app->logo->color.a = 0;
     sfRenderWindow_setView(app->window, view);
     while (sfRenderWindow_isOpen(app->window)) {
-        poll_events(app, &app->event->event);
+        poll_events_splashscreen(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfWhite);
         animation_splash(app, clock);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
