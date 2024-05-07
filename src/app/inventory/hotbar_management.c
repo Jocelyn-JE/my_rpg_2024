@@ -36,13 +36,14 @@ static void draw_texture_hotbar(app_t *app)
 static void draw_selection(app_t *app, float scale,
     float hotbarX, float hotbarY)
 {
-    float selectedX = hotbarX - (13.5 * scale) +
+    float selectedX = hotbarX - (11 * scale) +
         (app->inventory->selected_slot * 45.3 * scale);
-    float selectedY = hotbarY - (14 * scale);
+    float selectedY = hotbarY - (11.5 * scale);
 
     sfSprite_setPosition(app->inventory->selection,
         (sfVector2f){selectedX, selectedY});
-    sfSprite_setScale(app->inventory->selection, (sfVector2f){scale, scale});
+    sfSprite_setScale(app->inventory->selection, (sfVector2f){scale * 2.25f,
+        scale * 2.25f});
     sfRenderWindow_drawSprite(app->window, app->inventory->selection, NULL);
 }
 
@@ -78,7 +79,7 @@ static void draw_hotbar_items(app_t *app, float scale)
         sfSprite_setPosition(app->inventory->slots[i + 27]->sprite,
             (sfVector2f){hotbar_pos.x + (i * 45.3 * scale), hotbar_pos.y});
         sfSprite_setScale(app->inventory->slots[i + 27]->sprite,
-            (sfVector2f){scale, scale});
+            (sfVector2f){scale * 2.f, scale * 2.f});
         sfRenderWindow_drawSprite(app->window,
             app->inventory->slots[i + 27]->sprite, NULL);
         draw_item_quantity(app, i,
