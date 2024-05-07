@@ -51,13 +51,13 @@ void menu(app_t *app)
     set_buton(app);
     set_title(app);
     text_menu(app);
+    set_sound(app);
     while (sfRenderWindow_isOpen(app->window)) {
         poll_events(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);
         sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
         draw_buton(app);
-        assert(app->window != NULL);
         sfRenderWindow_display(app->window);
     }
 }

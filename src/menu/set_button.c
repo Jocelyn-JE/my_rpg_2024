@@ -45,14 +45,28 @@ static void buton(app_t *app, int index, int x, int y)
 
 void set_buton(app_t *app)
 {
-    buton(app, 0, 700, 500);
-    buton(app, 1, 700, 650);
-    buton(app, 2, 700, 800);
+    buton(app, 0, 690, 500);
+    buton(app, 1, 690, 650);
+    buton(app, 2, 690, 800);
 }
 
 void set_buton_setting(app_t *app)
 {
     buton(app, 3, 350, 500);
     buton(app, 4, 1050, 500);
-    buton(app, 5, 700, 700);
+    buton(app, 5, 690, 700);
+}
+
+void set_buton_sound(app_t *app)
+{
+    buton(app, 6, 350, 500);
+    buton(app, 7, 1050, 500);
+    buton(app, 8, 690, 700);
+}
+
+void set_buton_video(app_t *app)
+{
+    buton(app, 9, 350, 500);
+    buton(app, 10, 1050, 500);
+    buton(app, 11, 690, 700);
 }

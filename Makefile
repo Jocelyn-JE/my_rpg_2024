@@ -34,6 +34,9 @@ SRC =	src/main.c								\
 		src/menu/click_buton.c					\
 		src/menu/set_text.c						\
 		src/setting/setting.c					\
+		src/setting/set_sound.c					\
+		src/setting/parameter_sound.c			\
+		src/setting/parameter_video.c			\
 
 OBJ	=	$(SRC:.c=.o)
 

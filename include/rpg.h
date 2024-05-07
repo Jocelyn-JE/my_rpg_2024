@@ -54,6 +54,7 @@ typedef struct app_s {
     struct event_s *event;
     struct logo_s *logo;
     struct text_s *text;
+    struct sound_s *sound;
 } app_t;
 
 typedef struct menu_s {
@@ -62,6 +63,11 @@ typedef struct menu_s {
     sfVector2f *backposition;
     sfVector2f backscale;
 } menu_t;
+
+typedef struct sound_s {
+    sfMusic *music;
+    int volume;
+} sound_t;
 
 typedef struct buton_s {
     sfSprite *sprite;
@@ -111,6 +117,7 @@ int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
 void splash_screen(app_t *a);
 void menu(app_t *app);
+void destroy_menu(app_t *app);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
@@ -119,7 +126,17 @@ void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 void text_menu(app_t *app);
 void setting(app_t *app);
 void set_buton_setting(app_t *app);
+void set_buton_sound(app_t *app);
+void set_buton_video(app_t *app);
 void text_setting(app_t *app);
+void text_sound(app_t *app);
+void text_video(app_t *app);
+void set_sound(app_t *app);
+void parameter_sound(app_t *app);
+void parameter_video(app_t *app);
+sfSprite* create_sprite(const char *texture_path,
+    sfVector2f position, sfVector2f scale);
+void set_text(app_t *app, sfVector2f position, char *filename, int i);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,

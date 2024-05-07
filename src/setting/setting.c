@@ -7,7 +7,7 @@
 
 #include "rpg.h"
 
-static sfSprite* create_sprite(const char *texture_path,
+sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale)
 {
     sfSprite* sprite = sfSprite_create();
@@ -37,8 +37,10 @@ static void draw_setting_buton(app_t *app)
     sfRenderWindow_drawText(app->window, app->text[6].text, NULL);
 }
 
-static void destroy_menu(app_t *app)
+void destroy_menu(app_t *app)
 {
+    sfSprite_destroy(app->menu->backsprite);
+    sfSprite_destroy(app->logo->sprite);
     sfSprite_destroy(app->buton[0].sprite);
     sfSprite_destroy(app->buton[1].sprite);
     sfSprite_destroy(app->buton[2].sprite);
@@ -49,7 +51,6 @@ static void destroy_menu(app_t *app)
 
 void setting(app_t *app)
 {
-    destroy_menu(app);
     set_buton_setting(app);
     text_setting(app);
     while (sfRenderWindow_isOpen(app->window)) {
