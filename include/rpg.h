@@ -115,6 +115,9 @@ sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 int get_random_nb(int min_value, int max_value);
 void poll_events(app_t *app, sfEvent *event);
+void poll_events_menu(app_t *app, sfEvent *event);
+void poll_events_setting(app_t *app, sfEvent *event);
+void poll_events_volume(app_t *app, sfEvent *event);
 void splash_screen(app_t *a);
 void menu(app_t *app);
 void destroy_menu(app_t *app);

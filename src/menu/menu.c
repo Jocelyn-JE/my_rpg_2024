@@ -45,6 +45,27 @@ static void draw_buton(app_t *app)
     sfRenderWindow_drawText(app->window, app->text[2].text, NULL);
 }
 
+static void handle_events_menu(app_t *app, sfEvent *event)
+{
+    sfMouseButtonEvent mouse_event = event->mouseButton;
+
+    if (event->type == sfEvtMouseButtonPressed) {
+        if (mouse_event.button == sfMouseLeft) {
+            handle_button_click(app, &mouse_event);
+        }
+    }
+}
+
+void poll_events_menu(app_t *app, sfEvent *event)
+{
+    while (sfRenderWindow_pollEvent(app->window, event) &&
+        sfRenderWindow_hasFocus(app->window)) {
+        handle_events_menu(app, event);
+        if (event->type == sfEvtClosed)
+            sfRenderWindow_close(app->window);
+    }
+}
+
 void menu(app_t *app)
 {
     set_menu(app);
@@ -53,7 +74,7 @@ void menu(app_t *app)
     text_menu(app);
     set_sound(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        poll_events(app, &app->event->event);
+        poll_events_menu(app, &app->event->event);
         sfRenderWindow_clear(app->window, sfBlack);
         sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
         sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
