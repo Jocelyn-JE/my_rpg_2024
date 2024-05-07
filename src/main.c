@@ -22,7 +22,7 @@ sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-static void draw_chunks(list_t *list, app_t *app)
+void draw_chunks(list_t *list, app_t *app)
 {
     chunk_t *data;
     sfRenderStates renderstate = sfRenderStates_default();
@@ -52,7 +52,7 @@ void draw_game(app_t *app)
     draw_hotbar(app);
 }
 
-void setup_global_handlers(app_t *app)
+static void setup_global_handlers(app_t *app)
 {
     app->game_handler = draw_game;
     app->event_handler = manage_game_events;

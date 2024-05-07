@@ -152,6 +152,7 @@ void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
+void draw_chunks(list_t *list, app_t *app);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,

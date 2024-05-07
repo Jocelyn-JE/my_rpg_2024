@@ -142,6 +142,7 @@ void draw_inventory(app_t *app)
     sfSprite_setPosition(app->inventory->trash,
         (sfVector2f){center.x + 398, center.y + 218.8});
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
+    draw_chunks(app->map, app);
     draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
