@@ -96,7 +96,9 @@ void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
 void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
     int chunk_index);
-void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
+void add_entity(sfVertexArray *vertices, int index, entity_t *entity,
+    block_t **entity_models);
+sfVector2f get_entity_chunk_coords(entity_t *entity);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,

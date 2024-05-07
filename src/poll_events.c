@@ -28,34 +28,34 @@ static void zoom_view(sfEvent *event, sfRenderWindow *window, sfView *view)
     }
 }
 
-static void handle_movement(app_t *app, sfKeyEvent *key)
+static void handle_movement(player_t *player, entity_t *player_entity)
 {
-    player_t *player = app->game_ressources->player;
-
-    if (key->code == sfKeyLeft && (player->pos.x - 0.1f > 0 &&
-        player->pos.y + 0.1f > 0)) {
+    if (sfKeyboard_isKeyPressed(sfKeyLeft) && (round((player->pos.x - 0.1f))
+        > 0 && round((player->pos.y + 0.1f)) > 0) && (round((player->pos.x +
+        0.1f)) <= 512.f && round((player->pos.y + 0.1f)) < 512.f)) {
         player->pos.x -= 0.1f;
         player->pos.y += 0.1f;
     }
-    if (key->code == sfKeyRight && (player->pos.x + 0.1f > 0 &&
-        player->pos.y - 0.1f > 0)) {
+    if (sfKeyboard_isKeyPressed(sfKeyRight) && (round((player->pos.x + 0.1f))
+        > 0 && round((player->pos.y - 0.1f)) > 0) && (round((player->pos.x +
+        0.1f)) < 512.f && round((player->pos.y + 0.1f)) <= 512.f)) {
         player->pos.x += 0.1f;
         player->pos.y -= 0.1f;
     }
-    if (key->code == sfKeyUp && (player->pos.x - 0.1f > 0 &&
-        player->pos.y - 0.1f > 0)) {
+    if (sfKeyboard_isKeyPressed(sfKeyUp) && (round((player->pos.x - 0.1f))
+        > 0 && round((player->pos.y - 0.1f)) > 0) && (round((player->pos.x +
+        0.1f)) <= 512.f && round((player->pos.y + 0.1f)) <= 512.f)) {
         player->pos.y -= 0.1f;
         player->pos.x -= 0.1f;
     }
-    if (key->code == sfKeyDown && (player->pos.x + 0.1f > 0 &&
-        player->pos.y + 0.1f > 0)) {
+    if (sfKeyboard_isKeyPressed(sfKeyDown) && (round((player->pos.x + 0.1f))
+        > 0 && round((player->pos.y + 0.1f)) > 0) && (round((player->pos.x +
+        0.1f)) < 512.f && round((player->pos.y + 0.1f)) < 512.f)) {
         player->pos.y += 0.1f;
         player->pos.x += 0.1f;
     }
-    ((entity_t *)(app->game_ressources->entities->data))->pos.x =
-        player->pos.x;
-    ((entity_t *)(app->game_ressources->entities->data))->pos.y =
-        player->pos.y;
+    player_entity->pos.x = player->pos.x;
+    player_entity->pos.y = player->pos.y;
 }
 
 static void handle_events(app_t *app, sfEvent *event)
@@ -67,8 +67,6 @@ static void handle_events(app_t *app, sfEvent *event)
     if (event->type == sfEvtResized)
         get_letterbox_view(app->view, (sfVector2f){event->size.width,
             event->size.height});
-    if (event->type == sfEvtKeyPressed)
-        handle_movement(app, &event->key);
     drag_view(event, app->window, app->view);
     zoom_view(event, app->window, app->view);
 }
@@ -78,4 +76,6 @@ void poll_events(app_t *app, sfEvent *event)
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
+    handle_movement(app->game_ressources->player,
+        app->game_ressources->entities->data);
 }

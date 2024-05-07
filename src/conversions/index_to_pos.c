@@ -26,5 +26,5 @@ sfVector2i get_chunk_coordinates_from_index(int index)
     int x = index % 32;
     int y = index / 32;
 
-    return (sfVector2i){x, y};
+    return (sfVector2i){y, x};
 }

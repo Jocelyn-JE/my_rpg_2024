@@ -29,12 +29,12 @@ static void place_chunks(chunk_t **chunks)
     }
 }
 
-static sfView *create_view(sfVector2f res)
+static sfView *create_view(sfVector2f res, sfVector2f pos)
 {
     sfView *view = sfView_create();
 
     sfView_setSize(view, (sfVector2f){res.x, res.y});
-    sfView_setCenter(view, cartesian_to_isometric(8 * 32, 8 * 32, 0, 100));
+    sfView_setCenter(view, cartesian_to_isometric(pos.x, pos.y, 0, 100));
     get_letterbox_view(view, (sfVector2f){res.x, res.y});
     return view;
 }
@@ -43,8 +43,8 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 0.0f;
-    new_player->pos.y = 0.0f;
+    new_player->pos.x = 1.0f;
+    new_player->pos.y = 510.0f;
     return new_player;
 }
 
@@ -59,7 +59,8 @@ static game_t *init_game(void)
     new_game->map = malloc(sizeof(chunk_t *) * (32 * 32 + 1));
     new_game->entities = NULL;
     new_game->player = init_player();
-    list_add(&new_game->entities, create_entity((sfVector2f){0, 0}, e_player));
+    list_add(&new_game->entities, create_entity(new_game->player->pos,
+        e_player));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_atlas,
             new_game->block_types, map_fd);
@@ -77,7 +78,7 @@ app_t *create_app(void)
     app->game_clock = sfClock_create();
     app->game_ressources = init_game();
     app->debug_options = init_debug_options();
-    app->view = create_view(res);
+    app->view = create_view(res, app->game_ressources->player->pos);
     app->window = create_window(res, 32);
     sfRenderWindow_setView(app->window, app->view);
     return app;
