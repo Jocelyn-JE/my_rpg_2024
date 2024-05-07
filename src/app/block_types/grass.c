@@ -29,8 +29,7 @@ static sfVertex *get_diagonal_face(sfVector2f text_pos1, sfVector2f text_pos2,
         grass_green(), text_pos2};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y},
         grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
-    vertices[6] = (sfVertex){(sfVector2f){0, 0},
-        (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
+    vertices[6] = null_vertex();
     return vertices;
 }
 

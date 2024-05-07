@@ -28,8 +28,7 @@ static sfVertex *get_water_face(sfVector2f text_pos1, sfVector2f text_pos2,
         water_blue(), (sfVector2f){text_pos1.x, text_pos2.y}};
     vertices[5] = (sfVertex){(sfVector2f){0 + offset.x, 0 + offset.y},
         water_blue(), text_pos1};
-    vertices[6] = (sfVertex){(sfVector2f){0, 0},
-        (sfColor){0, 0, 0, 0}, (sfVector2f){0, 0}};
+    vertices[6] = null_vertex();
     return vertices;
 }
 
@@ -45,6 +44,6 @@ block_t *init_water(void)
     block->faces[2] = NULL;
     block->faces[3] = NULL;
     block->transparent = true;
-    block->solid = true;
+    block->solid = false;
     return block;
 }

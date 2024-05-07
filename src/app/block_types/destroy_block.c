@@ -9,8 +9,10 @@
 
 void destroy_block(block_t *block)
 {
-    for (int i = 0; block->faces && block->faces[i] != NULL; i++)
-        free(block->faces[i]);
+    for (int i = 0; i != 3; i++) {
+        if (block->faces && block->faces[i])
+            free(block->faces[i]);
+    }
     free(block->faces);
     free(block);
 }

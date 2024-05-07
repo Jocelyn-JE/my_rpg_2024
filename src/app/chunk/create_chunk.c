@@ -6,6 +6,7 @@
 */
 #include "rpg.h"
 #include "blocks.h"
+#include <time.h>
 
 static uint8_t *create_blocks(int map_fd)
 {
