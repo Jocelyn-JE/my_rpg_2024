@@ -22,33 +22,30 @@ sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
     return sfFloatRect_intersects(&bounds, &renderdistance, NULL);
 }
 
-void draw_chunks(list_t *list, app_t *app)
+void draw_chunks(chunk_t **list, app_t *app)
 {
-    chunk_t *data;
     sfRenderStates renderstate = sfRenderStates_default();
 
-    renderstate.texture = app->block_atlas;
-    for (list_t *current = list; current != NULL; current =
-        current->next) {
-        data = current->data;
-        renderstate.transform = sfTransformable_getTransform(data->transform);
-        if (app->debug_options->wireframe)
-            sfVertexArray_setPrimitiveType(data->vertices, sfLines);
-        else
-            sfVertexArray_setPrimitiveType(data->vertices, sfTriangles);
-        if (is_vertexarray_visible(app->view, data->bounding_box,
-            sfTransformable_getPosition(data->transform), app->window))
-            sfRenderWindow_drawVertexArray(app->window, data->vertices,
+    renderstate.texture = app->game_ressources->block_atlas;
+    for (int i = 0; list[i] != NULL; i++) {
+        renderstate.transform =
+            sfTransformable_getTransform(list[i]->transform);
+        if (is_vertexarray_visible(app->view, list[i]->bounding_box,
+            sfTransformable_getPosition(list[i]->transform), app->window)) {
+            update_chunk(list[i], app->game_ressources->block_types,
+                app->game_ressources->entities, i);
+            sfRenderWindow_drawVertexArray(app->window, list[i]->vertices,
                 &renderstate);
+        }
         if (app->debug_options->bounding_box)
-            draw_bounding_box(app->window, app->view, data->bounding_box,
-                sfTransformable_getPosition(data->transform));
+            draw_bounding_box(app->window, app->view, list[i]->bounding_box,
+                sfTransformable_getPosition(list[i]->transform));
     }
 }
 
 void draw_game(app_t *app)
 {
-    draw_chunks(app->map, app);
+    draw_chunks(app->game_ressources->map, app);
     draw_hotbar(app);
 }
 
@@ -58,26 +55,14 @@ static void setup_global_handlers(app_t *app)
     app->event_handler = manage_game_events;
 }
 
-void poll_events(app_t *app, sfEvent *events)
-{
-    if (events->type == sfEvtClosed)
-        handle_closed(events, app);
-    if (events->type == sfEvtResized)
-        handle_resized(events, app);
-    app->event_handler(app, events);
-}
-
 int main(int argc, char **argv)
 {
     app_t *app = create_app();
     sfEvent events;
 
-    setup_inventory(app);
     setup_global_handlers(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        while (sfRenderWindow_pollEvent(app->window, &events)) {
-            poll_events(app, &events);
-        }
+        app->event_handler(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
         sfRenderWindow_setView(app->window, app->view);
         app->game_handler(app);

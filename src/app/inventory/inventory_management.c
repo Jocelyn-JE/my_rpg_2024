@@ -12,7 +12,7 @@ static void draw_sprite(app_t *app, int i, sfVector2f pos, float scale)
     sfSprite_setPosition(app->inventory->slots[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->slots[i]->sprite,
-        (sfVector2f){scale * 1.87f, scale * 1.94f});
+        (sfVector2f){scale * 1.87f * 2.f, scale * 1.94f * 2.f});
     sfRenderWindow_drawSprite(app->window,
         app->inventory->slots[i]->sprite, NULL);
 }
@@ -76,7 +76,7 @@ void draw_sprite_armor(app_t *app, int i, sfVector2f pos, float scale)
     sfSprite_setPosition(app->inventory->armor[i]->sprite,
         (sfVector2f){pos.x, pos.y});
     sfSprite_setScale(app->inventory->armor[i]->sprite,
-        (sfVector2f){scale * 1.87f, scale* 1.94f});
+        (sfVector2f){scale * 1.87f * 2.f, scale * 1.94f * 2.f});
     sfRenderWindow_drawSprite(app->window,
         app->inventory->armor[i]->sprite, NULL);
 }
@@ -142,7 +142,7 @@ void draw_inventory(app_t *app)
     sfSprite_setPosition(app->inventory->trash,
         (sfVector2f){center.x + 398, center.y + 218.8});
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
-    draw_chunks(app->map, app);
+    draw_chunks(app->game_ressources->map, app);
     draw_semi_transparent_rect(app->window, app->view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);

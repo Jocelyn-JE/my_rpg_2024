@@ -9,10 +9,6 @@
 
 static void update_debug_options(sfKeyEvent *event, debug_t *options)
 {
-    if (event->code == sfKeyW && options->wireframe)
-        options->wireframe = false;
-    else if (event->code == sfKeyW)
-        options->wireframe = true;
     if (event->code == sfKeyX && options->bounding_box)
         options->bounding_box = false;
     else if (event->code == sfKeyX)

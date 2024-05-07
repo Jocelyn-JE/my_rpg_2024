@@ -107,20 +107,36 @@ typedef struct chunk_s {
 } chunk_t;
 
 typedef struct debug_s {
-    bool wireframe;
     bool bounding_box;
     bool fps;
 } debug_t;
 
+typedef struct entity_s {
+    uint32_t type;
+    sfVector2f pos;
+} entity_t;
+
+typedef struct player_s {
+    sfVector2f pos;
+} player_t;
+
+typedef struct game_s {
+    sfTexture *block_atlas;
+    block_t **block_types;
+    list_t *entities;
+    chunk_t **map;
+    player_t *player;
+} game_t;
+
 typedef struct app_s {
     float zoom;
-    debug_t *debug_options;
     sfRenderWindow *window;
     sfView *view;
     sfClock *game_clock;
-    sfTexture *block_atlas;
-    list_t *map;
+    debug_t *debug_options;
+    game_t *game_ressources;
     inventory_t *inventory;
+    sfFont **fonts;
     void (*game_handler)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
@@ -129,17 +145,23 @@ typedef struct app_s {
 
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
 void draw_game(app_t *app);
+void poll_events(app_t *app, sfEvent *event);
+void poll_events_ingame(app_t *app, sfEvent *event);
 
 // Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
+entity_t *create_entity(sfVector2f pos, uint32_t type);
 chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
 // Destroy / free functions
+
+void destroy_entity(entity_t *entity);
 void destroy_chunk(chunk_t *chunk);
+void destroy_block(block_t *block);
 void destroy_app(app_t *app);
 
 // Coordinates conversion
@@ -148,11 +170,13 @@ sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 // Other
 int get_random_nb(int min_value, int max_value);
-void poll_events(app_t *app, sfEvent *event);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
-void draw_chunks(list_t *list, app_t *app);
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
+    int chunk_index);
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt);
+void draw_chunks(chunk_t **chunks, app_t *app);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
@@ -163,6 +187,13 @@ void draw_bounds(sfRenderWindow *, sfSprite *, float);
 // Conversions
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
+int get_chunk_index_from_coordinates(int x, int y);
+sfVector2i get_chunk_coordinates_from_index(int index);
+
+// Entities
+
+void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
+sfVector2f get_entity_chunk_coords(entity_t *entity);
 int get_slot_index(int, int, app_t *);
 int get_armor_index(int, int, app_t *);
 
