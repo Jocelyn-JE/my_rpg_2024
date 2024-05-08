@@ -177,6 +177,7 @@ void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
     int chunk_index);
 void handle_movement(player_t *player, entity_t *player_entity, sfTime dt);
 void draw_chunks(chunk_t **chunks, app_t *app);
+void draw_game(app_t *app);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
