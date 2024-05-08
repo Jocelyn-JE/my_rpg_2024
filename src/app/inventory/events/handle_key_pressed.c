@@ -18,6 +18,8 @@ static void set_dragged_to_null(app_t *app)
             free(app->inventory->dragged_item);
         app->inventory->dragged_item = NULL;
         app->inventory->dragging_slot = -1;
+        app->inventory->current_item_slot = -1;
+        app->inventory->current_armor_slot = -1;
     }
 }
 

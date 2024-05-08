@@ -18,16 +18,15 @@ void manage_dragged_item(app_t *app, sfVector2f world_pos, float scale,
         rect = sfSprite_getGlobalBounds(app->inventory->dragged_item->sprite);
         sfSprite_setPosition(
             app->inventory->dragged_item->sprite,
-            (sfVector2f){world_pos.x - (rect.width / 2) * scale,
-                world_pos.y - (rect.height / 2) * scale});
+            (sfVector2f){world_pos.x - (rect.width / 2),
+                world_pos.y - (rect.height / 2)});
     }
     if (app->inventory->dragged_item != NULL &&
         app->inventory->dragged_item->limit > 1) {
         sfText_setPosition(
             app->inventory->dragged_item->quantity_text,
-            (sfVector2f){world_pos.x - (rect.width / 2) * scale + (31 * scale),
-                world_pos.y - (rect.height / 2) * scale +
-                    (39 * scale)});
+            (sfVector2f){world_pos.x - (rect.width / 2) + (31 * scale),
+                world_pos.y - (rect.height / 2) + (39 * scale)});
     }
 }
 

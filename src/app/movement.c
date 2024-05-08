@@ -75,7 +75,7 @@ void handle_movement(player_t *player, entity_t *player_entity, sfTime dt)
     if (check_time(dt))
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLControl))
-        speed = 0.05612f;
+        speed = 0.15612f;
     move_player(player, speed);
     set_player_entity_pos(player, player_entity);
 }
