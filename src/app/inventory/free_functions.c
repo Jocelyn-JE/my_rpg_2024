@@ -34,3 +34,25 @@ void free_inventory(inventory_t *inventory)
     sfSprite_destroy(inventory->hotbar);
     free(inventory);
 }
+
+item_t *copy_item(item_t *original)
+{
+    item_t *copy = malloc(sizeof(item_t));
+    sfTexture *original_texture = NULL;
+    sfTexture *cloned_texture = NULL;
+
+    if (copy == NULL || original == NULL)
+        return NULL;
+    copy->current_item = original->current_item;
+    copy->limit = original->limit;
+    copy->quantity = original->quantity;
+    original_texture = (sfTexture*)sfSprite_getTexture(original->sprite);
+    cloned_texture = sfTexture_copy(original_texture);
+    copy->sprite = sfSprite_create();
+    sfSprite_setTexture(copy->sprite, cloned_texture, sfFalse);
+    sfSprite_setPosition(copy->sprite, sfSprite_getPosition(original->sprite));
+    sfSprite_setScale(copy->sprite, sfSprite_getScale(original->sprite));
+    if (original->limit > 1 && original->quantity_text)
+        copy->quantity_text = sfText_copy(original->quantity_text);
+    return copy;
+}

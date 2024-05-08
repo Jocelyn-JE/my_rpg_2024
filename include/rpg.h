@@ -214,6 +214,7 @@ void draw_highlighted_slot(app_t *);
 void manage_dragged_item(app_t *, sfVector2f, float, float);
 void free_item(item_t *);
 void free_inventory(inventory_t *);
+item_t *copy_item(item_t *);
 
 //Events
 void initialize_event_handlers(void);
@@ -227,3 +228,5 @@ void manage_armor_slots(app_t *, sfEvent *);
 void manage_game_events(app_t *, sfEvent *);
 void manage_invent_events(app_t *, sfEvent *);
 void handle_key_pressed_game(sfEvent *, app_t *);
+void case_picking(app_t *, int, sfVector2f);
+void handle_mouse_button_right(app_t *, sfEvent *);

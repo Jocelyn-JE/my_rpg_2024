@@ -67,8 +67,7 @@ static void manage_trash_can(app_t *app)
     }
 }
 
-void handle_mouse_button_pressed(sfRenderWindow *window,
-    sfEvent *event, app_t *app)
+void handle_mouse_button_pressed(sfEvent *event, app_t *app)
 {
     int slot_index =
         get_slot_index(event->mouseButton.x, event->mouseButton.y, app);
@@ -94,5 +93,7 @@ void handle_mouse_button_pressed(sfRenderWindow *window,
 void handle_mouse_button(sfEvent *event, app_t *app)
 {
     if (event->mouseButton.button == sfMouseLeft)
-        handle_mouse_button_pressed(app->window, event, app);
+        handle_mouse_button_pressed(event, app);
+    if (event->mouseButton.button == sfMouseRight)
+        handle_mouse_button_right(app, event);
 }

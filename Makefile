@@ -6,7 +6,6 @@
 ##
 
 SRC =	src/main.c												\
-		src/random.c											\
 		src/linked_list/add.c									\
 		src/linked_list/del.c									\
 		src/linked_list/free_list.c								\
@@ -15,6 +14,7 @@ SRC =	src/main.c												\
 		src/conversions/cartesian_to_iso.c						\
 		src/conversions/index_to_pos.c							\
 		src/conversions/clamp.c									\
+		src/conversions/random.c								\
 		src/debug/print_fps.c									\
 		src/debug/mini_printf.c									\
 		src/debug/my_put_nbr.c									\
@@ -84,6 +84,7 @@ SRC =	src/main.c												\
 		src/app/game/events/handle_mouse_wheel.c 				\
 		src/events/handle_resized.c								\
 		src/app/inventory/events/manage_armor_slots.c			\
+		src/app/inventory/events/handle_mouse_right.c			\
 		src/app/inventory/inventory_management.c 				\
 		src/app/inventory/inventory_setup.c						\
 		src/app/inventory/hotbar_management.c 					\
