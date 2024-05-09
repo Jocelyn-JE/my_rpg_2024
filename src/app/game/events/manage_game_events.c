@@ -32,5 +32,5 @@ void manage_game_events(app_t *app, sfEvent *event)
         sfClock_getElapsedTime(app->game_clock));
     sfView_setCenter(app->view,
         cartesian_to_isometric(app->game_ressources->player->pos.x + 16,
-        app->game_ressources->player->pos.y, 2, 100));
+        app->game_ressources->player->pos.y, 1.5, 100));
 }

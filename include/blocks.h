@@ -93,6 +93,11 @@ enum entities {
     e_sheep
 };
 
+typedef struct uv_coords_s {
+    sfVector2f top_left;
+    sfVector2f bottom_right;
+} uv_coords_t;
+
 typedef struct block_s {
     sfVertex **faces;
     bool transparent;
@@ -105,19 +110,14 @@ typedef struct init_func_s {
 
 // Basic cube faces with possibility of offset
 
-sfVertex *get_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_left_face(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_right_face(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_top_face_rot(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_left_face_rot(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_right_face_rot(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset);
-sfVertex *get_wheat_vertex(sfVector2f text_pos1, sfVector2f text_pos2);
+sfVertex *get_top_face(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_left_face(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_right_face(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_top_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_left_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_right_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_wheat_vertex(uv_coords_t uv_mapping);
+sfVertex *get_diagonal_face(uv_coords_t uv, sfVector2f offset, sfColor color);
 
 // Block inits
 
