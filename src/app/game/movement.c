@@ -15,25 +15,21 @@ static void set_player_entity_pos(player_t *player, entity_t *player_entity)
 static void move_left(player_t *player, float speed)
 {
     player->pos.x -= speed;
-    player->pos.y += speed;
 }
 
 static void move_right(player_t *player, float speed)
 {
     player->pos.x += speed;
-    player->pos.y -= speed;
 }
 
 static void move_up(player_t *player, float speed)
 {
     player->pos.y -= speed;
-    player->pos.x -= speed;
 }
 
 static void move_down(player_t *player, float speed)
 {
     player->pos.y += speed;
-    player->pos.x += speed;
 }
 
 static bool check_time(sfTime dt)
@@ -75,7 +71,7 @@ void handle_movement(player_t *player, entity_t *player_entity, sfTime dt)
     if (check_time(dt))
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLControl))
-        speed = 0.15612f;
+        speed = 0.07806f;
     move_player(player, speed);
     set_player_entity_pos(player, player_entity);
 }
