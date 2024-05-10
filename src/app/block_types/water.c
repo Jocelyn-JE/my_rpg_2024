@@ -11,7 +11,7 @@ sfColor water_blue(void)
     return (sfColor){63, 118, 228, 255};
 }
 
-static sfVertex *get_water_face(uv_coords_t uv, sfVector2f offset)
+sfVertex *get_water_face(uv_coords_t uv, sfVector2f offset)
 {
     sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 

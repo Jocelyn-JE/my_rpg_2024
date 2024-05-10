@@ -42,13 +42,14 @@ static void handle_events(app_t *app, sfEvent *event)
 
 void poll_events_ingame(app_t *app, sfEvent *event)
 {
+    player_t *player = app->game_ressources->player;
+    sfTime dt = sfClock_getElapsedTime(app->game_clock);
+
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
-    handle_movement(app->game_ressources->player,
-        app->game_ressources->entities->data,
-        sfClock_getElapsedTime(app->game_clock));
-    sfView_setCenter(app->view,
-        cartesian_to_isometric(app->game_ressources->player->pos.x + 16,
+    handle_movement(player, app->game_ressources->entities->data, dt);
+    update_blocks(app->game_ressources->block_types, dt);
+    sfView_setCenter(app->view, cartesian_to_isometric(player->pos.x + 16,
         app->game_ressources->player->pos.y, 2, 100));
 }

@@ -116,6 +116,7 @@ sfVertex *get_right_face(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_top_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_left_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_right_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
+sfVertex *get_water_face(uv_coords_t uv, sfVector2f offset);
 sfVertex *get_wheat_vertex(uv_coords_t uv_mapping);
 sfVertex *get_diagonal_face(uv_coords_t uv, sfVector2f offset, sfColor color);
 
@@ -197,3 +198,7 @@ sfColor water_blue(void);
 bool is_null_vertex(sfVertex vertex);
 sfVertex null_vertex(void);
 void cat_vertex_array(sfVertex *arr1, sfVertex *arr2);
+
+// Animations
+
+void update_blocks(block_t **blocks, sfTime dt);
