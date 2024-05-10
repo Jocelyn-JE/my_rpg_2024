@@ -13,7 +13,7 @@ block_t *init_beetroots(void)
     sfVector2f text_pos2 = {160, 240};
 
     block->faces = malloc(sizeof(sfVertex *) * 4);
-    block->faces[0] = get_wheat_vertex(text_pos1, text_pos2);
+    block->faces[0] = get_wheat_vertex((uv_coords_t){text_pos1, text_pos2});
     block->faces[1] = NULL;
     block->faces[2] = NULL;
     block->faces[3] = NULL;

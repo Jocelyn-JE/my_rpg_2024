@@ -6,65 +6,62 @@
 */
 #include "blocks.h"
 
-static sfVertex *get_leaf_top_face(sfVector2f text_pos1, sfVector2f text_pos2,
-    sfVector2f offset)
+static sfVertex *get_leaf_top_face(uv_coords_t uv, sfVector2f offset)
 {
     sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){0 + offset.x, 0 + offset.y},
-        grass_green(), text_pos1};
+        grass_green(), uv.top_left};
     vertices[1] = (sfVertex){(sfVector2f){1 + offset.x, 0 + offset.y},
-        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){uv.bottom_right.x, uv.top_left.y}};
     vertices[2] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y},
-        grass_green(), text_pos2};
+        grass_green(), uv.bottom_right};
     vertices[3] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y},
-        grass_green(), text_pos2};
+        grass_green(), uv.bottom_right};
     vertices[4] = (sfVertex){(sfVector2f){0 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){uv.top_left.x, uv.bottom_right.y}};
     vertices[5] = (sfVertex){(sfVector2f){0 + offset.x, 0 + offset.y},
-        grass_green(), text_pos1};
+        grass_green(), uv.top_left};
     vertices[6] = null_vertex();
     return vertices;
 }
 
-static sfVertex *get_leaf_left_face(sfVector2f text_pos1,
-    sfVector2f text_pos2, sfVector2f offset)
+static sfVertex *get_leaf_left_face(uv_coords_t uv, sfVector2f offset)
 {
     sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){1 + offset.x, 0 + offset.y},
-        grass_green(), text_pos1};
+        grass_green(), uv.top_left};
     vertices[1] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){uv.top_left.x, uv.bottom_right.y}};
     vertices[2] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){uv.bottom_right.x, uv.top_left.y}};
     vertices[3] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){uv.bottom_right.x, uv.top_left.y}};
     vertices[4] = (sfVertex){(sfVector2f){2 + offset.x, 2 + offset.y},
-        grass_green(), text_pos2};
+        grass_green(), uv.bottom_right};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){uv.top_left.x, uv.bottom_right.y}};
     vertices[6] = null_vertex();
     return vertices;
 }
 
-static sfVertex *get_leaf_right_face(sfVector2f text_pos1,
-    sfVector2f text_pos2, sfVector2f offset)
+static sfVertex *get_leaf_right_face(uv_coords_t uv, sfVector2f offset)
 {
     sfVertex *vertices = malloc(sizeof(sfVertex) * 7);
 
     vertices[0] = (sfVertex){(sfVector2f){1 + offset.x, 1 + offset.y},
-        grass_green(), text_pos1};
+        grass_green(), uv.top_left};
     vertices[1] = (sfVertex){(sfVector2f){2 + offset.x, 2 + offset.y},
-        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){uv.top_left.x, uv.bottom_right.y}};
     vertices[2] = (sfVertex){(sfVector2f){0 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){uv.bottom_right.x, uv.top_left.y}};
     vertices[3] = (sfVertex){(sfVector2f){0 + offset.x, 1 + offset.y},
-        grass_green(), (sfVector2f){text_pos2.x, text_pos1.y}};
+        grass_green(), (sfVector2f){uv.bottom_right.x, uv.top_left.y}};
     vertices[4] = (sfVertex){(sfVector2f){1 + offset.x, 2 + offset.y},
-        grass_green(), text_pos2};
+        grass_green(), uv.bottom_right};
     vertices[5] = (sfVertex){(sfVector2f){2 + offset.x, 2 + offset.y},
-        grass_green(), (sfVector2f){text_pos1.x, text_pos2.y}};
+        grass_green(), (sfVector2f){uv.top_left.x, uv.bottom_right.y}};
     vertices[6] = null_vertex();
     return vertices;
 }
@@ -74,12 +71,12 @@ block_t *init_oak_leaves(void)
     block_t *block = malloc(sizeof(block_t));
 
     block->faces = malloc(sizeof(sfVertex *) * 4);
-    block->faces[0] = get_leaf_top_face((sfVector2f){32, 96},
-        (sfVector2f){48, 112}, (sfVector2f){0, 0});
-    block->faces[1] = get_leaf_left_face((sfVector2f){32, 96},
-        (sfVector2f){48, 112}, (sfVector2f){0, 0});
-    block->faces[2] = get_leaf_right_face((sfVector2f){32, 96},
-        (sfVector2f){48, 112}, (sfVector2f){0, 0});
+    block->faces[0] = get_leaf_top_face((uv_coords_t){(sfVector2f){32, 96},
+        (sfVector2f){48, 112}}, (sfVector2f){0, 0});
+    block->faces[1] = get_leaf_left_face((uv_coords_t){(sfVector2f){32, 96},
+        (sfVector2f){48, 112}}, (sfVector2f){0, 0});
+    block->faces[2] = get_leaf_right_face((uv_coords_t){(sfVector2f){32, 96},
+        (sfVector2f){48, 112}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
     block->transparent = true;
     block->solid = true;
@@ -91,12 +88,12 @@ block_t *init_jungle_leaves(void)
     block_t *block = malloc(sizeof(block_t));
 
     block->faces = malloc(sizeof(sfVertex *) * 4);
-    block->faces[0] = get_leaf_top_face((sfVector2f){48, 96},
-        (sfVector2f){64, 112}, (sfVector2f){0, 0});
-    block->faces[1] = get_leaf_left_face((sfVector2f){48, 96},
-        (sfVector2f){64, 112}, (sfVector2f){0, 0});
-    block->faces[2] = get_leaf_right_face((sfVector2f){48, 96},
-        (sfVector2f){64, 112}, (sfVector2f){0, 0});
+    block->faces[0] = get_leaf_top_face((uv_coords_t){(sfVector2f){48, 96},
+        (sfVector2f){64, 112}}, (sfVector2f){0, 0});
+    block->faces[1] = get_leaf_left_face((uv_coords_t){(sfVector2f){48, 96},
+        (sfVector2f){64, 112}}, (sfVector2f){0, 0});
+    block->faces[2] = get_leaf_right_face((uv_coords_t){(sfVector2f){48, 96},
+        (sfVector2f){64, 112}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
     block->transparent = true;
     block->solid = true;
@@ -108,12 +105,12 @@ block_t *init_spruce_leaves(void)
     block_t *block = malloc(sizeof(block_t));
 
     block->faces = malloc(sizeof(sfVertex *) * 4);
-    block->faces[0] = get_leaf_top_face((sfVector2f){64, 96},
-        (sfVector2f){80, 112}, (sfVector2f){0, 0});
-    block->faces[1] = get_leaf_left_face((sfVector2f){64, 96},
-        (sfVector2f){80, 112}, (sfVector2f){0, 0});
-    block->faces[2] = get_leaf_right_face((sfVector2f){64, 96},
-        (sfVector2f){80, 112}, (sfVector2f){0, 0});
+    block->faces[0] = get_leaf_top_face((uv_coords_t){(sfVector2f){64, 96},
+        (sfVector2f){80, 112}}, (sfVector2f){0, 0});
+    block->faces[1] = get_leaf_left_face((uv_coords_t){(sfVector2f){64, 96},
+        (sfVector2f){80, 112}}, (sfVector2f){0, 0});
+    block->faces[2] = get_leaf_right_face((uv_coords_t){(sfVector2f){64, 96},
+        (sfVector2f){80, 112}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
     block->transparent = true;
     block->solid = true;
