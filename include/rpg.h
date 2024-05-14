@@ -78,12 +78,17 @@ typedef struct buton_s {
     sfVector2f *position;
     sfVector2f scale;
     sfFloatRect hitbox;
-    int number;
+    unsigned int largeur_fenetre;
+    unsigned int hauteur_fenetre;
+    float largeur_sprite;
+    float hauteur_sprite;
 } buton_t;
 
 typedef struct text_s {
     sfFont *font;
     sfText *text;
+    unsigned int width_fenetre;
+    float largeur_text;
 } text_t;
 
 typedef struct event_s {
@@ -143,6 +148,7 @@ void parameter_video(app_t *app);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
+void handle_resized(sfEvent *event, app_t *app);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,

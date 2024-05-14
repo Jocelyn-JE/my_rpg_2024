@@ -27,7 +27,7 @@ static void animation_splash(app_t *app, sfClock *clock)
 
     if (seconds < 0.03)
         return;
-    if (app->logo->color.a > 254)
+    if (app->logo->color.a > 254 || sfKeyboard_isKeyPressed(sfKeySpace))
         menu(app);
     if (app->logo->color.a < 255) {
         app->logo->color.a += 1.6;

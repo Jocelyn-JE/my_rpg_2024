@@ -20,6 +20,7 @@ void set_text(app_t *app, sfVector2f position, char *filename, int i)
 
 void text_menu(app_t *app)
 {
+    app->text->width_fenetre = sfRenderWindow_getSize(app->window).x;
     set_text(app, (sfVector2f){880, 507}, "Play Game", 0);
     set_text(app, (sfVector2f){890, 657}, "Options", 1);
     set_text(app, (sfVector2f){880, 807}, "Quit Game", 2);
@@ -27,9 +28,12 @@ void text_menu(app_t *app)
 
 void text_setting(app_t *app)
 {
+    app->text->largeur_text = sfText_getGlobalBounds(app->text[0].text).width;
     set_text(app, (sfVector2f){880, 307}, "Options", 3);
     set_text(app, (sfVector2f){480, 507}, "Music & Sounds", 4);
     set_text(app, (sfVector2f){1190, 507}, "Video Settings", 5);
+    set_text(app, (sfVector2f){(app->text->width_fenetre / 2) -
+        (app->text->largeur_text / 2), 707}, "Done", 6);
     set_text(app, (sfVector2f){900, 707}, "Done", 6);
 }
 

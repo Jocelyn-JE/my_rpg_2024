@@ -58,12 +58,14 @@ static void handle_events_menu(app_t *app, sfEvent *event)
     }
 }
 
-void poll_events_menu(app_t *app, sfEvent *event)
+void poll_events_menu(app_t *app, sfEvent *events)
 {
-    while (sfRenderWindow_pollEvent(app->window, event) &&
+    while (sfRenderWindow_pollEvent(app->window, events) &&
         sfRenderWindow_hasFocus(app->window)) {
-        handle_events_menu(app, event);
-        if (event->type == sfEvtClosed)
+        handle_events_menu(app, events);
+        if (events->type == sfEvtResized)
+            handle_resized(events, app);
+        if (events->type == sfEvtClosed)
             sfRenderWindow_close(app->window);
     }
 }

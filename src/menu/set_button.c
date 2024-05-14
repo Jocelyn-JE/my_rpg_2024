@@ -45,6 +45,8 @@ static void buton(app_t *app, int index, int x, int y)
 
 void set_buton(app_t *app)
 {
+    app->buton->largeur_fenetre = sfRenderWindow_getSize(app->window).x;
+    app->buton->hauteur_fenetre = sfRenderWindow_getSize(app->window).y;
     buton(app, 0, 690, 500);
     buton(app, 1, 690, 650);
     buton(app, 2, 690, 800);
@@ -52,16 +54,26 @@ void set_buton(app_t *app)
 
 void set_buton_setting(app_t *app)
 {
-    buton(app, 3, 350, 500);
-    buton(app, 4, 1050, 500);
-    buton(app, 5, 690, 700);
+    app->buton->largeur_sprite =
+        sfSprite_getGlobalBounds(app->buton[0].sprite).width;
+    app->buton->hauteur_sprite =
+        sfSprite_getGlobalBounds(app->buton[0].sprite).height;
+    buton(app, 3, (app->buton->largeur_fenetre / 4) -
+        (app->buton->largeur_sprite / 2), 500);
+    buton(app, 4, (app->buton->largeur_fenetre / 4 * 3) -
+        (app->buton->largeur_sprite / 2), 500);
+    buton(app, 5, (app->buton->largeur_fenetre / 2) -
+        (app->buton->largeur_sprite / 2), 700);
 }
 
 void set_buton_video(app_t *app)
 {
-    buton(app, 6, 350, 500);
-    buton(app, 7, 1050, 500);
-    buton(app, 8, 690, 700);
+    buton(app, 6, (app->buton->largeur_fenetre / 4) -
+        (app->buton->largeur_sprite / 2), 500);
+    buton(app, 7, (app->buton->largeur_fenetre / 4 * 3) -
+        (app->buton->largeur_sprite / 2), 500);
+    buton(app, 8, (app->buton->largeur_fenetre / 2) -
+        (app->buton->largeur_sprite / 2), 700);
 }
 
 void set_buton_sound(app_t *app)

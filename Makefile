@@ -37,6 +37,7 @@ SRC =	src/main.c								\
 		src/setting/set_sound.c					\
 		src/setting/parameter_sound.c			\
 		src/setting/parameter_video.c			\
+		src/events/handle_resized.c				\
 
 OBJ	=	$(SRC:.c=.o)
 

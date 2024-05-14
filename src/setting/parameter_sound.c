@@ -49,22 +49,22 @@ static void handle_effect_music(app_t *app, sfVector2f mouse_pos)
     if (sfFloatRect_contains(&app->buton[11].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_effect > 0)
-            app->sound->volume_effect -= 1;
+            app->sound->volume_effect -= 5;
     }
     if (sfFloatRect_contains(&app->buton[12].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_effect < 100)
-            app->sound->volume_effect += 1;
+            app->sound->volume_effect += 5;
     }
     if (sfFloatRect_contains(&app->buton[13].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_music > 0)
-            app->sound->volume_music -= 1;
+            app->sound->volume_music -= 5;
     }
     if (sfFloatRect_contains(&app->buton[14].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_music < 100)
-            app->sound->volume_music += 1;
+            app->sound->volume_music += 5;
     }
 }
 
@@ -76,12 +76,12 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
     if (sfFloatRect_contains(&app->buton[9].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_general > 0)
-            app->sound->volume_general -= 1;
+            app->sound->volume_general -= 5;
     }
     if (sfFloatRect_contains(&app->buton[10].hitbox,
         mouse_pos.x, mouse_pos.y)) {
         if (app->sound->volume_general < 100)
-            app->sound->volume_general += 1;
+            app->sound->volume_general += 5;
     }
     if (sfFloatRect_contains(&app->buton[15].hitbox,
         mouse_pos.x, mouse_pos.y))
