@@ -59,6 +59,6 @@ block_t *init_snow(void)
         (sfVector2f){96, 66}}, (sfVector2f){14.f / 16.f, 14.f / 16.f});
     block->faces[3] = NULL;
     block->transparent = true;
-    block->solid = true;
+    block->solid = false;
     return block;
 }

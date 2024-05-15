@@ -19,12 +19,16 @@ void add_entity(sfVertexArray *vertices, int index, entity_t *entity)
 {
     sfVector2f pos = get_entity_chunk_coords(entity);
 
-    pos.x--;
-    pos.y--;
+    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
+        pos.x, 0 + pos.y, 5, 100), sfWhite, (sfVector2f){274, 0}});
+    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
+        pos.x, 1 + pos.y, 2.5, 100), sfWhite, (sfVector2f){274, 212}});
     sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, 0 + pos.y, 0, 100), sfWhite, (sfVector2f){0, 0}});
-    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(-1 +
-        pos.x, 0 + pos.y, 0, 100), sfWhite, (sfVector2f){0, 0}});
+        pos.x, 1 + pos.y, 5, 100), sfWhite, (sfVector2f){176, 0}});
     sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(0 +
-        pos.x, -1 + pos.y, 0, 100), sfWhite, (sfVector2f){0, 0}});
+        pos.x, 1 + pos.y, 5, 100), sfWhite, (sfVector2f){176, 0}});
+    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(1 +
+        pos.x, 2 + pos.y, 2.5, 100), sfWhite, (sfVector2f){176, 212}});
+    sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(2 +
+        pos.x, 1 + pos.y, 2.5, 100), sfWhite, (sfVector2f){274, 212}});
 }
