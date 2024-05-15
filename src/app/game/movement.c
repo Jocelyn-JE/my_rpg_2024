@@ -45,28 +45,29 @@ static void move_down(player_t *player, float speed)
 
 static void move_player(player_t *player, float speed, game_t *game)
 {
-    sfVector2i prev = {(int)round(player->pos.x - speed), (int)round(player->pos.y - speed)};
-    sfVector2i next = {(int)round(player->pos.x + speed), (int)round(player->pos.y + speed)};
+    sfVector2i prev = {player->pos.x - speed, player->pos.y - speed};
+    sfVector2i next = {player->pos.x + speed, player->pos.y + speed};
+    block_t **blocks = game->block_types;
 
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && prev.x > 0 && prev.x < 512.f &&
-        get_block((sfVector2i){floor(player->pos.x - speed), floor(player->pos.y)}, game->block_types, game->map, 1)->solid &&
-        !get_block((sfVector2i){floor(player->pos.x - speed), floor(player->pos.y)}, game->block_types, game->map, 2)->solid)
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && get_block((sfVector3f){prev.x,
+            player->pos.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){prev.x, player->pos.y, 2}, blocks, game->map)->solid)
         move_left(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyD) && next.x > 0 && next.x < 512.f &&
-        get_block((sfVector2i){floor(player->pos.x + speed), floor(player->pos.y)}, game->block_types, game->map, 1)->solid &&
-        !get_block((sfVector2i){floor(player->pos.x + speed), floor(player->pos.y)}, game->block_types, game->map, 2)->solid)
+    if (sfKeyboard_isKeyPressed(sfKeyD) && get_block((sfVector3f){next.x,
+            player->pos.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){next.x, player->pos.y, 2}, blocks, game->map)->solid)
         move_right(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && prev.y > 0 && prev.y < 512.f &&
-        get_block((sfVector2i){floor(player->pos.x), floor(player->pos.y - speed)}, game->block_types, game->map, 1)->solid &&
-        !get_block((sfVector2i){floor(player->pos.x), floor(player->pos.y - speed)}, game->block_types, game->map, 2)->solid)
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && get_block((sfVector3f){
+            player->pos.x, prev.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){player->pos.x, prev.y, 2}, blocks, game->map)->solid)
         move_up(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyS) && next.y > 0 && next.y < 512.f &&
-        get_block((sfVector2i){floor(player->pos.x), floor(player->pos.y + speed)}, game->block_types, game->map, 1)->solid &&
-        !get_block((sfVector2i){floor(player->pos.x), floor(player->pos.y + speed)}, game->block_types, game->map, 2)->solid)
+    if (sfKeyboard_isKeyPressed(sfKeyS) && get_block((sfVector3f){
+            player->pos.x, next.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){player->pos.x, next.y, 2}, blocks, game->map)->solid)
         move_down(player, speed);
 }
 
-void handle_movement(player_t *player, entity_t *player_entity, sfTime dt, 
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
     game_t *game)
 {
     float speed = 0.04317f;

@@ -168,8 +168,7 @@ void destroy_app(app_t *app);
 sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
 sfVector2f get_chunk_coords(sfVector2f pos);
-block_t *get_block(sfVector2i coords, block_t **block_types, chunk_t **map,
-    int z);
+block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
 
 // Other
 int get_random_nb(int min_value, int max_value);

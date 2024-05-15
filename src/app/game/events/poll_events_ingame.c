@@ -49,7 +49,7 @@ void poll_events_ingame(app_t *app, sfEvent *event)
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
     if (sfRenderWindow_hasFocus(app->window))
-        handle_movement(player, app->game_ressources->entities->data, dt, 
+        handle_movement(player, app->game_ressources->entities->data, dt,
             app->game_ressources);
     update_blocks(app->game_ressources->block_types, dt);
     sfView_setCenter(app->view, cartesian_to_isometric(player->pos.x + 16,

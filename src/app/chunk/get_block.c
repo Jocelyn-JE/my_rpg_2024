@@ -11,12 +11,12 @@ static sfVector2i get_block_chunk_coords(sfVector2i pos)
     return (sfVector2i){pos.x % 16, pos.y % 16};
 }
 
-block_t *get_block(sfVector2i coords, block_t **block_types, chunk_t **map,
-    int z)
+block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map)
 {
-    sfVector2i chunk_coords = get_block_chunk_coords(coords);
+    sfVector2i chunk_coords = get_block_chunk_coords((sfVector2i){coords.x,
+        coords.y});
 
     return block_types[map[get_chunk_index_from_coordinates(coords.x / 16,
         coords.y / 16)]->blocks[get_index_from_pos(chunk_coords.x,
-        chunk_coords.y, z)]];
+        chunk_coords.y, coords.z)]];
 }
