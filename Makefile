@@ -5,39 +5,39 @@
 ## Makefile
 ##
 
-SRC =	src/main.c								\
-		src/app/init_app.c						\
-		src/app/destroy_app.c					\
-		src/linked_list/add.c					\
-		src/linked_list/del.c					\
-		src/linked_list/free_list.c				\
-		src/linked_list/list_len.c				\
-		src/debug/mini_printf.c					\
-		src/debug/my_put_nbr.c					\
-		src/debug/my_strcmp.c					\
-		src/poll_events.c						\
-		src/splash_screen/splash_screen.c		\
-		src/random.c							\
-		src/drag_view.c							\
-		src/get_letterbox_view.c				\
-		src/conversions/cartesian_to_iso.c		\
-		src/conversions/index_to_pos.c			\
-		src/conversions/clamp.c					\
-		src/debug/print_fps.c					\
-		src/debug/draw_bounding_box.c			\
-		src/app/init_window.c					\
-		src/app/chunk/add_cube.c				\
-		src/app/chunk/create_chunk.c			\
-		src/app/chunk/destroy_chunk.c			\
-		src/menu/menu.c							\
-		src/menu/set_button.c					\
-		src/menu/click_buton.c					\
-		src/menu/set_text.c						\
-		src/setting/setting.c					\
-		src/setting/set_sound.c					\
-		src/setting/parameter_sound.c			\
-		src/setting/parameter_video.c			\
-		src/events/handle_resized.c				\
+SRC =	src/main.c									\
+		src/app/init_app.c							\
+		src/app/destroy_app.c						\
+		src/linked_list/add.c						\
+		src/linked_list/del.c						\
+		src/linked_list/free_list.c					\
+		src/linked_list/list_len.c					\
+		src/debug/mini_printf.c						\
+		src/debug/my_put_nbr.c						\
+		src/debug/my_strcmp.c						\
+		src/poll_events.c							\
+		src/app/splash_screen/splash_screen.c		\
+		src/random.c								\
+		src/drag_view.c								\
+		src/get_letterbox_view.c					\
+		src/conversions/cartesian_to_iso.c			\
+		src/conversions/index_to_pos.c				\
+		src/conversions/clamp.c						\
+		src/debug/print_fps.c						\
+		src/debug/draw_bounding_box.c				\
+		src/app/init_window.c						\
+		src/app/chunk/add_cube.c					\
+		src/app/chunk/create_chunk.c				\
+		src/app/chunk/destroy_chunk.c				\
+		src/text_and_button/set_text.c				\
+		src/text_and_button/set_button.c			\
+		src/app/menu/menu.c							\
+		src/app/menu/events/click_buton.c			\
+		src/app/menu/events/poll_events_menu.c		\
+		src/app/setting/setting.c					\
+		src/app/setting/sound/parameter_sound.c		\
+		src/app/setting/video/parameter_video.c		\
+		src/events/handle_resized.c					\
 
 OBJ	=	$(SRC:.c=.o)
 
