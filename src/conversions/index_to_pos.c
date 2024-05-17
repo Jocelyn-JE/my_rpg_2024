@@ -18,7 +18,7 @@ vector3uint8_t get_pos_from_index(int i)
 
 int get_chunk_index_from_coordinates(int x, int y)
 {
-    return y * 32 + x;
+    return x * 32 + y;
 }
 
 sfVector2i get_chunk_coordinates_from_index(int index)

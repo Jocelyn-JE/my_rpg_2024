@@ -112,9 +112,17 @@ typedef struct debug_s {
     bool fps;
 } debug_t;
 
+typedef enum e_state {
+    e_north = 0,
+    e_south = 1,
+    e_west = 2,
+    e_east = 3,
+} e_state_t;
+
 typedef struct entity_s {
     uint32_t type;
     sfVector2f pos;
+    e_state_t state;
 } entity_t;
 
 typedef struct player_s {
@@ -151,7 +159,7 @@ typedef struct sound_s {
     int volume_effect;
 } sound_t;
 
-typedef struct buton_s {
+typedef struct button_s {
     sfSprite *sprite;
     sfTexture *texture;
     sfVector2f *position;
@@ -161,7 +169,7 @@ typedef struct buton_s {
     unsigned int hauteur_fenetre;
     float largeur_sprite;
     float hauteur_sprite;
-} buton_t;
+} button_t;
 
 typedef struct text_s {
     sfFont *font;
@@ -170,23 +178,16 @@ typedef struct text_s {
     float largeur_text;
 } text_t;
 
-typedef struct event_s {
-    sfEvent event;
-} event_t;
-
 typedef struct app_s {
     float zoom;
     sfRenderWindow *window;
     sfView *view;
     sfClock *game_clock;
-    sfTexture *block_atlas;
-    list_t *map;
-    struct menu_s *menu;
-    struct buton_s *buton;
-    struct event_s *event;
-    struct logo_s *logo;
-    struct text_s *text;
-    struct sound_s *sound;
+    menu_t *menu;
+    button_t *button;
+    logo_t *logo;
+    text_t *text;
+    sound_t *sound;
     debug_t *debug_options;
     game_t *game_ressources;
     inventory_t *inventory;
@@ -222,17 +223,24 @@ void destroy_app(app_t *app);
 // Coordinates conversion
 sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
+sfVector2f get_chunk_coords(sfVector2f pos);
+block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
 
 // Other
 int get_random_nb(int min_value, int max_value);
 double clamp(double d, double min, double max);
+void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
+    int chunk_index);
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
+    game_t *game); 
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
+void draw_chunks(chunk_t **chunks, app_t *app);
+void draw_game(app_t *app);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
-void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
-void handle_movement(player_t *player, entity_t *player_entity, sfTime dt);
 
 // Menu
 
@@ -240,7 +248,7 @@ void poll_events_splashscreen(app_t *app, sfEvent *event);
 void splash_screen(app_t *app);
 void text_menu(app_t *app);
 void menu(app_t *app);
-void set_buton(app_t *app);
+void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
 void set_menu_sprite(app_t *app);
 void destroy_menu(app_t *app);
@@ -249,25 +257,22 @@ void destroy_menu(app_t *app);
 
 void poll_events_setting(app_t *app, sfEvent *event);
 void setting(app_t *app);
-void set_buton_setting(app_t *app);
+void set_button_setting(app_t *app);
 void text_setting(app_t *app);
 
 // Video
 
 void parameter_video(app_t *app);
-void set_buton_video(app_t *app);
+void set_button_video(app_t *app);
 void text_video(app_t *app);
 
 // Musique
 
 void poll_events_volume(app_t *app, sfEvent *event);
 void parameter_sound(app_t *app);
-void set_buton_sound(app_t *app);
+void set_button_sound(app_t *app);
 void text_sound(app_t *app);
-double clamp(double d, double min, double max);
-void get_letterbox_view(sfView *view, sfVector2f size);
-void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
-    int chunk_index);
+
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
