@@ -35,33 +35,35 @@ static void set_title(logo_t *logo)
     sfSprite_setTexture(logo->sprite, logo->texture, sfTrue);
 }
 
-static void draw_buton(app_t *app)
+static void draw_button(app_t *app)
 {
     sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
     sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
-    sfRenderWindow_drawSprite(app->window, app->buton[0].sprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->button[0].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[0].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->buton[1].sprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->button[1].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[1].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->buton[2].sprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->button[2].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[2].text, NULL);
 }
 
 void set_menu_sprite(app_t *app)
 {
     set_menu(app->menu);
-    set_buton(app);
+    set_button(app);
     set_title(app->logo);
     text_menu(app);
 }
 
 void menu(app_t *app)
 {
+    sfEvent events;
+
     set_menu_sprite(app);
     while (sfRenderWindow_isOpen(app->window)) {
-        manage_events_menu(app, &app->event->event);
+        manage_events_menu(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        draw_buton(app);
+        draw_button(app);
         sfRenderWindow_display(app->window);
     }
 }

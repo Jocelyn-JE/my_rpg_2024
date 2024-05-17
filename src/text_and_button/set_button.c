@@ -7,82 +7,82 @@
 
 #include "rpg.h"
 
-static void create_buton_sprite(app_t *app, int index, const char *filename)
+static void create_button_sprite(app_t *app, int index, const char *filename)
 {
-    app->buton[index].sprite = sfSprite_create();
-    app->buton[index].texture = sfTexture_createFromFile(filename, NULL);
-    sfSprite_setTexture(app->buton[index].sprite,
-        app->buton[index].texture, sfTrue);
+    app->button[index].sprite = sfSprite_create();
+    app->button[index].texture = sfTexture_createFromFile(filename, NULL);
+    sfSprite_setTexture(app->button[index].sprite,
+        app->button[index].texture, sfTrue);
 }
 
-static void set_buton_scale(app_t *app, int index, sfVector2f scale)
+static void set_button_scale(app_t *app, int index, sfVector2f scale)
 {
-    app->buton[index].scale = scale;
-    sfSprite_setScale(app->buton[index].sprite, app->buton[index].scale);
+    app->button[index].scale = scale;
+    sfSprite_setScale(app->button[index].sprite, app->button[index].scale);
 }
 
-static void set_buton_position(app_t *app, int index, sfVector2f position)
+static void set_button_position(app_t *app, int index, sfVector2f position)
 {
-    sfSprite_setPosition(app->buton[index].sprite, position);
+    sfSprite_setPosition(app->button[index].sprite, position);
 }
 
-static void set_buton_hitbox(app_t *app, int index, sfFloatRect hitbox)
+static void set_button_hitbox(app_t *app, int index, sfFloatRect hitbox)
 {
-    app->buton[index].hitbox = hitbox;
+    app->button[index].hitbox = hitbox;
 }
 
-static void buton(app_t *app, int index, int x, int y)
+static void button(app_t *app, int index, int x, int y)
 {
-    sfVector2f pos_buton = {x, y};
-    sfVector2f scale_buton = {0.4, 0.4};
+    sfVector2f pos_button = {x, y};
+    sfVector2f scale_button = {0.4, 0.4};
     sfFloatRect hitbox = {x, y, 490.8, 48.8};
 
-    create_buton_sprite(app, index, "assets/widgets/bouton.png");
-    set_buton_scale(app, index, scale_buton);
-    set_buton_position(app, index, pos_buton);
-    set_buton_hitbox(app, index, hitbox);
+    create_button_sprite(app, index, "assets/widgets/bouton.png");
+    set_button_scale(app, index, scale_button);
+    set_button_position(app, index, pos_button);
+    set_button_hitbox(app, index, hitbox);
 }
 
-void set_buton(app_t *app)
+void set_button(app_t *app)
 {
-    app->buton->largeur_fenetre = sfRenderWindow_getSize(app->window).x;
-    app->buton->hauteur_fenetre = sfRenderWindow_getSize(app->window).y;
-    buton(app, 0, 690, 500);
-    buton(app, 1, 690, 650);
-    buton(app, 2, 690, 800);
+    app->button->largeur_fenetre = sfRenderWindow_getSize(app->window).x;
+    app->button->hauteur_fenetre = sfRenderWindow_getSize(app->window).y;
+    button(app, 0, 690, 500);
+    button(app, 1, 690, 650);
+    button(app, 2, 690, 800);
 }
 
-void set_buton_setting(app_t *app)
+void set_button_setting(app_t *app)
 {
-    app->buton->largeur_sprite =
-        sfSprite_getGlobalBounds(app->buton[0].sprite).width;
-    app->buton->hauteur_sprite =
-        sfSprite_getGlobalBounds(app->buton[0].sprite).height;
-    buton(app, 3, (app->buton->largeur_fenetre / 4) -
-        (app->buton->largeur_sprite / 2), 500);
-    buton(app, 4, (app->buton->largeur_fenetre / 4 * 3) -
-        (app->buton->largeur_sprite / 2), 500);
-    buton(app, 5, (app->buton->largeur_fenetre / 2) -
-        (app->buton->largeur_sprite / 2), 700);
+    app->button->largeur_sprite =
+        sfSprite_getGlobalBounds(app->button[0].sprite).width;
+    app->button->hauteur_sprite =
+        sfSprite_getGlobalBounds(app->button[0].sprite).height;
+    button(app, 3, (app->button->largeur_fenetre / 4) -
+        (app->button->largeur_sprite / 2), 500);
+    button(app, 4, (app->button->largeur_fenetre / 4 * 3) -
+        (app->button->largeur_sprite / 2), 500);
+    button(app, 5, (app->button->largeur_fenetre / 2) -
+        (app->button->largeur_sprite / 2), 700);
 }
 
-void set_buton_video(app_t *app)
+void set_button_video(app_t *app)
 {
-    buton(app, 6, (app->buton->largeur_fenetre / 4) -
-        (app->buton->largeur_sprite / 2), 500);
-    buton(app, 7, (app->buton->largeur_fenetre / 4 * 3) -
-        (app->buton->largeur_sprite / 2), 500);
-    buton(app, 8, (app->buton->largeur_fenetre / 2) -
-        (app->buton->largeur_sprite / 2), 700);
+    button(app, 6, (app->button->largeur_fenetre / 4) -
+        (app->button->largeur_sprite / 2), 500);
+    button(app, 7, (app->button->largeur_fenetre / 4 * 3) -
+        (app->button->largeur_sprite / 2), 500);
+    button(app, 8, (app->button->largeur_fenetre / 2) -
+        (app->button->largeur_sprite / 2), 700);
 }
 
-void set_buton_sound(app_t *app)
+void set_button_sound(app_t *app)
 {
-    buton(app, 9, 350, 200);
-    buton(app, 10, 1050, 200);
-    buton(app, 11, 350, 350);
-    buton(app, 12, 1050, 350);
-    buton(app, 13, 350, 500);
-    buton(app, 14, 1050, 500);
-    buton(app, 15, 690, 700);
+    button(app, 9, 350, 200);
+    button(app, 10, 1050, 200);
+    button(app, 11, 350, 350);
+    button(app, 12, 1050, 350);
+    button(app, 13, 350, 500);
+    button(app, 14, 1050, 500);
+    button(app, 15, 690, 700);
 }

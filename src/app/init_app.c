@@ -73,11 +73,10 @@ app_t *create_app(void)
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
 
-    app->event = malloc(sizeof(event_t));
     app->logo = malloc(sizeof(logo_t));
     app->menu = malloc(sizeof(menu_t));
     app->sound = malloc(sizeof(sound_t));
-    app->buton = malloc(16 * sizeof(buton_t));
+    app->button = malloc(16 * sizeof(button_t));
     app->text = malloc(23 * sizeof(text_t));
     srand(time(NULL));
     app->game_clock = sfClock_create();

@@ -103,7 +103,7 @@ SRC =	src/main.c												\
 		src/text_and_button/set_text.c							\
 		src/text_and_button/set_button.c						\
 		src/app/menu/menu.c										\
-		src/app/menu/events/click_buton.c						\
+		src/app/menu/events/click_button.c						\
 		src/app/menu/events/poll_events_menu.c					\
 		src/app/setting/setting.c								\
 		src/app/setting/sound/parameter_sound.c					\
