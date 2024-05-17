@@ -111,9 +111,17 @@ typedef struct debug_s {
     bool fps;
 } debug_t;
 
+typedef enum e_state {
+    e_north = 0,
+    e_south = 1,
+    e_west = 2,
+    e_east = 3,
+} e_state_t;
+
 typedef struct entity_s {
     uint32_t type;
     sfVector2f pos;
+    e_state_t state;
 } entity_t;
 
 typedef struct player_s {

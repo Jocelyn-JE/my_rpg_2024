@@ -12,5 +12,6 @@ entity_t *create_entity(sfVector2f pos, uint32_t type)
 
     new_entity->pos = pos;
     new_entity->type = type;
+    new_entity->state = e_north;
     return new_entity;
 }

@@ -19,7 +19,9 @@ static void render_player(sfVertexArray *vertices, entity_t *entity)
 {
     sfVector2f pos = get_entity_chunk_coords(entity);
     float offset = 0.41 / 2;
-    sfVector2f texture_coords[] = {{295, 0}, {295, 240}, {176, 0}, {176, 240}};
+    sfVector2f texture_coords[] = {{295 + 176 * entity->state, 0}, {295 + 176 *
+        entity->state, 240}, {176 + 176 * entity->state, 0}, {176 + 176 *
+        entity->state, 240}};
     sfVertex vertices_data[] = {
         (sfVertex){cartesian_to_isometric(1 + pos.x - offset, 0 + pos.y +
             offset, 3.5, 100), sfWhite, texture_coords[0]},
