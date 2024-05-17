@@ -111,9 +111,17 @@ typedef struct debug_s {
     bool fps;
 } debug_t;
 
+typedef enum e_state {
+    e_north = 0,
+    e_south = 1,
+    e_west = 2,
+    e_east = 3,
+} e_state_t;
+
 typedef struct entity_s {
     uint32_t type;
     sfVector2f pos;
+    e_state_t state;
 } entity_t;
 
 typedef struct player_s {
@@ -167,6 +175,8 @@ void destroy_app(app_t *app);
 // Coordinates conversion
 sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
+sfVector2f get_chunk_coords(sfVector2f pos);
+block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
 
 // Other
 int get_random_nb(int min_value, int max_value);
@@ -175,7 +185,8 @@ void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
 void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
     int chunk_index);
-void handle_movement(player_t *player, entity_t *player_entity, sfTime dt);
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
+    game_t *game);
 void draw_chunks(chunk_t **chunks, app_t *app);
 void draw_game(app_t *app);
 

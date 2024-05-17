@@ -30,8 +30,9 @@ void manage_game_events(app_t *app, sfEvent *event)
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
-    drag_view(event, app->window, app->view);
-    handle_movement(player, app->game_ressources->entities->data, dt);
+    if (sfRenderWindow_hasFocus(app->window))
+        handle_movement(player, app->game_ressources->entities->data, dt,
+            app->game_ressources);
     update_blocks(app->game_ressources->block_types, dt);
     sfView_setCenter(app->view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));

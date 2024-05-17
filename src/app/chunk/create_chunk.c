@@ -39,7 +39,7 @@ static void add_entities(sfVertexArray *vertices, int index, list_t *entities,
         if ((int)floor(data->pos.x / 16) == chunk_coords.x &&
             (int)floor(data->pos.y / 16) == chunk_coords.y &&
             floor(entity_pos.x) == pos.x &&
-            floor(entity_pos.y) == pos.y && pos.z == 3) {
+            floor(entity_pos.y) == pos.y && pos.z == 2) {
             add_entity(vertices, index, data);
         }
     }

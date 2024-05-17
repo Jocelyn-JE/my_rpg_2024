@@ -15,6 +15,7 @@ SRC =	src/main.c												\
 		src/conversions/index_to_pos.c							\
 		src/conversions/clamp.c									\
 		src/conversions/random.c								\
+		src/conversions/get_chunk_coords.c						\
 		src/debug/print_fps.c									\
 		src/debug/mini_printf.c									\
 		src/debug/my_put_nbr.c									\
@@ -69,6 +70,7 @@ SRC =	src/main.c												\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\
+		src/app/chunk/get_block.c								\
 		src/app/entity/create_entity.c							\
 		src/app/entity/destroy_entity.c							\
 		src/app/entity/add_entity.c								\

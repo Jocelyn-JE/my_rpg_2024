@@ -12,26 +12,6 @@ static void set_player_entity_pos(player_t *player, entity_t *player_entity)
     player_entity->pos.y = player->pos.y;
 }
 
-static void move_left(player_t *player, float speed)
-{
-    player->pos.x -= speed;
-}
-
-static void move_right(player_t *player, float speed)
-{
-    player->pos.x += speed;
-}
-
-static void move_up(player_t *player, float speed)
-{
-    player->pos.y -= speed;
-}
-
-static void move_down(player_t *player, float speed)
-{
-    player->pos.y += speed;
-}
-
 static bool check_time(sfTime dt)
 {
     static sfTime prev_dt = {(sfInt64){0}};
@@ -43,28 +23,57 @@ static bool check_time(sfTime dt)
     return true;
 }
 
-static void move_player(player_t *player, float speed)
+static void move_left(player_t *player, float speed, e_state_t *player_state)
 {
-    int prev_x = round((player->pos.x - speed));
-    int next_x = round((player->pos.x + speed));
-    int prev_y = round((player->pos.y - speed));
-    int next_y = round((player->pos.y + speed));
-
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && (prev_x > 0 && next_y > 0) &&
-        (next_x <= 512.f && next_y < 512.f))
-        move_left(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyD) && (next_x > 0 && prev_y > 0) &&
-        (next_x < 512.f && next_y <= 512.f))
-        move_right(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && (prev_x > 0 && prev_y > 0) &&
-        (next_x <= 512.f && next_y <= 512.f))
-        move_up(player, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyS) && (next_x > 0 && next_y > 0) &&
-        (next_x < 512.f && next_y < 512.f))
-        move_down(player, speed);
+    player->pos.x -= speed;
+    *player_state = e_north;
 }
 
-void handle_movement(player_t *player, entity_t *player_entity, sfTime dt)
+static void move_right(player_t *player, float speed, e_state_t *player_state)
+{
+    player->pos.x += speed;
+    *player_state = e_south;
+}
+
+static void move_up(player_t *player, float speed, e_state_t *player_state)
+{
+    player->pos.y -= speed;
+    *player_state = e_east;
+}
+
+static void move_down(player_t *player, float speed, e_state_t *player_state)
+{
+    player->pos.y += speed;
+    *player_state = e_west;
+}
+
+static void move_player(player_t *player, float speed, game_t *game,
+    e_state_t *player_state)
+{
+    sfVector2i prev = {player->pos.x - speed, player->pos.y - speed};
+    sfVector2i next = {player->pos.x + speed, player->pos.y + speed};
+    block_t **blocks = game->block_types;
+
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && get_block((sfVector3f){prev.x,
+            player->pos.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){prev.x, player->pos.y, 2}, blocks, game->map)->solid)
+        move_left(player, speed, player_state);
+    if (sfKeyboard_isKeyPressed(sfKeyD) && get_block((sfVector3f){next.x,
+            player->pos.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){next.x, player->pos.y, 2}, blocks, game->map)->solid)
+        move_right(player, speed, player_state);
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && get_block((sfVector3f){
+            player->pos.x, prev.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){player->pos.x, prev.y, 2}, blocks, game->map)->solid)
+        move_up(player, speed, player_state);
+    if (sfKeyboard_isKeyPressed(sfKeyS) && get_block((sfVector3f){
+            player->pos.x, next.y, 1}, blocks, game->map)->solid && !get_block(
+            (sfVector3f){player->pos.x, next.y, 2}, blocks, game->map)->solid)
+        move_down(player, speed, player_state);
+}
+
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
+    game_t *game)
 {
     float speed = 0.04317f;
 
@@ -72,6 +81,6 @@ void handle_movement(player_t *player, entity_t *player_entity, sfTime dt)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLControl))
         speed = 0.07806f;
-    move_player(player, speed);
+    move_player(player, speed, game, &player_entity->state);
     set_player_entity_pos(player, player_entity);
 }
