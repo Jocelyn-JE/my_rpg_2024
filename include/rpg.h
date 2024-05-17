@@ -6,23 +6,93 @@
 */
 
 #pragma once
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <SFML/Audio.h>
-#include <SFML/System.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <math.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdio.h>
-#include <assert.h>
+
+#include "blocks.h"
 #include "linked_list.h"
 #include "mystr.h"
+#include <SFML/Audio.h>
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
+#include <SFML/Window.h>
+#include <fcntl.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+// Enumerations
+
+typedef enum p_items {
+    p_apple = 0,
+    p_arrow = 1,
+    p_diamond_axe = 2,
+    p_diamond_pickaxe = 3,
+    p_diamond_sword = 4,
+    p_diamond_helmet = 5,
+    p_diamond_chestplate = 6,
+    p_diamond_leggings = 7,
+    p_diamond_boots = 8,
+    p_iron_axe = 9,
+    p_iron_pickaxe = 10,
+    p_iron_sword = 11,
+    p_iron_helmet = 12,
+    p_iron_chestplate = 13,
+    p_iron_leggings = 14,
+    p_iron_boots = 15,
+    p_gold_axe = 16,
+    p_gold_pickaxe = 17,
+    p_gold_sword = 18,
+    p_gold_helmet = 19,
+    p_gold_chestplate = 20,
+    p_gold_leggings = 21,
+    p_gold_boots = 22,
+    p_netherite_axe = 23,
+    p_netherite_pickaxe = 24,
+    p_netherite_sword = 25,
+    p_netherite_helmet = 26,
+    p_netherite_chestplate = 27,
+    p_netherite_leggings = 28,
+    p_netherite_boots = 29,
+} p_items_t;
 
 // Structures
+
+typedef struct inventory_params_s {
+    sfVector2f world_pos;
+    sfVector2f center;
+    sfVector2f size;
+    float scale;
+    float offset_X;
+    float offset_Y;
+    float slot_width;
+    float slot_height;
+    float spacing;
+} inventory_params_t;
+
+typedef struct item_s {
+    p_items_t current_item;
+    sfSprite *sprite;
+    sfText *quantity_text;
+    int limit;
+    int quantity;
+} item_t;
+
+typedef struct inventory_s {
+    sfSprite *background;
+    int selected_slot;
+    sfSprite *hotbar;
+    sfSprite *selection;
+    sfSprite *trash;
+    int dragging_slot;
+    item_t *dragged_item;
+    item_t *armor[4];
+    item_t *slots[36];
+    int current_item_slot;
+    int current_armor_slot;
+} inventory_t;
 
 typedef struct vector3uint8_s {
     uint8_t x;
@@ -38,25 +108,34 @@ typedef struct chunk_s {
 } chunk_t;
 
 typedef struct debug_s {
-    bool wireframe;
     bool bounding_box;
     bool fps;
 } debug_t;
 
-typedef struct app_s {
-    debug_t *debug_options;
-    sfRenderWindow *window;
-    sfView *view;
-    sfClock *game_clock;
+typedef struct entity_s {
+    uint32_t type;
+    sfVector2f pos;
+} entity_t;
+
+typedef struct player_s {
+    sfVector2f pos;
+} player_t;
+
+typedef struct game_s {
     sfTexture *block_atlas;
-    list_t *map;
-    struct menu_s *menu;
-    struct buton_s *buton;
-    struct event_s *event;
-    struct logo_s *logo;
-    struct text_s *text;
-    struct sound_s *sound;
-} app_t;
+    block_t **block_types;
+    list_t *entities;
+    chunk_t **map;
+    player_t *player;
+} game_t;
+
+typedef struct logo_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f *position;
+    sfVector2f scale;
+    sfColor color;
+} logo_t;
 
 typedef struct menu_s {
     sfSprite *backsprite;
@@ -95,46 +174,70 @@ typedef struct event_s {
     sfEvent event;
 } event_t;
 
-typedef struct logo_s {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f *position;
-    sfVector2f scale;
-    sfColor color;
-} logo_t;
-// Create / init functions
+typedef struct app_s {
+    float zoom;
+    sfRenderWindow *window;
+    sfView *view;
+    sfClock *game_clock;
+    sfTexture *block_atlas;
+    list_t *map;
+    struct menu_s *menu;
+    struct buton_s *buton;
+    struct event_s *event;
+    struct logo_s *logo;
+    struct text_s *text;
+    struct sound_s *sound;
+    debug_t *debug_options;
+    game_t *game_ressources;
+    inventory_t *inventory;
+    sfFont **fonts;
+    void (*game_handler)(struct app_s *);
+    void (*event_handler)(struct app_s *, sfEvent *);
+} app_t;
 
+// Handlers
+
+typedef void (*event_handler_t)(sfEvent *event, app_t *app);
+void draw_game(app_t *app);
+void poll_events(app_t *app, sfEvent *event);
+void poll_events_ingame(app_t *app, sfEvent *event);
+
+// Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
 app_t *create_app(void);
-void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks);
-chunk_t *create_chunk(sfTexture *atlas);
+void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
+    block_t **block_types);
+entity_t *create_entity(sfVector2f pos, uint32_t type);
+chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
+block_t **init_blocks(void);
 
 // Destroy / free functions
 
+void draw_chunks(chunk_t **list, app_t *app);
+void destroy_entity(entity_t *entity);
 void destroy_chunk(chunk_t *chunk);
+void destroy_block(block_t *block);
 void destroy_app(app_t *app);
 
 // Coordinates conversion
-
 sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
 
 // Other
-
 int get_random_nb(int min_value, int max_value);
-void poll_events(app_t *app, sfEvent *event);
-void splash_screen(app_t *a);
 double clamp(double d, double min, double max);
-void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2f size);
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
-void handle_resized(sfEvent *event, app_t *app);
+void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
+void handle_movement(player_t *player, entity_t *player_entity, sfTime dt);
 
 // Menu
 
+void poll_events_splashscreen(app_t *app, sfEvent *event);
+void splash_screen(app_t *app);
 void text_menu(app_t *app);
 void menu(app_t *app);
 void set_buton(app_t *app);
@@ -160,15 +263,61 @@ void text_video(app_t *app);
 void poll_events_volume(app_t *app, sfEvent *event);
 void parameter_sound(app_t *app);
 void set_buton_sound(app_t *app);
-void set_music(app_t *app);
 void text_sound(app_t *app);
+double clamp(double d, double min, double max);
+void get_letterbox_view(sfView *view, sfVector2f size);
+void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
+    int chunk_index);
 
 // Debug
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);
 
 // Conversions
-
 int get_index_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
+int get_chunk_index_from_coordinates(int x, int y);
+sfVector2i get_chunk_coordinates_from_index(int index);
+
+// Entities
+
+void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
+sfVector2f get_entity_chunk_coords(entity_t *entity);
+int get_slot_index(int, int, app_t *);
+int get_armor_index(int, int, app_t *);
+
+// Inventory
+void setup_inventory(app_t *);
+void draw_inventory(app_t *);
+void draw_hotbar(app_t *);
+void draw_bounds(sfRenderWindow *, sfSprite *, float);
+float adjust_sprite_scale(inventory_t *, float, float);
+bool add_item_to_inventory(inventory_t *, item_t *, int);
+inventory_params_t setup_inventory_params(int, int, app_t *);
+inventory_params_t setup_armor_params(int, int, app_t *);
+bool is_helmet(p_items_t);
+bool is_chestplate(p_items_t);
+bool is_leggings(p_items_t);
+bool is_boots(p_items_t);
+void draw_highlighted_slot(app_t *);
+void manage_dragged_item(app_t *, sfVector2f, float, float);
+void free_item(item_t *);
+void free_inventory(inventory_t *);
+item_t *copy_item(item_t *);
+
+//Events
+void initialize_event_handlers(void);
+void handle_mouse_button(sfEvent *, app_t *);
+void handle_closed(sfEvent *, app_t *);
+void handle_resized(sfEvent *, app_t *);
+void handle_mouse_wheeling(sfEvent *, app_t *);
+void handle_key_pressed(sfEvent *, app_t *);
+void handle_mouse_moved(sfEvent *, app_t *);
+void manage_armor_slots(app_t *, sfEvent *);
+void manage_game_events(app_t *, sfEvent *);
+void manage_invent_events(app_t *, sfEvent *);
+void handle_key_pressed_game(sfEvent *, app_t *);
+void case_picking(app_t *, int, sfVector2f);
+void handle_mouse_button_right(app_t *, sfEvent *);

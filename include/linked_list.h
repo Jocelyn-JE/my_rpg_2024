@@ -17,3 +17,4 @@ void list_del(list_t **list, void *ptr);
 void destroy_list(list_t *list);
 void free_list(list_t *list, void (*free_func)());
 int list_len(list_t *start);
+void list_reverse(list_t **begin);

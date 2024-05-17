@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
-** rpg
+** EPITECH PROJECT, 2023
+** rpg: handle_resized.c
 ** File description:
-** handle_resized
+** functions for handling window resize
 */
 
-#include "rpg.h"
+#include "../../include/rpg.h"
 
 void handle_resized(sfEvent *event, app_t *app)
 {

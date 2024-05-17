@@ -4,7 +4,7 @@
 ** File description:
 ** print_fps
 */
-#include "rpg.h"
+#include "../../include/rpg.h"
 
 void print_framerate(void)
 {
@@ -19,7 +19,7 @@ void print_framerate(void)
     }
     elapsed = sfClock_getElapsedTime(clock);
     if (sfTime_asSeconds(elapsed) >= 1) {
-        printf("%3d FPS\r", fps);
+        printf("FPS: %3d\n", fps);
         fflush(stdout);
         fps = 0;
         sfClock_restart(clock);
