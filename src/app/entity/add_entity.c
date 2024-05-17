@@ -15,26 +15,25 @@ sfVector2f get_entity_chunk_coords(entity_t *entity)
     return pos;
 }
 
-static void render_player(sfVertexArray *vertices, entity_t *entity)
+static void render_player(sfVertexArray *vertices, entity_t *entity,
+    e_state_t dir)
 {
     sfVector2f pos = get_entity_chunk_coords(entity);
-    float offset = 0.41 / 2;
-    sfVector2f texture_coords[] = {{295 + 176 * entity->state, 0}, {295 + 176 *
-        entity->state, 240}, {176 + 176 * entity->state, 0}, {176 + 176 *
-        entity->state, 240}};
+    sfVector2f texture_coords[] = {{295 + 119 * dir, 0}, {295 + 119 * dir, 240}
+        , {176 + 119 * dir, 0}, {176 + 119 * dir, 240}};
     sfVertex vertices_data[] = {
-        (sfVertex){cartesian_to_isometric(1 + pos.x - offset, 0 + pos.y +
-            offset, 3.5, 100), sfWhite, texture_coords[0]},
-        (sfVertex){cartesian_to_isometric(2 + pos.x - offset, 1 + pos.y +
-            offset, 2.5, 100), sfWhite, texture_coords[1]},
-        (sfVertex){cartesian_to_isometric(0 + pos.x + offset, 1 + pos.y -
-            offset, 3.5, 100), sfWhite, texture_coords[2]},
-        (sfVertex){cartesian_to_isometric(0 + pos.x + offset, 1 + pos.y -
-            offset, 3.5, 100), sfWhite, texture_coords[2]},
-        (sfVertex){cartesian_to_isometric(1 + pos.x + offset, 2 + pos.y -
-            offset, 2.5, 100), sfWhite, texture_coords[3]},
-        (sfVertex){cartesian_to_isometric(2 + pos.x - offset, 1 + pos.y +
-            offset, 2.5, 100), sfWhite, texture_coords[1]},
+        (sfVertex){cartesian_to_isometric(1 + pos.x - 0.205, 0 + pos.y +
+            0.205, 3.5, 100), sfWhite, texture_coords[0]},
+        (sfVertex){cartesian_to_isometric(2 + pos.x - 0.205, 1 + pos.y +
+            0.205, 2.5, 100), sfWhite, texture_coords[1]},
+        (sfVertex){cartesian_to_isometric(0 + pos.x + 0.205, 1 + pos.y -
+            0.205, 3.5, 100), sfWhite, texture_coords[2]},
+        (sfVertex){cartesian_to_isometric(0 + pos.x + 0.205, 1 + pos.y -
+            0.205, 3.5, 100), sfWhite, texture_coords[2]},
+        (sfVertex){cartesian_to_isometric(1 + pos.x + 0.205, 2 + pos.y -
+            0.205, 2.5, 100), sfWhite, texture_coords[3]},
+        (sfVertex){cartesian_to_isometric(2 + pos.x - 0.205, 1 + pos.y +
+            0.205, 2.5, 100), sfWhite, texture_coords[1]},
     };
 
     for (int i = 0; i < sizeof(vertices_data) / sizeof(vertices_data[0]); i++)
@@ -44,5 +43,5 @@ static void render_player(sfVertexArray *vertices, entity_t *entity)
 void add_entity(sfVertexArray *vertices, int index, entity_t *entity)
 {
     if (entity->type == e_player)
-        render_player(vertices, entity);
+        render_player(vertices, entity, entity->state);
 }
