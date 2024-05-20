@@ -24,6 +24,13 @@ static void add_face(sfVertexArray *vertices, vector3uint8_t pos,
     }
 }
 
+static bool is_cullable(block_t *current_block, block_t **block_types)
+{
+    if (current_block == block_types[b_water])
+        return false;
+    return true;
+}
+
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types)
 {
@@ -31,16 +38,16 @@ void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t *current_block = block_types[blocks[index]];
 
     if ((!(pos.z + 1 > 15 || pos.x + 1 > 15 || pos.y + 1 > 15) &&
-        !block_types[blocks[get_index_from_pos(pos.x + 1, pos.y + 1, pos.z +
+        !block_types[blocks[get_idx_from_pos(pos.x + 1, pos.y + 1, pos.z +
         1)]]->transparent))
         return;
-    if (pos.z + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x,
-        pos.y, pos.z + 1)]]->transparent)
+    if (pos.z + 1 > 15 || block_types[blocks[get_idx_from_pos(pos.x, pos.y,
+        pos.z + 1)]]->transparent || !is_cullable(current_block, block_types))
         add_face(vertices, pos, current_block->faces[0], 1);
-    if (pos.x + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x + 1,
-        pos.y, pos.z)]]->transparent)
+    if (pos.x + 1 > 15 || block_types[blocks[get_idx_from_pos(pos.x + 1, pos.y,
+        pos.z)]]->transparent || !is_cullable(current_block, block_types))
         add_face(vertices, pos, current_block->faces[1], 0.6);
-    if (pos.y + 1 > 15 || block_types[blocks[get_index_from_pos(pos.x,
-        pos.y + 1, pos.z)]]->transparent)
+    if (pos.y + 1 > 15 || block_types[blocks[get_idx_from_pos(pos.x, pos.y + 1,
+        pos.z)]]->transparent || !is_cullable(current_block, block_types))
         add_face(vertices, pos, current_block->faces[2], 0.8);
 }

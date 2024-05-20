@@ -17,6 +17,6 @@ block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map)
         coords.y});
 
     return block_types[map[get_chunk_index_from_coordinates(coords.x / 16,
-        coords.y / 16)]->blocks[get_index_from_pos(chunk_coords.x,
+        coords.y / 16)]->blocks[get_idx_from_pos(chunk_coords.x,
         chunk_coords.y, coords.z)]];
 }

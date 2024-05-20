@@ -6,7 +6,7 @@
 */
 #include "rpg.h"
 
-int get_index_from_pos(int x, int y, int z)
+int get_idx_from_pos(int x, int y, int z)
 {
     return (z * 256) + (y * 16) + x;
 }
