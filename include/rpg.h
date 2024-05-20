@@ -200,9 +200,6 @@ typedef struct app_s {
 // Handlers
 
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
-void draw_game(app_t *app);
-void poll_events(app_t *app, sfEvent *event);
-void poll_events_ingame(app_t *app, sfEvent *event);
 
 // Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
@@ -215,7 +212,6 @@ block_t **init_blocks(void);
 
 // Destroy / free functions
 
-void draw_chunks(chunk_t **list, app_t *app);
 void destroy_entity(entity_t *entity);
 void destroy_chunk(chunk_t *chunk);
 void destroy_block(block_t *block);
@@ -239,14 +235,7 @@ void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
-void draw_chunks(chunk_t **chunks, app_t *app);
-void draw_game(app_t *app);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
-
-// Splashscreen
-
-void draw_splashscreen(app_t *app);
-void poll_events_splashscreen(app_t *app, sfEvent *event);
 
 // Menu
 
@@ -260,7 +249,6 @@ void destroy_menu(app_t *app);
 
 // Setting
 
-void poll_events_setting(app_t *app, sfEvent *event);
 void setting(app_t *app);
 void set_button_setting(app_t *app);
 void text_setting(app_t *app);
@@ -273,13 +261,13 @@ void text_video(app_t *app);
 
 // Musique
 
-void poll_events_volume(app_t *app, sfEvent *event);
 void parameter_sound(app_t *app);
 void set_button_sound(app_t *app);
 void text_sound(app_t *app);
 
 
 // Debug
+
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
@@ -299,6 +287,7 @@ int get_slot_index(int, int, app_t *);
 int get_armor_index(int, int, app_t *);
 
 // Inventory
+
 void setup_inventory(app_t *);
 void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
@@ -317,8 +306,21 @@ void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
 
+//Poll event functions
+
+void poll_events(app_t *app, sfEvent *event);
+void poll_events_splashscreen(app_t *app, sfEvent *event);
+void poll_events_setting(app_t *app, sfEvent *event);
+void poll_events_volume(app_t *app, sfEvent *event);
+
+//Draw functions
+
+void draw_chunks(chunk_t **chunks, app_t *app);
+void draw_game(app_t *app);
+void draw_splashscreen(app_t *app);
+
 //Events
-void initialize_event_handlers(void);
+
 void handle_mouse_button(sfEvent *, app_t *);
 void handle_closed(sfEvent *, app_t *);
 void handle_resized(sfEvent *, app_t *);
