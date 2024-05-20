@@ -9,11 +9,11 @@
 
 static void setup_global_handlers(app_t *app)
 {
-    app->game_handler = draw_game;
-    app->event_handler = manage_game_events;
+    app->game_handler = draw_splashscreen;
+    app->event_handler = poll_events_splashscreen;
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
     app_t *app = create_app();
     sfEvent events;
@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     while (sfRenderWindow_isOpen(app->window)) {
         app->event_handler(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);
-        sfRenderWindow_setView(app->window, app->view);
         app->game_handler(app);
         sfRenderWindow_display(app->window);
     }

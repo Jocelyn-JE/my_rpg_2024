@@ -29,12 +29,13 @@ static void place_chunks(chunk_t **chunks)
     }
 }
 
-static sfView *create_view(sfVector2f res, sfVector2f pos)
+static sfView *create_view(sfVector2f res)
 {
     sfView *view = sfView_create();
 
+    sfView_setCenter(view, (sfVector2f){res.x / 2, res.y / 2});
     sfView_setSize(view, (sfVector2f){res.x, res.y});
-    get_letterbox_view(view, (sfVector2f){res.x, res.y});
+    get_letterbox_view(view, (sfVector2u){res.x, res.y});
     return view;
 }
 
@@ -61,11 +62,29 @@ static game_t *init_game(void)
     list_add(&new_game->entities, create_entity(new_game->player->pos,
         e_player));
     for (int i = 0; i != 32 * 32; i++)
-        new_game->map[i] = create_chunk(new_game->block_atlas,
-            new_game->block_types, map_fd);
+        new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
     place_chunks(new_game->map);
     return new_game;
+}
+
+static sound_t *init_sound(void)
+{
+    sound_t *sound = malloc(sizeof(sound_t));
+
+    sound->volume_general = 0;
+    sound->volume_music = 0;
+    sound->volume_effect = 0;
+    return sound;
+}
+
+static sfFont **init_fonts(void)
+{
+    sfFont **fonts = malloc(sizeof(sfFont *) * 1);
+
+    fonts[0] = sfFont_createFromFile(
+        "assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
+    return fonts;
 }
 
 app_t *create_app(void)
@@ -73,21 +92,20 @@ app_t *create_app(void)
     app_t *app = malloc(sizeof(app_t));
     sfVector2f res = {1920, 1080};
 
-    app->logo = malloc(sizeof(logo_t));
+    srand(time(NULL));
+    app->logo = create_logo();
     app->menu = malloc(sizeof(menu_t));
-    app->sound = malloc(sizeof(sound_t));
+    app->sound = init_sound();
     app->button = malloc(16 * sizeof(button_t));
     app->text = malloc(23 * sizeof(text_t));
-    srand(time(NULL));
     app->game_clock = sfClock_create();
     app->game_ressources = init_game();
+    app->game_view = create_view(res);
+    app->view = create_view(res);
+    app->window = create_window(res, 32);
     app->zoom = 1.0f;
     app->debug_options = init_debug_options();
-    app->view = create_view(res, app->game_ressources->player->pos);
-    app->window = create_window(res, 32);
-    app->fonts = malloc(sizeof(sfFont *) * 1);
-    app->fonts[0] = sfFont_createFromFile
-        ("assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
+    app->fonts = init_fonts();
     sfRenderWindow_setView(app->window, app->view);
     setup_inventory(app);
     return app;

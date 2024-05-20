@@ -9,6 +9,6 @@
 
 void handle_resized(sfEvent *event, app_t *app)
 {
-    get_letterbox_view(app->view,
-        (sfVector2f){event->size.width, event->size.height});
+    get_letterbox_view(app->game_view,
+        (sfVector2u){event->size.width, event->size.height});
 }

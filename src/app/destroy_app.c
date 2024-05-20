@@ -23,7 +23,7 @@ static void destroy_game_ressources(game_t *game)
 void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
-    sfView_destroy(app->view);
+    sfView_destroy(app->game_view);
     sfClock_destroy(app->game_clock);
     destroy_game_ressources(app->game_ressources);
     free_inventory(app->inventory);

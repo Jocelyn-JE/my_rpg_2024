@@ -12,9 +12,9 @@ inventory_params_t setup_armor_params(int x, int y, app_t *app)
     inventory_params_t params;
 
     params.world_pos = sfRenderWindow_mapPixelToCoords(
-        app->window, (sfVector2i){x, y}, app->view);
-    params.center = sfView_getCenter(app->view);
-    params.size = sfView_getSize(app->view);
+        app->window, (sfVector2i){x, y}, app->game_view);
+    params.center = sfView_getCenter(app->game_view);
+    params.size = sfView_getSize(app->game_view);
     params.scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
     params.offset_X = 640.5 * params.scale;
     params.offset_Y = 239 * params.scale;
@@ -24,8 +24,8 @@ inventory_params_t setup_armor_params(int x, int y, app_t *app)
     return params;
 }
 
-static int thing_indexing(sfVector2f start_cor, int column,
-    int row, inventory_params_t params)
+static int thing_indexing(sfVector2f start_cor, int row,
+    inventory_params_t params)
 {
     float slotLeft = start_cor.x;
     float slotTop = start_cor.y + row * (params.slot_height + params.spacing);
@@ -44,12 +44,11 @@ static int calculate_slot_index(inventory_params_t params)
     float start_x = params.center.x - params.size.x / 2 + params.offset_X;
     float start_y = params.center.y - params.size.y / 2 + params.offset_Y;
     sfVector2f start_cor = {start_x, start_y};
-    int column = 0;
     int row = (int)((params.world_pos.y - start_y) /
         (params.slot_height + params.spacing));
 
     if (row >= 0 && row < 4) {
-        return thing_indexing(start_cor, column, row, params);
+        return thing_indexing(start_cor, row, params);
     }
     return -1;
 }

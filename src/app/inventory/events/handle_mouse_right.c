@@ -98,7 +98,7 @@ void handle_mouse_button_right(app_t *app, sfEvent *event)
         get_slot_index(event->mouseButton.x, event->mouseButton.y, app);
     sfVector2i pixel_pos = {event->mouseButton.x, event->mouseButton.y};
     sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(
-        app->window, pixel_pos, app->view);
+        app->window, pixel_pos, app->game_view);
 
     if (slot_index == -1)
         return;

@@ -23,7 +23,7 @@ static void set_dragged_to_null(app_t *app)
     }
 }
 
-void manage_inventory_input(app_t *app, sfEvent *event)
+void manage_inventory_input(app_t *app)
 {
     app->event_handler = manage_game_events;
     app->game_handler = draw_game;
@@ -33,5 +33,5 @@ void manage_inventory_input(app_t *app, sfEvent *event)
 void handle_key_pressed(sfEvent *event, app_t *app)
 {
     if (event->key.code == sfKeyE)
-        manage_inventory_input(app, event);
+        manage_inventory_input(app);
 }

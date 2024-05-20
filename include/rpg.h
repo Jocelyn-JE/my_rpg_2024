@@ -181,6 +181,7 @@ typedef struct text_s {
 typedef struct app_s {
     float zoom;
     sfRenderWindow *window;
+    sfView *game_view;
     sfView *view;
     sfClock *game_clock;
     menu_t *menu;
@@ -209,7 +210,7 @@ app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
 entity_t *create_entity(sfVector2f pos, uint32_t type);
-chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
+chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
 // Destroy / free functions
@@ -230,11 +231,11 @@ block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
 int get_random_nb(int min_value, int max_value);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
-void get_letterbox_view(sfView *view, sfVector2f size);
+void get_letterbox_view(sfView *view, sfVector2u size);
 void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
     int chunk_index);
 void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
-    game_t *game); 
+    game_t *game);
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
@@ -242,10 +243,14 @@ void draw_chunks(chunk_t **chunks, app_t *app);
 void draw_game(app_t *app);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
 
+// Splashscreen
+
+void draw_splashscreen(app_t *app);
+void poll_events_splashscreen(app_t *app, sfEvent *event);
+
 // Menu
 
-void poll_events_splashscreen(app_t *app, sfEvent *event);
-void splash_screen(app_t *app);
+logo_t *create_logo(void);
 void text_menu(app_t *app);
 void menu(app_t *app);
 void set_button(app_t *app);
@@ -288,7 +293,7 @@ sfVector2i get_chunk_coordinates_from_index(int index);
 
 // Entities
 
-void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
+void add_entity(sfVertexArray *vertices, entity_t *entity);
 sfVector2f get_entity_chunk_coords(entity_t *entity);
 int get_slot_index(int, int, app_t *);
 int get_armor_index(int, int, app_t *);

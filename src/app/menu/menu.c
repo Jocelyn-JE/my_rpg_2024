@@ -47,19 +47,22 @@ static void draw_button(app_t *app)
     sfRenderWindow_drawText(app->window, app->text[2].text, NULL);
 }
 
-void set_menu_sprite(app_t *app)
+menu_t *create_menu(app_t *app)
 {
-    set_menu(app->menu);
+    menu_t *menu = malloc(sizeof(menu_t));
+
+    set_menu(menu);
     set_button(app);
-    set_title(app->logo);
     text_menu(app);
+    return menu;
 }
 
 void menu(app_t *app)
 {
     sfEvent events;
 
-    set_menu_sprite(app);
+    set_title(app->logo);
+    app->menu = create_menu(app);
     while (sfRenderWindow_isOpen(app->window)) {
         manage_events_menu(app, &events);
         sfRenderWindow_clear(app->window, sfBlack);

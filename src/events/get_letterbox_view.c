@@ -6,7 +6,7 @@
 */
 #include "../include/rpg.h"
 
-void get_letterbox_view(sfView *view, sfVector2f size)
+void get_letterbox_view(sfView *view, sfVector2u size)
 {
     float windowRatio = (float)size.x / (float)size.y;
     float viewRatio = (float)sfView_getSize(view).x /

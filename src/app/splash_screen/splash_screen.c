@@ -7,35 +7,39 @@
 
 #include "rpg.h"
 
-static void create_logo(app_t *app)
+logo_t *create_logo(void)
 {
-    sfVector2f pos_logo = {127, -100};
-    sfVector2f scale_logo = {1, 1};
+    logo_t *logo = malloc(sizeof(logo_t));
+    sfFloatRect rect;
 
-    app->logo->sprite = sfSprite_create();
-    app->logo->texture = sfTexture_createFromFile("asset"
-    "s/widgets/logo.png", NULL);
-    sfSprite_setScale(app->logo->sprite, scale_logo);
-    sfSprite_setPosition(app->logo->sprite, pos_logo);
-    sfSprite_setTexture(app->logo->sprite, app->logo->texture, sfTrue);
+    logo->sprite = sfSprite_create();
+    logo->texture = sfTexture_createFromFile("assets/widgets/logo.png", NULL);
+    sfSprite_setTexture(logo->sprite, logo->texture, sfTrue);
+    rect = sfSprite_getGlobalBounds(logo->sprite);
+    sfSprite_setOrigin(logo->sprite, (sfVector2f){rect.width / 2,
+        rect.height / 2});
+    sfSprite_setScale(logo->sprite, (sfVector2f){1, 1});
+    sfSprite_setPosition(logo->sprite, (sfVector2f){1920 / 2, 1080 / 2});
+    return logo;
 }
 
 static void animation_splash(app_t *app, sfClock *clock)
 {
     sfTime finished = sfClock_getElapsedTime(clock);
     float seconds = sfTime_asSeconds(finished);
+    static sfColor color = {255, 255, 255, 0};
 
-    if (seconds < 0.03)
+    if (seconds < 0.01)
         return;
-    if (app->logo->color.a > 254 || sfKeyboard_isKeyPressed(sfKeySpace))
-        menu(app);
-    if (app->logo->color.a < 255) {
-        app->logo->color.a += 1.6;
-        if (app->logo->color.a > 255) {
-            app->logo->color.a = 255;
-            menu(app);
-        }
-        sfSprite_setColor(app->logo->sprite, app->logo->color);
+    if (color.a == 255 || sfKeyboard_isKeyPressed(sfKeySpace)) {
+        app->event_handler = manage_game_events;
+        app->game_handler = draw_game;
+        get_letterbox_view(app->game_view,
+            sfRenderWindow_getSize(app->window));
+    }
+    if (color.a < 255) {
+        color.a += 1.5;
+        sfSprite_setColor(app->logo->sprite, color);
         sfClock_restart(clock);
     }
 }
@@ -43,31 +47,18 @@ static void animation_splash(app_t *app, sfClock *clock)
 void poll_events_splashscreen(app_t *app, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(app->window, event) &&
-        sfRenderWindow_hasFocus(app->window))
+        sfRenderWindow_hasFocus(app->window)) {
         if (event->type == sfEvtClosed)
             sfRenderWindow_close(app->window);
+        if (event->type == sfEvtResized)
+            get_letterbox_view(app->view,
+                (sfVector2u){event->size.width, event->size.height});
+    }
+    animation_splash(app, app->game_clock);
+    sfRenderWindow_setView(app->window, app->view);
 }
 
-void splash_screen(app_t *app)
+void draw_splashscreen(app_t *app)
 {
-    sfView *view = sfView_createFromRect((sfFloatRect){0, 0, 1920, 1080});
-    static sfClock *clock = NULL;
-    sfEvent events;
-
-    app->sound->volume_general = 0;
-    app->sound->volume_music = 0;
-    app->sound->volume_effect = 0;
-    if (clock == NULL)
-        clock = sfClock_create();
-    create_logo(app);
-    app->logo->color = sfSprite_getColor(app->logo->sprite);
-    app->logo->color.a = 0;
-    sfRenderWindow_setView(app->window, view);
-    while (sfRenderWindow_isOpen(app->window)) {
-        poll_events_splashscreen(app, &events);
-        sfRenderWindow_clear(app->window, sfWhite);
-        animation_splash(app, clock);
-        sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
-        sfRenderWindow_display(app->window);
-    }
+    sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
 }

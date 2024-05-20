@@ -34,8 +34,8 @@ void handle_mouse_moved(sfEvent *event, app_t *app)
 {
     int slot_index = 0;
     sfVector2i pixel_pos = {event->mouseMove.x, event->mouseMove.y};
-    sfVector2f world_pos =
-        sfRenderWindow_mapPixelToCoords(app->window, pixel_pos, app->view);
+    sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(app->window,
+        pixel_pos, app->game_view);
 
     manage_dragged_item(app, world_pos, 0.f, 1.0f);
     slot_index = get_slot_index(event->mouseMove.x, event->mouseMove.y, app);

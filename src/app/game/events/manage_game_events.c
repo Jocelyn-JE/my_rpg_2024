@@ -34,6 +34,7 @@ void manage_game_events(app_t *app, sfEvent *event)
         handle_movement(player, app->game_ressources->entities->data, dt,
             app->game_ressources);
     update_blocks(app->game_ressources->block_types, dt);
-    sfView_setCenter(app->view, cartesian_to_isometric(player->pos.x + 16,
+    sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));
+    sfRenderWindow_setView(app->window, app->game_view);
 }
