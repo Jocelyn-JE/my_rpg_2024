@@ -94,7 +94,6 @@ app_t *create_app(void)
 
     srand(time(NULL));
     app->logo = create_logo();
-    app->menu = malloc(sizeof(menu_t));
     app->sound = init_sound();
     app->button = malloc(16 * sizeof(button_t));
     app->text = malloc(23 * sizeof(text_t));
@@ -106,6 +105,7 @@ app_t *create_app(void)
     app->zoom = 1.0f;
     app->debug_options = init_debug_options();
     app->fonts = init_fonts();
+    app->menu = create_menu(app);
     sfRenderWindow_setView(app->window, app->view);
     setup_inventory(app);
     return app;

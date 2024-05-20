@@ -7,6 +7,15 @@
 
 #include "rpg.h"
 
+void switch_to_menu(app_t *app)
+{
+    app->event_handler = manage_events_menu;
+    app->draw_function = draw_menu;
+    sfSprite_setColor(app->logo->sprite, sfWhite);
+    sfSprite_setPosition(app->logo->sprite, (sfVector2f){1920 / 2, 1080 / 4});
+    get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
+}
+
 static void set_menu(menu_t *menu)
 {
     sfVector2f pos_menu = {0, 0};
@@ -21,30 +30,20 @@ static void set_menu(menu_t *menu)
     sfSprite_setTexture(menu->backsprite, menu->backtexture, sfTrue);
 }
 
-static void set_title(logo_t *logo)
+static void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text)
 {
-    sfVector2f pos_title = {127, -300};
-    sfVector2f scale_title = {1, 1};
-
-    logo->sprite = sfSprite_create();
-    logo->texture = sfTexture_createFromFile("assets/widgets/"
-        "logo.png", NULL);
-    logo->scale = scale_title;
-    sfSprite_setScale(logo->sprite, logo->scale);
-    sfSprite_setPosition(logo->sprite, pos_title);
-    sfSprite_setTexture(logo->sprite, logo->texture, sfTrue);
+    sfRenderWindow_drawSprite(window, sprite, NULL);
+    sfRenderWindow_drawText(window, text, NULL);
 }
 
-static void draw_button(app_t *app)
+void draw_menu(app_t *app)
 {
+    sfRenderWindow_clear(app->window, sfBlack);
     sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
     sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
-    sfRenderWindow_drawSprite(app->window, app->button[0].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[0].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->button[1].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[1].text, NULL);
-    sfRenderWindow_drawSprite(app->window, app->button[2].sprite, NULL);
-    sfRenderWindow_drawText(app->window, app->text[2].text, NULL);
+    draw_button(app->window, app->button[0].sprite, app->text[0].text);
+    draw_button(app->window, app->button[1].sprite, app->text[1].text);
+    draw_button(app->window, app->button[2].sprite, app->text[2].text);
 }
 
 menu_t *create_menu(app_t *app)
@@ -55,18 +54,4 @@ menu_t *create_menu(app_t *app)
     set_button(app);
     text_menu(app);
     return menu;
-}
-
-void menu(app_t *app)
-{
-    sfEvent events;
-
-    set_title(app->logo);
-    app->menu = create_menu(app);
-    while (sfRenderWindow_isOpen(app->window)) {
-        manage_events_menu(app, &events);
-        sfRenderWindow_clear(app->window, sfBlack);
-        draw_button(app);
-        sfRenderWindow_display(app->window);
-    }
 }

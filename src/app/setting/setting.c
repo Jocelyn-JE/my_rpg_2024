@@ -49,8 +49,7 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
         mouse_pos.x, mouse_pos.y))
         parameter_video(app);
     if (sfFloatRect_contains(&app->button[5].hitbox,
-        mouse_pos.x, mouse_pos.y))
-        menu(app);
+        mouse_pos.x, mouse_pos.y));
 }
 
 static void handle_events_setting(app_t *app, sfEvent *event)

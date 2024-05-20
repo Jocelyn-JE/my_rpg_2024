@@ -22,4 +22,6 @@ static void update_debug_options(sfKeyEvent *event, debug_t *options)
 void handle_key_pressed_game(sfEvent *event, app_t *app)
 {
     update_debug_options(&event->key, app->debug_options);
+    if (event->key.code == sfKeyEscape)
+        switch_to_menu(app);
 }

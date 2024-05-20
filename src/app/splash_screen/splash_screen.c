@@ -23,13 +23,6 @@ logo_t *create_logo(void)
     return logo;
 }
 
-static void go_to_next_scene(app_t *app)
-{
-    app->event_handler = manage_game_events;
-    app->draw_function = draw_game;
-    get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
-}
-
 static void animation_splash(app_t *app, sfClock *clock)
 {
     sfTime finished = sfClock_getElapsedTime(clock);
@@ -39,7 +32,7 @@ static void animation_splash(app_t *app, sfClock *clock)
     if (seconds < 0.01)
         return;
     if (color.a == 255)
-        go_to_next_scene(app);
+        return switch_to_menu(app);
     if (color.a < 255) {
         color.a += 1.5;
         sfSprite_setColor(app->logo->sprite, color);
@@ -58,7 +51,7 @@ void poll_events_splashscreen(app_t *app, sfEvent *event)
                 (sfVector2u){event->size.width, event->size.height});
         if (event->type == sfEvtKeyPressed ||
             event->type == sfEvtMouseButtonPressed)
-            go_to_next_scene(app);
+            return switch_to_menu(app);
     }
     animation_splash(app, app->game_clock);
     sfRenderWindow_setView(app->window, app->view);

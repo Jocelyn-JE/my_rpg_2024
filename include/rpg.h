@@ -239,6 +239,7 @@ void set_text(app_t *app, sfVector2f position, char *filename, int i);
 
 // Menu
 
+menu_t *create_menu(app_t *app);
 logo_t *create_logo(void);
 void text_menu(app_t *app);
 void menu(app_t *app);
@@ -318,6 +319,7 @@ void poll_events_volume(app_t *app, sfEvent *event);
 void draw_chunks(chunk_t **chunks, app_t *app);
 void draw_game(app_t *app);
 void draw_splashscreen(app_t *app);
+void draw_menu(app_t *app);
 
 //Events
 
@@ -333,3 +335,7 @@ void manage_invent_events(app_t *, sfEvent *);
 void handle_key_pressed_game(sfEvent *, app_t *);
 void case_picking(app_t *, int, sfVector2f);
 void handle_mouse_button_right(app_t *, sfEvent *);
+
+// Scenes
+
+void switch_to_menu(app_t *app);
