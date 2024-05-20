@@ -133,9 +133,10 @@ void draw_inventory(app_t *app)
     float scale = 0.f;
     sfVector2f center = sfView_getCenter(app->game_view);
     sfVector2f size = sfView_getSize(app->game_view);
-    sfFloatRect background_bounds =
-        sfSprite_getGlobalBounds(app->inventory->background);
+    sfFloatRect background_bounds = sfSprite_getGlobalBounds(
+        app->inventory->background);
 
+    sfRenderWindow_clear(app->window, sfBlack);
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
     sfSprite_setPosition(app->inventory->background,
         (sfVector2f){center.x - background_bounds.width / 2,

@@ -193,7 +193,7 @@ typedef struct app_s {
     game_t *game_ressources;
     inventory_t *inventory;
     sfFont **fonts;
-    void (*game_handler)(struct app_s *);
+    void (*draw_function)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
 

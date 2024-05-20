@@ -26,7 +26,7 @@ logo_t *create_logo(void)
 static void go_to_next_scene(app_t *app)
 {
     app->event_handler = manage_game_events;
-    app->game_handler = draw_game;
+    app->draw_function = draw_game;
     get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
 }
 
@@ -66,5 +66,6 @@ void poll_events_splashscreen(app_t *app, sfEvent *event)
 
 void draw_splashscreen(app_t *app)
 {
+    sfRenderWindow_clear(app->window, sfWhite);
     sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
 }

@@ -16,7 +16,7 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_key_pressed_game(event, app);
     if (event->type == sfEvtKeyPressed && event->key.code == sfKeyE) {
         app->event_handler = manage_invent_events;
-        app->game_handler = draw_inventory;
+        app->draw_function = draw_inventory;
     }
     if (event->type == sfEvtMouseWheelScrolled)
         handle_mouse_wheeling(event, app);

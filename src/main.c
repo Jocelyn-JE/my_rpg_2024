@@ -9,7 +9,7 @@
 
 static void setup_global_handlers(app_t *app)
 {
-    app->game_handler = draw_splashscreen;
+    app->draw_function = draw_splashscreen;
     app->event_handler = poll_events_splashscreen;
 }
 
@@ -21,8 +21,7 @@ int main(void)
     setup_global_handlers(app);
     while (sfRenderWindow_isOpen(app->window)) {
         app->event_handler(app, &events);
-        sfRenderWindow_clear(app->window, sfBlack);
-        app->game_handler(app);
+        app->draw_function(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);
