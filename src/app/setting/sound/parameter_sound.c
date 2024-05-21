@@ -79,23 +79,19 @@ static void volume_value(app_t *app)
 
 static void handle_effect_music(app_t *app, sfVector2f mouse_pos)
 {
-    if (sfFloatRect_contains(&app->button[11].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[11].sprite, mouse_pos)) {
         if (app->sound->volume_effect > 0)
             app->sound->volume_effect -= 5;
     }
-    if (sfFloatRect_contains(&app->button[12].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[12].sprite, mouse_pos)) {
         if (app->sound->volume_effect < 100)
             app->sound->volume_effect += 5;
     }
-    if (sfFloatRect_contains(&app->button[13].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[13].sprite, mouse_pos)) {
         if (app->sound->volume_music > 0)
             app->sound->volume_music -= 5;
     }
-    if (sfFloatRect_contains(&app->button[14].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[14].sprite, mouse_pos)) {
         if (app->sound->volume_music < 100)
             app->sound->volume_music += 5;
     }
@@ -106,18 +102,15 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (sfFloatRect_contains(&app->button[9].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[9].sprite, mouse_pos)) {
         if (app->sound->volume_general > 0)
             app->sound->volume_general -= 5;
     }
-    if (sfFloatRect_contains(&app->button[10].hitbox,
-        mouse_pos.x, mouse_pos.y)) {
+    if (is_on_sprite(app->button[10].sprite, mouse_pos)) {
         if (app->sound->volume_general < 100)
             app->sound->volume_general += 5;
     }
-    if (sfFloatRect_contains(&app->button[15].hitbox,
-        mouse_pos.x, mouse_pos.y))
+    if (is_on_sprite(app->button[15].sprite, mouse_pos))
         return switch_to_settings(app);
     handle_effect_music(app, mouse_pos);
 }

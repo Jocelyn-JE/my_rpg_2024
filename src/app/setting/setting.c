@@ -43,14 +43,11 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (sfFloatRect_contains(&app->button[3].hitbox,
-        mouse_pos.x, mouse_pos.y))
+    if (is_on_sprite(app->button[3].sprite, mouse_pos))
         return parameter_sound(app);
-    if (sfFloatRect_contains(&app->button[4].hitbox,
-        mouse_pos.x, mouse_pos.y))
+    if (is_on_sprite(app->button[4].sprite, mouse_pos))
         return parameter_video(app);
-    if (sfFloatRect_contains(&app->button[5].hitbox,
-        mouse_pos.x, mouse_pos.y))
+    if (is_on_sprite(app->button[5].sprite, mouse_pos))
         return switch_to_menu(app);
 }
 
@@ -76,8 +73,6 @@ void poll_events_setting(app_t *app, sfEvent *event)
 
 void switch_to_settings(app_t *app)
 {
-    set_button_setting(app);
-    text_setting(app);
     app->event_handler = poll_events_setting;
     app->draw_function = draw_setting_button;
 }

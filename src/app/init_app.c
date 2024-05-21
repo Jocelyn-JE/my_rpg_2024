@@ -87,6 +87,23 @@ static sfFont **init_fonts(void)
     return fonts;
 }
 
+static void init_button(app_t *app)
+{
+    app->button = malloc(16 * sizeof(button_t));
+    set_button(app);
+    set_button_setting(app);
+    set_button_sound(app);
+    set_button_video(app);
+}
+
+static void init_text(app_t *app)
+{
+    app->text = malloc(23 * sizeof(button_t));
+    text_setting(app);
+    text_sound(app);
+    text_menu(app);
+}
+
 app_t *create_app(void)
 {
     app_t *app = malloc(sizeof(app_t));
@@ -95,8 +112,6 @@ app_t *create_app(void)
     srand(time(NULL));
     app->logo = create_logo();
     app->sound = init_sound();
-    app->button = malloc(16 * sizeof(button_t));
-    app->text = malloc(23 * sizeof(text_t));
     app->game_clock = sfClock_create();
     app->game_ressources = init_game();
     app->game_view = create_view(res);
@@ -105,7 +120,9 @@ app_t *create_app(void)
     app->zoom = 1.0f;
     app->debug_options = init_debug_options();
     app->fonts = init_fonts();
-    app->menu = create_menu(app);
+    app->menu = create_menu();
+    init_button(app);
+    init_text(app);
     sfRenderWindow_setView(app->window, app->view);
     setup_inventory(app);
     return app;

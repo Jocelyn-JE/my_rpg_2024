@@ -46,12 +46,10 @@ void draw_menu(app_t *app)
     draw_button(app->window, app->button[2].sprite, app->text[2].text);
 }
 
-menu_t *create_menu(app_t *app)
+menu_t *create_menu(void)
 {
     menu_t *menu = malloc(sizeof(menu_t));
 
     set_menu(menu);
-    set_button(app);
-    text_menu(app);
     return menu;
 }

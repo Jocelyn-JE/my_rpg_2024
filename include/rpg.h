@@ -161,13 +161,6 @@ typedef struct sound_s {
 typedef struct button_s {
     sfSprite *sprite;
     sfTexture *texture;
-    sfVector2f *position;
-    sfVector2f scale;
-    sfFloatRect hitbox;
-    unsigned int largeur_fenetre;
-    unsigned int hauteur_fenetre;
-    float largeur_sprite;
-    float hauteur_sprite;
 } button_t;
 
 typedef struct text_s {
@@ -233,10 +226,11 @@ void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
+bool is_on_sprite(sfSprite *button, sfVector2f pos);
 
 // Menu
 
-menu_t *create_menu(app_t *app);
+menu_t *create_menu(void);
 logo_t *create_logo(void);
 void text_menu(app_t *app);
 void menu(app_t *app);

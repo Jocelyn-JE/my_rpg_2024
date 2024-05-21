@@ -29,12 +29,9 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (sfFloatRect_contains(&app->button[6].hitbox,
-        mouse_pos.x, mouse_pos.y))
-    if (sfFloatRect_contains(&app->button[7].hitbox,
-        mouse_pos.x, mouse_pos.y))
-    if (sfFloatRect_contains(&app->button[8].hitbox,
-        mouse_pos.x, mouse_pos.y))
+    if (is_on_sprite(app->button[6].sprite, mouse_pos))
+    if (is_on_sprite(app->button[7].sprite, mouse_pos))
+    if (is_on_sprite(app->button[8].sprite, mouse_pos))
         switch_to_settings(app);
 }
 
