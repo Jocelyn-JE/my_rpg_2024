@@ -87,7 +87,8 @@ enum blocks {
     b_polished_blackstone_bricks,
     b_gilded_blackstone,
     b_cracked_polished_blackstone_bricks,
-    b_chiseled_polished_blackstone
+    b_chiseled_polished_blackstone,
+    b_coal_block
 };
 
 enum entities {
@@ -204,6 +205,7 @@ block_t *init_polished_blackstone_bricks(void);
 block_t *init_gilded_blackstone(void);
 block_t *init_cracked_polished_blackstone_bricks(void);
 block_t *init_chiseled_polished_blackstone(void);
+block_t *init_coal_block(void);
 
 // Colors
 
