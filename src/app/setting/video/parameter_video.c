@@ -30,7 +30,9 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
     if (is_on_sprite(app->button[6].sprite, mouse_pos))
+        mini_printf("test\n");
     if (is_on_sprite(app->button[7].sprite, mouse_pos))
+        mini_printf("test\n");
     if (is_on_sprite(app->button[8].sprite, mouse_pos))
         switch_to_settings(app);
 }
