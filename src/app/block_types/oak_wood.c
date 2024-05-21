@@ -28,7 +28,7 @@ block_t *init_x_oak_wood(void)
     block_t *block = malloc(sizeof(block_t));
 
     block->faces = malloc(sizeof(sfVertex *) * 4);
-    block->faces[0] = get_top_face((uv_coords_t){(sfVector2f){0, 32},
+    block->faces[0] = get_top_face_rot((uv_coords_t){(sfVector2f){0, 32},
         (sfVector2f){16, 48}}, (sfVector2f){0, 0});
     block->faces[1] = get_left_face((uv_coords_t){(sfVector2f){0, 32},
         (sfVector2f){16, 48}}, (sfVector2f){0, 0});
