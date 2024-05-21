@@ -17,7 +17,7 @@ static void zoom_view(sfEvent *event, app_t *app)
     if ((app->zoom * zoom) > 5 || (app->zoom * zoom) < 0.2)
         return;
     app->zoom *= zoom;
-    sfView_zoom(app->view, zoom);
+    sfView_zoom(app->game_view, zoom);
 }
 
 void handle_mouse_wheel(app_t *app, sfEvent event)

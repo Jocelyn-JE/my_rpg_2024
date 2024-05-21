@@ -98,7 +98,15 @@ SRC =	src/main.c												\
 		src/conversions/get_slot_index.c						\
 		src/conversions/get_armor_index.c						\
 		src/debug/draw_bounds.c									\
-		src/app/game/events/poll_events_ingame.c				\
+		src/app/splash_screen/splash_screen.c					\
+		src/text_and_button/set_text.c							\
+		src/text_and_button/set_button.c						\
+		src/app/menu/menu.c										\
+		src/app/menu/events/click_button.c						\
+		src/app/menu/events/poll_events_menu.c					\
+		src/app/setting/setting.c								\
+		src/app/setting/sound/parameter_sound.c					\
+		src/app/setting/video/parameter_video.c					\
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -108,7 +116,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Wshadow $(INCLUDES) $(LIBS) -g
+CFLAGS += -Wall -Wextra -Wshadow $(INCLUDES) $(LIBS) -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
@@ -150,3 +158,6 @@ cs:		fclean
 
 tests_run: $(NAME)
 	valgrind $(VALGRIND_FLAGS)./$(NAME) &
+
+run: all
+	./$(NAME)

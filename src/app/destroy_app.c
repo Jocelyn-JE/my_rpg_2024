@@ -20,15 +20,52 @@ static void destroy_game_ressources(game_t *game)
     free(game);
 }
 
+static void free_logo(logo_t *logo)
+{
+    sfSprite_destroy(logo->sprite);
+    sfTexture_destroy(logo->texture);
+    free(logo);
+}
+
+static void free_ui(app_t *app)
+{
+    free_logo(app->logo);
+    for (int i = 0; i < 16; i++) {
+        sfSprite_destroy(app->button[i].sprite);
+        sfTexture_destroy(app->button[i].texture);
+    }
+    for (int i = 0; i < 25; i++)
+        sfText_destroy(app->text[i].text);
+    free(app->button);
+    free(app->sound);
+    free(app->text);
+}
+
+static void free_fonts(sfFont **fonts)
+{
+    for (int i = 0; fonts[i]; i++)
+        sfFont_destroy(fonts[i]);
+    free(fonts);
+}
+
+static void free_menu(menu_t *menu)
+{
+    sfTexture_destroy(menu->backtexture);
+    sfSprite_destroy(menu->backsprite);
+    free(menu);
+}
+
 void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
+    sfView_destroy(app->game_view);
     sfView_destroy(app->view);
     sfClock_destroy(app->game_clock);
     destroy_game_ressources(app->game_ressources);
+    free_menu(app->menu);
     free_inventory(app->inventory);
-    sfFont_destroy(app->fonts[0]);
-    free(app->fonts);
+    free_fonts(app->fonts);
+    free_ui(app);
     free(app->debug_options);
     free(app);
 }

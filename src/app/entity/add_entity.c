@@ -36,11 +36,11 @@ static void render_player(sfVertexArray *vertices, entity_t *entity,
             0.205, 2.5, 100), sfWhite, texture_coords[1]},
     };
 
-    for (int i = 0; i < sizeof(vertices_data) / sizeof(vertices_data[0]); i++)
+    for (uint32_t i = 0; i < 6; i++)
         sfVertexArray_append(vertices, vertices_data[i]);
 }
 
-void add_entity(sfVertexArray *vertices, int index, entity_t *entity)
+void add_entity(sfVertexArray *vertices, entity_t *entity)
 {
     if (entity->type == e_player)
         render_player(vertices, entity, entity->state);

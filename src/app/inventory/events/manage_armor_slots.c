@@ -11,7 +11,7 @@ void case_picking_armor(app_t *app, int slot_index, sfEvent *event)
 {
     sfVector2i pixel_pos = {event->mouseButton.x, event->mouseButton.y};
     sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(
-        app->window, pixel_pos, app->view);
+        app->window, pixel_pos, app->game_view);
 
     if (slot_index != -1 && app->inventory->armor[slot_index] != NULL) {
         app->inventory->dragging_slot = slot_index;

@@ -8,7 +8,7 @@
 #include "../../../include/rpg.h"
 
 sfBool is_vertexarray_visible(sfView *view, sfFloatRect bounds,
-    sfVector2f position, sfRenderWindow *window)
+    sfVector2f position)
 {
     sfFloatRect renderdistance = {0, 0, 0, 0};
     sfVector2f viewpos = sfView_getCenter(view);
@@ -31,21 +31,32 @@ void draw_chunks(chunk_t **list, app_t *app)
     for (int i = 0; list[i] != NULL; i++) {
         renderstate.transform =
             sfTransformable_getTransform(list[i]->transform);
-        if (is_vertexarray_visible(app->view, list[i]->bounding_box,
-            sfTransformable_getPosition(list[i]->transform), app->window)) {
-            update_chunk(list[i], app->game_ressources->block_types,
-                app->game_ressources->entities, i);
+        if (is_vertexarray_visible(app->game_view, list[i]->bounding_box,
+            sfTransformable_getPosition(list[i]->transform)))
             sfRenderWindow_drawVertexArray(app->window, list[i]->vertices,
                 &renderstate);
-        }
         if (app->debug_options->bounding_box)
-            draw_bounding_box(app->window, app->view, list[i]->bounding_box,
-                sfTransformable_getPosition(list[i]->transform));
+            draw_bounding_box(app->window, app->game_view,
+                list[i]->bounding_box, sfTransformable_getPosition(
+                list[i]->transform));
+    }
+}
+
+void update_chunks(chunk_t **list, app_t *app)
+{
+    for (int i = 0; list[i] != NULL; i++) {
+        if (is_vertexarray_visible(app->game_view, list[i]->bounding_box,
+            sfTransformable_getPosition(list[i]->transform))) {
+            update_chunk(list[i], app->game_ressources->block_types,
+                app->game_ressources->entities, i);
+        }
     }
 }
 
 void draw_game(app_t *app)
 {
+    sfRenderWindow_clear(app->window, sfBlack);
+    update_chunks(app->game_ressources->map, app);
     draw_chunks(app->game_ressources->map, app);
     draw_hotbar(app);
 }

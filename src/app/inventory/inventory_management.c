@@ -131,11 +131,12 @@ void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
 void draw_inventory(app_t *app)
 {
     float scale = 0.f;
-    sfVector2f center = sfView_getCenter(app->view);
-    sfVector2f size = sfView_getSize(app->view);
-    sfFloatRect background_bounds =
-        sfSprite_getGlobalBounds(app->inventory->background);
+    sfVector2f center = sfView_getCenter(app->game_view);
+    sfVector2f size = sfView_getSize(app->game_view);
+    sfFloatRect background_bounds = sfSprite_getGlobalBounds(
+        app->inventory->background);
 
+    sfRenderWindow_clear(app->window, sfBlack);
     scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
     sfSprite_setPosition(app->inventory->background,
         (sfVector2f){center.x - background_bounds.width / 2,
@@ -143,7 +144,7 @@ void draw_inventory(app_t *app)
     sfSprite_setPosition(app->inventory->trash,
         (sfVector2f){center.x + 400.5 * scale, center.y + 234 * scale});
     draw_chunks(app->game_ressources->map, app);
-    draw_semi_transparent_rect(app->window, app->view);
+    draw_semi_transparent_rect(app->window, app->game_view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
     draw_inventory_items(app, center, size, scale);

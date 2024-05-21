@@ -20,8 +20,8 @@ static float adjust_texture_scale(inventory_t *inventory, float baseScale,
 
 static void draw_texture_hotbar(app_t *app)
 {
-    sfVector2f center = sfView_getCenter(app->view);
-    sfVector2f size = sfView_getSize(app->view);
+    sfVector2f center = sfView_getCenter(app->game_view);
+    sfVector2f size = sfView_getSize(app->game_view);
     sfFloatRect backgroundBounds =
         sfSprite_getGlobalBounds(app->inventory->hotbar);
     float hotbarX = center.x - (backgroundBounds.width / 2);
@@ -68,8 +68,8 @@ static void draw_hotbar_items(app_t *app, float scale)
 {
     sfFloatRect bounds =
         sfSprite_getGlobalBounds(app->inventory->hotbar);
-    const sfVector2f center = sfView_getCenter(app->view);
-    const sfVector2f size = sfView_getSize(app->view);
+    const sfVector2f center = sfView_getCenter(app->game_view);
+    const sfVector2f size = sfView_getSize(app->game_view);
     sfVector2f hotbar_pos = {center.x - ((bounds.width - 18 * scale) / 2),
         center.y + (size.y / 2) - bounds.height + 10 * scale};
 

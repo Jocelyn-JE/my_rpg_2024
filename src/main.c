@@ -7,23 +7,15 @@
 
 #include "../include/rpg.h"
 
-static void setup_global_handlers(app_t *app)
-{
-    app->game_handler = draw_game;
-    app->event_handler = manage_game_events;
-}
-
-int main(int argc, char **argv)
+int main(void)
 {
     app_t *app = create_app();
     sfEvent events;
 
-    setup_global_handlers(app);
+    switch_to_splashscreen(app);
     while (sfRenderWindow_isOpen(app->window)) {
         app->event_handler(app, &events);
-        sfRenderWindow_clear(app->window, sfBlack);
-        sfRenderWindow_setView(app->window, app->view);
-        app->game_handler(app);
+        app->draw_function(app);
         sfRenderWindow_display(app->window);
     }
     destroy_app(app);

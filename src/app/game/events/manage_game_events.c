@@ -6,6 +6,13 @@
 */
 #include "../../../../include/rpg.h"
 
+void switch_to_game(app_t *app)
+{
+    app->event_handler = manage_game_events;
+    app->draw_function = draw_game;
+    get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
+}
+
 static void handle_events(app_t *app, sfEvent *event)
 {
     if (event->type == sfEvtClosed)
@@ -16,7 +23,7 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_key_pressed_game(event, app);
     if (event->type == sfEvtKeyPressed && event->key.code == sfKeyE) {
         app->event_handler = manage_invent_events;
-        app->game_handler = draw_inventory;
+        app->draw_function = draw_inventory;
     }
     if (event->type == sfEvtMouseWheelScrolled)
         handle_mouse_wheeling(event, app);
@@ -34,6 +41,7 @@ void manage_game_events(app_t *app, sfEvent *event)
         handle_movement(player, app->game_ressources->entities->data, dt,
             app->game_ressources);
     update_blocks(app->game_ressources->block_types, dt);
-    sfView_setCenter(app->view, cartesian_to_isometric(player->pos.x + 16,
+    sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));
+    sfRenderWindow_setView(app->window, app->game_view);
 }

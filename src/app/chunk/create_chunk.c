@@ -16,7 +16,7 @@ static uint8_t *create_blocks(int map_fd)
     return array;
 }
 
-static void init_chunk(chunk_t *chunk, sfTexture *atlas, int map_fd)
+static void init_chunk(chunk_t *chunk, int map_fd)
 {
     chunk->vertices = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(chunk->vertices, sfTriangles);
@@ -40,16 +40,16 @@ static void add_entities(sfVertexArray *vertices, int index, list_t *entities,
             (int)floor(data->pos.y / 16) == chunk_coords.y &&
             floor(entity_pos.x) == pos.x &&
             floor(entity_pos.y) == pos.y && pos.z == 2) {
-            add_entity(vertices, index, data);
+            add_entity(vertices, data);
         }
     }
 }
 
-chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd)
+chunk_t *create_chunk(block_t **blocks, int map_fd)
 {
     chunk_t *new_chunk = malloc(sizeof(chunk_t));
 
-    init_chunk(new_chunk, atlas, map_fd);
+    init_chunk(new_chunk, map_fd);
     for (int i = 0; i < (16 * 16 * 32); i++) {
         if (new_chunk->blocks[i] != b_air)
             add_cube(new_chunk->vertices, i, new_chunk->blocks, blocks);

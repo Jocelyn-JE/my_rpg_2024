@@ -6,6 +6,7 @@
 */
 
 #pragma once
+
 #include "blocks.h"
 #include "linked_list.h"
 #include "mystr.h"
@@ -136,25 +137,57 @@ typedef struct game_s {
     player_t *player;
 } game_t;
 
+typedef struct logo_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f scale;
+    sfColor color;
+} logo_t;
+
+typedef struct menu_s {
+    sfSprite *backsprite;
+    sfTexture *backtexture;
+} menu_t;
+
+typedef struct sound_s {
+    sfMusic *music;
+    int volume_general;
+    int volume_music;
+    int volume_effect;
+} sound_t;
+
+typedef struct button_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+} button_t;
+
+typedef struct text_s {
+    sfFont *font;
+    sfText *text;
+} text_t;
+
 typedef struct app_s {
     float zoom;
     sfRenderWindow *window;
+    sfView *game_view;
     sfView *view;
     sfClock *game_clock;
+    menu_t *menu;
+    button_t *button;
+    logo_t *logo;
+    text_t *text;
+    sound_t *sound;
     debug_t *debug_options;
     game_t *game_ressources;
     inventory_t *inventory;
     sfFont **fonts;
-    void (*game_handler)(struct app_s *);
+    void (*draw_function)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
 
 // Handlers
 
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
-void draw_game(app_t *app);
-void poll_events(app_t *app, sfEvent *event);
-void poll_events_ingame(app_t *app, sfEvent *event);
 
 // Create / init functions
 sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
@@ -162,7 +195,7 @@ app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
 entity_t *create_entity(sfVector2f pos, uint32_t type);
-chunk_t *create_chunk(sfTexture *atlas, block_t **blocks, int map_fd);
+chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
 // Destroy / free functions
@@ -182,34 +215,64 @@ block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
 int get_random_nb(int min_value, int max_value);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
-void get_letterbox_view(sfView *view, sfVector2f size);
+void get_letterbox_view(sfView *view, sfVector2u size);
 void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
     int chunk_index);
 void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
     game_t *game);
-void draw_chunks(chunk_t **chunks, app_t *app);
-void draw_game(app_t *app);
+void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
+sfSprite* create_sprite(const char *texture_path,
+    sfVector2f position, sfVector2f scale);
+void set_text(app_t *app, sfVector2f position, char *filename, int i);
+void update_text(text_t *text, sfVector2f pos, char *string, int i);
+bool is_on_sprite(sfSprite *button, sfVector2f pos);
+
+// Menu
+
+menu_t *create_menu(void);
+logo_t *create_logo(void);
+void text_menu(app_t *app);
+void set_button(app_t *app);
+void manage_events_menu(app_t *app, sfEvent *event);
+
+// Setting
+
+void set_button_setting(app_t *app);
+void text_setting(app_t *app);
+
+// Video
+
+void set_button_video(app_t *app);
+void text_video(app_t *app);
+
+// Musique
+
+void set_button_sound(app_t *app);
+void text_sound(app_t *app);
+
 
 // Debug
+
 void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
 
 // Conversions
-int get_index_from_pos(int x, int y, int z);
+int get_idx_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 int get_chunk_index_from_coordinates(int x, int y);
 sfVector2i get_chunk_coordinates_from_index(int index);
 
 // Entities
 
-void add_entity(sfVertexArray *vertices, int index, entity_t *entity);
+void add_entity(sfVertexArray *vertices, entity_t *entity);
 sfVector2f get_entity_chunk_coords(entity_t *entity);
 int get_slot_index(int, int, app_t *);
 int get_armor_index(int, int, app_t *);
 
 // Inventory
+
 void setup_inventory(app_t *);
 void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
@@ -228,8 +291,15 @@ void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
 
+//Draw functions
+
+void draw_chunks(chunk_t **chunks, app_t *app);
+void draw_game(app_t *app);
+void draw_splashscreen(app_t *app);
+void draw_menu(app_t *app);
+
 //Events
-void initialize_event_handlers(void);
+
 void handle_mouse_button(sfEvent *, app_t *);
 void handle_closed(sfEvent *, app_t *);
 void handle_resized(sfEvent *, app_t *);
@@ -242,3 +312,12 @@ void manage_invent_events(app_t *, sfEvent *);
 void handle_key_pressed_game(sfEvent *, app_t *);
 void case_picking(app_t *, int, sfVector2f);
 void handle_mouse_button_right(app_t *, sfEvent *);
+
+// Scenes
+
+void switch_to_menu(app_t *app);
+void switch_to_settings(app_t *app);
+void switch_to_video_settings(app_t *app);
+void switch_to_sound_settings(app_t *app);
+void switch_to_game(app_t *app);
+void switch_to_splashscreen(app_t *app);

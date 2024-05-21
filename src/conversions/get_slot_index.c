@@ -12,9 +12,9 @@ inventory_params_t setup_inventory_params(int x, int y, app_t *app)
     inventory_params_t params;
 
     params.world_pos = sfRenderWindow_mapPixelToCoords(
-        app->window, (sfVector2i){x, y}, app->view);
-    params.center = sfView_getCenter(app->view);
-    params.size = sfView_getSize(app->view);
+        app->window, (sfVector2i){x, y}, app->game_view);
+    params.center = sfView_getCenter(app->game_view);
+    params.size = sfView_getSize(app->game_view);
     params.scale = adjust_sprite_scale(app->inventory, 1.0f, app->zoom);
     params.offset_X = 640.5 * params.scale;
     params.offset_Y = 552 * params.scale;
