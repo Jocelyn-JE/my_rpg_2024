@@ -6,13 +6,16 @@
 */
 #include "rpg.h"
 
-sfRenderWindow *create_window(sfVector2f res, unsigned int bpp)
+sfRenderWindow *create_window(sfVector2f res, unsigned int bpp, sfUint32 style)
 {
     sfVideoMode video_mode = {res.x, res.y, bpp};
-    sfRenderWindow *new_window = sfRenderWindow_create(video_mode,
-        "my_rpg", sfResize | sfClose, NULL);
+    sfRenderWindow *new_window = NULL;
     sfImage *icon = sfImage_createFromFile("./assets/icons/icon_256x256.png");
 
+    if (style == sfFullscreen)
+        video_mode = sfVideoMode_getFullscreenModes(NULL)[0];
+    new_window = sfRenderWindow_create(video_mode,
+        "my_rpg", style, NULL);
     if (!new_window)
         my_putstr("Window failed to load\n");
     if (!icon)

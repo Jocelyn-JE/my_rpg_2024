@@ -120,7 +120,7 @@ app_t *create_app(void)
     app->game_ressources = init_game();
     app->game_view = create_view(res);
     app->view = create_view(res);
-    app->window = create_window(res, 32);
+    app->window = create_window(res, 32, sfDefaultStyle);
     app->zoom = 1.0f;
     app->debug_options = init_debug_options();
     app->fonts = init_fonts();

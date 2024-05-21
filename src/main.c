@@ -13,6 +13,7 @@ int main(void)
     sfEvent events;
 
     switch_to_splashscreen(app);
+    sfRenderWindow_requestFocus(app->window);
     while (sfRenderWindow_isOpen(app->window)) {
         app->event_handler(app, &events);
         app->draw_function(app);

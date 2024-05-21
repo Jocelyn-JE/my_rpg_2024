@@ -11,6 +11,10 @@ void switch_to_menu(app_t *app)
 {
     app->event_handler = manage_events_menu;
     app->draw_function = draw_menu;
+    sfTexture_destroy(app->menu->backtexture);
+    app->menu->backtexture = sfTexture_createFromFile("assets/widgets/menu.png"
+        , NULL);
+    sfSprite_setTexture(app->menu->backsprite, app->menu->backtexture, sfTrue);
     sfSprite_setColor(app->logo->sprite, sfWhite);
     sfSprite_setPosition(app->logo->sprite, (sfVector2f){1920 / 2, 1080 / 4});
     get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));

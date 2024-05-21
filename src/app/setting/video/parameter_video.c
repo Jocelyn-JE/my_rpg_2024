@@ -9,14 +9,8 @@
 
 static void draw_video_settings(app_t *app)
 {
-    sfVector2f pos_back = {0, 0};
-    sfVector2f scale_back = {2.25, 2.25};
-    sfSprite* sprite = create_sprite("assets/widgets"
-        "/set_back.png", pos_back, scale_back);
-
     sfRenderWindow_clear(app->window, sfBlack);
-    sfRenderWindow_drawSprite(app->window, sprite, NULL);
-    sfSprite_destroy(sprite);
+    sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[24].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->button[6].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[7].text, NULL);
@@ -47,6 +41,21 @@ static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
     }
 }
 
+static void cycle_window_modes(sfRenderWindow **window, text_t *text)
+{
+    int screen_modes[] = {sfDefaultStyle, sfFullscreen};
+    char *mode_str[] = {"OFF", "ON"};
+    static int current_mode = 0;
+    char button_str[50];
+
+    current_mode = current_mode == 1 ? 0 : current_mode + 1;
+    sfRenderWindow_destroy(*window);
+    *window = create_window((sfVector2f){1920, 1080}, 32,
+        screen_modes[current_mode]);
+    sprintf(button_str, "Fullscreen: %s", mode_str[current_mode]);
+    update_text(text, (sfVector2f){1920 / 3 * 2, 1080 / 2}, button_str, 8);
+}
+
 static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
 {
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
@@ -55,7 +64,7 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
     if (is_on_sprite(app->button[6].sprite, mouse_pos))
         cycle_fps_setting(app->window, app->text);
     if (is_on_sprite(app->button[7].sprite, mouse_pos))
-        mini_printf("BBB\n");
+        cycle_window_modes(&app->window, app->text);
     if (is_on_sprite(app->button[8].sprite, mouse_pos))
         switch_to_settings(app);
 }

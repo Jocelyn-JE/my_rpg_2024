@@ -9,14 +9,8 @@
 
 static void draw_volume_settings(app_t *app)
 {
-    sfVector2f pos_back = {0, 0};
-    sfVector2f scale_back = {2.25, 2.25};
-    sfSprite* sprite = create_sprite("assets/widgets"
-        "/set_back.png", pos_back, scale_back);
-
     sfRenderWindow_clear(app->window, sfBlack);
-    sfRenderWindow_drawSprite(app->window, sprite, NULL);
-    sfSprite_destroy(sprite);
+    sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
     for (int i = 9; i != 16; i++)
         sfRenderWindow_drawSprite(app->window, app->button[i].sprite, NULL);
     for (int i = 10; i != 23; i++)

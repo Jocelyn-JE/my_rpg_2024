@@ -21,14 +21,8 @@ sfSprite* create_sprite(const char *texture_path,
 
 static void draw_setting_button(app_t *app)
 {
-    sfVector2f pos_back = {0, 0};
-    sfVector2f scale_back = {2.25, 2.25};
-    sfSprite *sprite = create_sprite("assets/widgets"
-        "/set_back.png", pos_back, scale_back);
-
     sfRenderWindow_clear(app->window, sfBlack);
-    sfRenderWindow_drawSprite(app->window, sprite, NULL);
-    sfSprite_destroy(sprite);
+    sfRenderWindow_drawSprite(app->window, app->menu->backsprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[3].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->button[3].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[4].text, NULL);
@@ -79,5 +73,11 @@ void switch_to_settings(app_t *app)
 {
     app->event_handler = poll_events_setting;
     app->draw_function = draw_setting_button;
+    sfTexture_destroy(app->menu->backtexture);
+    app->menu->backtexture = sfTexture_createFromFile("assets/widgets/set_back"
+        ".png", NULL);
+    sfTexture_setRepeated(app->menu->backtexture, true);
+    sfSprite_setTexture(app->menu->backsprite, app->menu->backtexture,
+        sfFalse);
     get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
 }

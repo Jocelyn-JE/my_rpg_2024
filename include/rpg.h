@@ -190,7 +190,8 @@ typedef struct app_s {
 typedef void (*event_handler_t)(sfEvent *event, app_t *app);
 
 // Create / init functions
-sfRenderWindow *create_window(sfVector2f res, unsigned int bpp);
+sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
+    sfUint32 style);
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
