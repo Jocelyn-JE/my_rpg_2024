@@ -43,8 +43,8 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 239.0f;
-    new_player->pos.y = 280.0f;
+    new_player->pos.x = 97.0f;
+    new_player->pos.y = 117.0f;
     return new_player;
 }
 

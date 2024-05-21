@@ -80,7 +80,8 @@ enum blocks {
     b_y_spruce_log,
     b_x_spruce_log,
     b_z_spruce_log,
-    b_lava
+    b_lava,
+    b_andesite
 };
 
 enum entities {
@@ -190,6 +191,7 @@ block_t *init_y_spruce_log(void);
 block_t *init_x_spruce_log(void);
 block_t *init_z_spruce_log(void);
 block_t *init_lava(void);
+block_t *init_andesite(void);
 
 // Colors
 

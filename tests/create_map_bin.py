@@ -53,7 +53,8 @@ replacement_pairs = {
     "calcite": 57,
     "dark_oak_planks": 58,
     "jungle_planks": 59,
-    "lava": 65
+    "lava": 65,
+    "andesite": 66
 }
 
 # Default value to write if the block is not found in replacement_pairs
