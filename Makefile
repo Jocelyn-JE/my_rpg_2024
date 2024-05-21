@@ -68,6 +68,8 @@ SRC =	src/main.c												\
 		src/app/block_types/moss.c								\
 		src/app/block_types/quartz.c							\
 		src/app/block_types/lava.c								\
+		src/app/block_types/blackstone.c						\
+		src/app/block_types/polished_blackstone.c				\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\

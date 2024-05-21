@@ -54,7 +54,13 @@ replacement_pairs = {
     "dark_oak_planks": 58,
     "jungle_planks": 59,
     "lava": 65,
-    "andesite": 66
+    "andesite": 66,
+    "blackstone": 67,
+    "polished_blackstone": 68,
+    "polished_blackstone_bricks": 69,
+    "gilded_blackstone": 70,
+    "cracked_polished_blackstone_bricks": 71,
+    "chiseled_polished_blackstone": 72
 }
 
 # Default value to write if the block is not found in replacement_pairs

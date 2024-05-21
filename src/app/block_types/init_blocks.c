@@ -74,7 +74,13 @@ const init_func_t init_block_functions[] = {
     {init_x_spruce_log},
     {init_z_spruce_log},
     {init_lava},
-    {init_andesite}
+    {init_andesite},
+    {init_blackstone},
+    {init_polished_blackstone},
+    {init_polished_blackstone_bricks},
+    {init_gilded_blackstone},
+    {init_cracked_polished_blackstone_bricks},
+    {init_chiseled_polished_blackstone}
 };
 
 sfVertex *get_top_face(uv_coords_t uv,
@@ -140,9 +146,10 @@ sfVertex *get_right_face(uv_coords_t uv,
     return vertices;
 }
 
+// The block_count is the last added block + 1
 block_t **init_blocks(void)
 {
-    uint8_t block_count = 67;
+    uint8_t block_count = b_chiseled_polished_blackstone + 1;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
     for (int i = 0; i != block_count; i++)

@@ -81,7 +81,13 @@ enum blocks {
     b_x_spruce_log,
     b_z_spruce_log,
     b_lava,
-    b_andesite
+    b_andesite,
+    b_blackstone,
+    b_polished_blackstone,
+    b_polished_blackstone_bricks,
+    b_gilded_blackstone,
+    b_cracked_polished_blackstone_bricks,
+    b_chiseled_polished_blackstone
 };
 
 enum entities {
@@ -192,6 +198,12 @@ block_t *init_x_spruce_log(void);
 block_t *init_z_spruce_log(void);
 block_t *init_lava(void);
 block_t *init_andesite(void);
+block_t *init_blackstone(void);
+block_t *init_polished_blackstone(void);
+block_t *init_polished_blackstone_bricks(void);
+block_t *init_gilded_blackstone(void);
+block_t *init_cracked_polished_blackstone_bricks(void);
+block_t *init_chiseled_polished_blackstone(void);
 
 // Colors
 
