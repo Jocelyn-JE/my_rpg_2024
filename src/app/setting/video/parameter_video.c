@@ -26,13 +26,34 @@ static void draw_video_settings(app_t *app)
     sfRenderWindow_drawText(app->window, app->text[9].text, NULL);
 }
 
+static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
+{
+    int fps_presets[] = {30, 60, 75, 90, 100, 120, 144, 165};
+    static int current_fps = 0;
+    char fps_str[50];
+
+    current_fps = current_fps == 8 ? 0 : current_fps + 1;
+    if (current_fps == 0) {
+        update_text(text, (sfVector2f){1920 / 3, 1080 / 2},
+            "Max Framerate: Vsync", 7);
+        sfRenderWindow_setVerticalSyncEnabled(window, true);
+    }
+    if (current_fps != 0) {
+        sfRenderWindow_setVerticalSyncEnabled(window, false);
+        sprintf(fps_str, "Max Framerate: %d fps",
+            fps_presets[current_fps - 1]);
+        update_text(text, (sfVector2f){1920 / 3, 1080 / 2}, fps_str, 7);
+        sfRenderWindow_setFramerateLimit(window, fps_presets[current_fps - 1]);
+    }
+}
+
 static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
 {
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
     if (is_on_sprite(app->button[6].sprite, mouse_pos))
-        mini_printf("AAA\n");
+        cycle_fps_setting(app->window, app->text);
     if (is_on_sprite(app->button[7].sprite, mouse_pos))
         mini_printf("BBB\n");
     if (is_on_sprite(app->button[8].sprite, mouse_pos))
