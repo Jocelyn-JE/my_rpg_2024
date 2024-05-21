@@ -63,7 +63,8 @@ replacement_pairs = {
     "chiseled_polished_blackstone": 72,
     "coal_block": 73,
     "obsidian": 74,
-    "crying_obsidian": 75
+    "crying_obsidian": 75,
+    "dead_fire_coral": 76
 }
 
 # Default value to write if the block is not found in replacement_pairs
