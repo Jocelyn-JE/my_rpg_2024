@@ -39,7 +39,8 @@ void text_setting(app_t *app)
 
 void text_video(app_t *app)
 {
-    set_text(app, (sfVector2f){480, 507}, "???", 7);
-    set_text(app, (sfVector2f){1190, 507}, "???", 8);
-    set_text(app, (sfVector2f){900, 707}, "Done", 9);
+    set_text(app, (sfVector2f){1920 / 3, 1080 / 2}, "AAA", 7);
+    set_text(app, (sfVector2f){1920 / 3 * 2, 1080 / 2}, "BBB", 8);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 2}, "Done", 9);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Video Settings", 10);
 }

@@ -48,9 +48,9 @@ void set_button_setting(app_t *app)
 
 void set_button_video(app_t *app)
 {
-    button(app, 6, 0, 500);
-    button(app, 7, 0, 500);
-    button(app, 8, 0, 700);
+    button(app, 6, 1920 / 3, 1080 / 2);
+    button(app, 7, 1920 / 3 * 2, 1080 / 2);
+    button(app, 8, 1920 / 2, 1080 / 3 * 2);
 }
 
 void set_button_sound(app_t *app)

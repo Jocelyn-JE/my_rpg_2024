@@ -46,7 +46,7 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
     if (is_on_sprite(app->button[3].sprite, mouse_pos))
         return parameter_sound(app);
     if (is_on_sprite(app->button[4].sprite, mouse_pos))
-        return parameter_video(app);
+        return switch_to_video_settings(app);
     if (is_on_sprite(app->button[5].sprite, mouse_pos))
         return switch_to_menu(app);
 }
@@ -68,11 +68,16 @@ void poll_events_setting(app_t *app, sfEvent *event)
         handle_events_setting(app, event);
         if (event->type == sfEvtClosed)
             sfRenderWindow_close(app->window);
+        if (event->type == sfEvtResized)
+            get_letterbox_view(app->view,
+                (sfVector2u){event->size.width, event->size.height});
     }
+    sfRenderWindow_setView(app->window, app->view);
 }
 
 void switch_to_settings(app_t *app)
 {
     app->event_handler = poll_events_setting;
     app->draw_function = draw_setting_button;
+    get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
 }

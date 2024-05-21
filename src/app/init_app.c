@@ -98,9 +98,10 @@ static void init_button(app_t *app)
 
 static void init_text(app_t *app)
 {
-    app->text = malloc(23 * sizeof(button_t));
+    app->text = malloc(24 * sizeof(button_t));
     text_setting(app);
     text_sound(app);
+    text_video(app);
     text_menu(app);
 }
 
