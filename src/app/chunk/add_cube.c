@@ -26,7 +26,8 @@ static void add_face(sfVertexArray *vertices, vector3uint8_t pos,
 
 static bool is_cullable(block_t *current_block, block_t **block_types)
 {
-    if (current_block == block_types[b_water])
+    if (current_block == block_types[b_water] ||
+        current_block == block_types[b_lava])
         return false;
     return true;
 }
