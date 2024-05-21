@@ -41,7 +41,41 @@ static sfVector2f water_anim[] = {
     (sfVector2f){144, 144}
 };
 
-static bool check_time(sfTime dt)
+static sfVector2f lava_anim[] = {
+    (sfVector2f){160, 144},
+    (sfVector2f){0, 160},
+    (sfVector2f){16, 160},
+    (sfVector2f){32, 160},
+    (sfVector2f){48, 160},
+    (sfVector2f){64, 160},
+    (sfVector2f){80, 160},
+    (sfVector2f){96, 160},
+    (sfVector2f){112, 160},
+    (sfVector2f){128, 160},
+    (sfVector2f){144, 160},
+    (sfVector2f){160, 160},
+    (sfVector2f){0, 176},
+    (sfVector2f){16, 176},
+    (sfVector2f){32, 176},
+    (sfVector2f){48, 176},
+    (sfVector2f){64, 176},
+    (sfVector2f){80, 176},
+    (sfVector2f){96, 176},
+    (sfVector2f){112, 176}
+};
+
+static bool check_time_water(sfTime dt)
+{
+    static sfTime prev_dt = {(sfInt64){0}};
+
+    if (sfTime_asMilliseconds(dt) - sfTime_asMilliseconds(prev_dt) > 100) {
+        prev_dt.microseconds = dt.microseconds;
+        return false;
+    }
+    return true;
+}
+
+static bool check_time_lava(sfTime dt)
 {
     static sfTime prev_dt = {(sfInt64){0}};
 
@@ -56,7 +90,7 @@ static void update_water(block_t *water, sfTime dt)
 {
     static int i = 0;
 
-    if (check_time(dt))
+    if (check_time_water(dt))
         return;
     free(water->faces[0]);
     water->faces[0] = get_water_face((uv_coords_t){water_anim[i],
@@ -67,7 +101,26 @@ static void update_water(block_t *water, sfTime dt)
         i = 0;
 }
 
+static void update_lava(block_t *lava, sfTime dt)
+{
+    static int i = 0;
+    static int offset = 1;
+
+    if (check_time_lava(dt))
+        return;
+    free(lava->faces[0]);
+    lava->faces[0] = get_lava_face((uv_coords_t){lava_anim[i],
+        (sfVector2f){lava_anim[i].x + 16, lava_anim[i].y + 16}},
+        (sfVector2f){(1.f / 16.f) * 2, (1.f / 16.f) * 2});
+    if (i == 0)
+        offset = 1;
+    if (i == 19)
+        offset = -1;
+    i += offset;
+}
+
 void update_blocks(block_t **blocks, sfTime dt)
 {
     update_water(blocks[b_water], dt);
+    update_lava(blocks[b_lava], dt);
 }

@@ -72,7 +72,8 @@ const init_func_t init_block_functions[] = {
     {init_z_oak_log},
     {init_y_spruce_log},
     {init_x_spruce_log},
-    {init_z_spruce_log}
+    {init_z_spruce_log},
+    {init_lava}
 };
 
 sfVertex *get_top_face(uv_coords_t uv,
@@ -140,12 +141,11 @@ sfVertex *get_right_face(uv_coords_t uv,
 
 block_t **init_blocks(void)
 {
-    uint8_t block_count = 65;
+    uint8_t block_count = 66;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
-    for (int i = 0; i != block_count; i++) {
+    for (int i = 0; i != block_count; i++)
         blocks[i] = init_block_functions[i].function();
-    }
     blocks[block_count] = NULL;
     return blocks;
 }

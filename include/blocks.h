@@ -79,7 +79,8 @@ enum blocks {
     b_z_oak_log,
     b_y_spruce_log,
     b_x_spruce_log,
-    b_z_spruce_log
+    b_z_spruce_log,
+    b_lava
 };
 
 enum entities {
@@ -117,6 +118,7 @@ sfVertex *get_top_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_left_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_right_face_rot(uv_coords_t uv_mapping, sfVector2f offset);
 sfVertex *get_water_face(uv_coords_t uv, sfVector2f offset);
+sfVertex *get_lava_face(uv_coords_t uv, sfVector2f offset);
 sfVertex *get_wheat_vertex(uv_coords_t uv_mapping);
 sfVertex *get_diagonal_face(uv_coords_t uv, sfVector2f offset, sfColor color);
 
@@ -187,6 +189,7 @@ block_t *init_jungle_planks(void);
 block_t *init_y_spruce_log(void);
 block_t *init_x_spruce_log(void);
 block_t *init_z_spruce_log(void);
+block_t *init_lava(void);
 
 // Colors
 
