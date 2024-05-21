@@ -40,7 +40,7 @@ static void animation_splash(app_t *app, sfClock *clock)
     }
 }
 
-void poll_events_splashscreen(app_t *app, sfEvent *event)
+static void poll_events_splashscreen(app_t *app, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window)) {
@@ -61,4 +61,10 @@ void draw_splashscreen(app_t *app)
 {
     sfRenderWindow_clear(app->window, sfWhite);
     sfRenderWindow_drawSprite(app->window, app->logo->sprite, NULL);
+}
+
+void switch_to_splashscreen(app_t *app)
+{
+    app->draw_function = draw_splashscreen;
+    app->event_handler = poll_events_splashscreen;
 }

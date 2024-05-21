@@ -44,7 +44,7 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
     if (is_on_sprite(app->button[3].sprite, mouse_pos))
-        return parameter_sound(app);
+        return switch_to_sound_settings(app);
     if (is_on_sprite(app->button[4].sprite, mouse_pos))
         return switch_to_video_settings(app);
     if (is_on_sprite(app->button[5].sprite, mouse_pos))
@@ -61,7 +61,7 @@ static void handle_events_setting(app_t *app, sfEvent *event)
     }
 }
 
-void poll_events_setting(app_t *app, sfEvent *event)
+static void poll_events_setting(app_t *app, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window)) {

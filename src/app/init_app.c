@@ -80,10 +80,13 @@ static sound_t *init_sound(void)
 
 static sfFont **init_fonts(void)
 {
-    sfFont **fonts = malloc(sizeof(sfFont *) * 1);
+    sfFont **fonts = malloc(sizeof(sfFont *) * 3);
 
     fonts[0] = sfFont_createFromFile(
         "assets/fonts/minecraft-font/MinecraftBold-nMK1.otf");
+    fonts[1] = sfFont_createFromFile(
+        "assets/fonts/minecraft-font/MinecraftRegular-Bmg3.otf");
+    fonts[2] = NULL;
     return fonts;
 }
 
@@ -98,7 +101,7 @@ static void init_button(app_t *app)
 
 static void init_text(app_t *app)
 {
-    app->text = malloc(24 * sizeof(button_t));
+    app->text = malloc(25 * sizeof(button_t));
     text_setting(app);
     text_sound(app);
     text_video(app);

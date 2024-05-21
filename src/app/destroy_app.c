@@ -36,6 +36,13 @@ static void free_ui(app_t *app)
     free(app->text);
 }
 
+static void free_fonts(sfFont **fonts)
+{
+    for (int i = 0; fonts[i]; i++)
+        sfFont_destroy(fonts[i]);
+    free(fonts);
+}
+
 void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
@@ -44,9 +51,8 @@ void destroy_app(app_t *app)
     sfClock_destroy(app->game_clock);
     destroy_game_ressources(app->game_ressources);
     free_inventory(app->inventory);
-    sfFont_destroy(app->fonts[0]);
+    free_fonts(app->fonts);
     free_ui(app);
-    free(app->fonts);
     free(app->debug_options);
     free(app);
 }

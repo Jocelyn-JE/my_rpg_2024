@@ -226,6 +226,7 @@ void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);
 sfSprite* create_sprite(const char *texture_path,
     sfVector2f position, sfVector2f scale);
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
+void update_text(text_t *text, sfVector2f pos, char *string, int i);
 bool is_on_sprite(sfSprite *button, sfVector2f pos);
 
 // Menu
@@ -233,10 +234,8 @@ bool is_on_sprite(sfSprite *button, sfVector2f pos);
 menu_t *create_menu(void);
 logo_t *create_logo(void);
 void text_menu(app_t *app);
-void menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
-void set_menu_sprite(app_t *app);
 
 // Setting
 
@@ -245,13 +244,11 @@ void text_setting(app_t *app);
 
 // Video
 
-void parameter_video(app_t *app);
 void set_button_video(app_t *app);
 void text_video(app_t *app);
 
 // Musique
 
-void parameter_sound(app_t *app);
 void set_button_sound(app_t *app);
 void text_sound(app_t *app);
 
@@ -296,13 +293,6 @@ void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
 
-//Poll event functions
-
-void poll_events(app_t *app, sfEvent *event);
-void poll_events_splashscreen(app_t *app, sfEvent *event);
-void poll_events_setting(app_t *app, sfEvent *event);
-void poll_events_volume(app_t *app, sfEvent *event);
-
 //Draw functions
 
 void draw_chunks(chunk_t **chunks, app_t *app);
@@ -330,4 +320,6 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 void switch_to_menu(app_t *app);
 void switch_to_settings(app_t *app);
 void switch_to_video_settings(app_t *app);
+void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);
+void switch_to_splashscreen(app_t *app);

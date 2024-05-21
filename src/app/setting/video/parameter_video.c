@@ -17,7 +17,7 @@ static void draw_video_settings(app_t *app)
     sfRenderWindow_clear(app->window, sfBlack);
     sfRenderWindow_drawSprite(app->window, sprite, NULL);
     sfSprite_destroy(sprite);
-    sfRenderWindow_drawText(app->window, app->text[10].text, NULL);
+    sfRenderWindow_drawText(app->window, app->text[24].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->button[6].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[7].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->button[7].sprite, NULL);

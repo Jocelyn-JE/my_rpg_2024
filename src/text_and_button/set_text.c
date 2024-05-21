@@ -7,14 +7,26 @@
 
 #include "rpg.h"
 
-void set_text(app_t *app, sfVector2f pos, char *filename, int i)
+void update_text(text_t *text, sfVector2f pos, char *string, int i)
 {
     sfFloatRect rect;
     sfVector2f centered_pos;
 
-    app->text[i].font = app->fonts[0];
+    sfText_setString(text[i].text, string);
+    sfText_setCharacterSize(text[i].text, 24);
+    rect = sfText_getGlobalBounds(text[i].text);
+    centered_pos = (sfVector2f){pos.x - rect.width / 2, pos.y - rect.height};
+    sfText_setPosition(text[i].text, centered_pos);
+}
+
+void set_text(app_t *app, sfVector2f pos, char *string, int i)
+{
+    sfFloatRect rect;
+    sfVector2f centered_pos;
+
+    app->text[i].font = app->fonts[1];
     app->text[i].text = sfText_create();
-    sfText_setString(app->text[i].text, filename);
+    sfText_setString(app->text[i].text, string);
     sfText_setFont(app->text[i].text, app->text[i].font);
     sfText_setCharacterSize(app->text[i].text, 24);
     rect = sfText_getGlobalBounds(app->text[i].text);
@@ -42,5 +54,5 @@ void text_video(app_t *app)
     set_text(app, (sfVector2f){1920 / 3, 1080 / 2}, "AAA", 7);
     set_text(app, (sfVector2f){1920 / 3 * 2, 1080 / 2}, "BBB", 8);
     set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 2}, "Done", 9);
-    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Video Settings", 10);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Video Settings", 24);
 }
