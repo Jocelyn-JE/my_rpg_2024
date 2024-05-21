@@ -7,34 +7,34 @@
 
 #include "rpg.h"
 
-void set_text(app_t *app, sfVector2f position, char *filename, int i)
+void set_text(app_t *app, sfVector2f pos, char *filename, int i)
 {
-    app->text[i].font = sfFont_createFromFile("assets/fonts/minecraft-f"
-        "ont/MinecraftBold-nMK1.otf");
+    sfFloatRect rect;
+    sfVector2f centered_pos;
+
+    app->text[i].font = app->fonts[0];
     app->text[i].text = sfText_create();
     sfText_setString(app->text[i].text, filename);
     sfText_setFont(app->text[i].text, app->text[i].font);
     sfText_setCharacterSize(app->text[i].text, 24);
-    sfText_setPosition(app->text[i].text, position);
+    rect = sfText_getGlobalBounds(app->text[i].text);
+    centered_pos = (sfVector2f){pos.x - rect.width / 2, pos.y - rect.height};
+    sfText_setPosition(app->text[i].text, centered_pos);
 }
 
 void text_menu(app_t *app)
 {
-    app->text->width_fenetre = sfRenderWindow_getSize(app->window).x;
-    set_text(app, (sfVector2f){880, 507}, "Play Game", 0);
-    set_text(app, (sfVector2f){890, 657}, "Options", 1);
-    set_text(app, (sfVector2f){880, 807}, "Quit Game", 2);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2}, "Play Game", 0);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 150}, "Options", 1);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 300}, "Quit Game", 2);
 }
 
 void text_setting(app_t *app)
 {
-    app->text->largeur_text = sfText_getGlobalBounds(app->text[0].text).width;
-    set_text(app, (sfVector2f){880, 307}, "Options", 3);
-    set_text(app, (sfVector2f){480, 507}, "Music & Sounds", 4);
-    set_text(app, (sfVector2f){1190, 507}, "Video Settings", 5);
-    set_text(app, (sfVector2f){(app->text->width_fenetre / 2) -
-        (app->text->largeur_text / 2), 707}, "Done", 6);
-    set_text(app, (sfVector2f){900, 707}, "Done", 6);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Options", 3);
+    set_text(app, (sfVector2f){1920 / 3, 1080 / 2}, "Music & Sounds", 4);
+    set_text(app, (sfVector2f){1920 / 3 * 2, 1080 / 2}, "Video Settings", 5);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 2}, "Done", 6);
 }
 
 void text_video(app_t *app)

@@ -118,7 +118,7 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (sfFloatRect_contains(&app->button[15].hitbox,
         mouse_pos.x, mouse_pos.y))
-        setting(app);
+        return switch_to_settings(app);
     handle_effect_music(app, mouse_pos);
 }
 

@@ -31,13 +31,11 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
 
     if (sfFloatRect_contains(&app->button[6].hitbox,
         mouse_pos.x, mouse_pos.y))
-        printf("caca\n");
     if (sfFloatRect_contains(&app->button[7].hitbox,
         mouse_pos.x, mouse_pos.y))
-        printf("pipi\n");
     if (sfFloatRect_contains(&app->button[8].hitbox,
         mouse_pos.x, mouse_pos.y))
-        setting(app);
+        switch_to_settings(app);
 }
 
 static void handle_events_video(app_t *app, sfEvent *event)

@@ -140,7 +140,6 @@ typedef struct game_s {
 typedef struct logo_s {
     sfSprite *sprite;
     sfTexture *texture;
-    sfVector2f *position;
     sfVector2f scale;
     sfColor color;
 } logo_t;
@@ -174,8 +173,6 @@ typedef struct button_s {
 typedef struct text_s {
     sfFont *font;
     sfText *text;
-    unsigned int width_fenetre;
-    float largeur_text;
 } text_t;
 
 typedef struct app_s {
@@ -246,11 +243,9 @@ void menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
 void set_menu_sprite(app_t *app);
-void destroy_menu(app_t *app);
 
 // Setting
 
-void setting(app_t *app);
 void set_button_setting(app_t *app);
 void text_setting(app_t *app);
 
@@ -339,3 +334,5 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 // Scenes
 
 void switch_to_menu(app_t *app);
+void switch_to_settings(app_t *app);
+void switch_to_game(app_t *app);
