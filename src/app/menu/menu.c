@@ -24,8 +24,7 @@ static void set_menu(menu_t *menu)
     menu->backsprite = sfSprite_create();
     menu->backtexture = sfTexture_createFromFile("assets/widgets/"
         "menu.png", NULL);
-    menu->backscale = scale_menu;
-    sfSprite_setScale(menu->backsprite, menu->backscale);
+    sfSprite_setScale(menu->backsprite, scale_menu);
     sfSprite_setPosition(menu->backsprite, pos_menu);
     sfSprite_setTexture(menu->backsprite, menu->backtexture, sfTrue);
 }

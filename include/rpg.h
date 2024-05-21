@@ -147,8 +147,6 @@ typedef struct logo_s {
 typedef struct menu_s {
     sfSprite *backsprite;
     sfTexture *backtexture;
-    sfVector2f *backposition;
-    sfVector2f backscale;
 } menu_t;
 
 typedef struct sound_s {

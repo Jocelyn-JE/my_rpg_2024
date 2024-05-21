@@ -30,8 +30,13 @@ static void free_logo(logo_t *logo)
 static void free_ui(app_t *app)
 {
     free_logo(app->logo);
+    for (int i = 0; i < 16; i++) {
+        sfSprite_destroy(app->button[i].sprite);
+        sfTexture_destroy(app->button[i].texture);
+    }
+    for (int i = 0; i < 25; i++)
+        sfText_destroy(app->text[i].text);
     free(app->button);
-    free(app->menu);
     free(app->sound);
     free(app->text);
 }
@@ -43,6 +48,13 @@ static void free_fonts(sfFont **fonts)
     free(fonts);
 }
 
+static void free_menu(menu_t *menu)
+{
+    sfTexture_destroy(menu->backtexture);
+    sfSprite_destroy(menu->backsprite);
+    free(menu);
+}
+
 void destroy_app(app_t *app)
 {
     sfRenderWindow_destroy(app->window);
@@ -50,6 +62,7 @@ void destroy_app(app_t *app)
     sfView_destroy(app->view);
     sfClock_destroy(app->game_clock);
     destroy_game_ressources(app->game_ressources);
+    free_menu(app->menu);
     free_inventory(app->inventory);
     free_fonts(app->fonts);
     free_ui(app);
