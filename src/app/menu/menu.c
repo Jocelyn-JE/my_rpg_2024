@@ -33,7 +33,7 @@ static void set_menu(menu_t *menu)
     sfSprite_setTexture(menu->backsprite, menu->backtexture, sfTrue);
 }
 
-static void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text)
+void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text)
 {
     sfRenderWindow_drawSprite(window, sprite, NULL);
     sfRenderWindow_drawText(window, text, NULL);

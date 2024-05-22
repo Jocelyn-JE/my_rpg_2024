@@ -238,6 +238,7 @@ void text_menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
 void update_buttons(app_t *app);
+void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text);
 
 
 // Setting
@@ -281,6 +282,7 @@ int get_armor_index(int, int, app_t *);
 // Inventory
 
 void setup_inventory(app_t *);
+void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view);
 void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
@@ -328,3 +330,5 @@ void switch_to_video_settings(app_t *app);
 void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
+void switch_to_pause_menu(app_t *app);
+void switch_to_inventory(app_t *app);

@@ -37,13 +37,18 @@ void set_text(app_t *app, sfVector2f pos, char *string, int i)
 void text_menu(app_t *app)
 {
     set_text(app, (sfVector2f){1920 / 2, 1080 / 2}, "Play Game", 0);
-    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 150}, "Options", 1);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 150}, "Options...", 1);
     set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 300}, "Quit Game", 2);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2}, "Options...", 26);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 - 60}, "Back To Game", 27);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 + 60}, "Save and Quit to Tit"
+        "le", 28);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 2 - 120}, "Game Menu", 29);
 }
 
 void text_setting(app_t *app)
 {
-    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Options", 3);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Options...", 3);
     set_text(app, (sfVector2f){1920 / 3, 1080 / 2}, "Music & Sounds", 4);
     set_text(app, (sfVector2f){1920 / 3 * 2, 1080 / 2}, "Video Settings", 5);
     set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 2}, "Done", 6);
