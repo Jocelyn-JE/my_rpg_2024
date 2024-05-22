@@ -119,14 +119,22 @@ typedef enum e_state {
     e_east = 3,
 } e_state_t;
 
+typedef struct stat_s {
+    int health;
+    int attack;
+    int defense;
+} stat_t;
+
 typedef struct entity_s {
     uint32_t type;
     sfVector2f pos;
     e_state_t state;
+    stat_t stats;
 } entity_t;
 
 typedef struct player_s {
     sfVector2f pos;
+    stat_t stats;
 } player_t;
 
 typedef struct game_s {
