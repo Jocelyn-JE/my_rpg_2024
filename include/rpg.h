@@ -151,6 +151,8 @@ typedef struct menu_s {
 
 typedef struct sound_s {
     sfMusic *music;
+    sfSound **sounds;
+    sfSoundBuffer **sound_buffers;
     int volume_general;
     int volume_music;
     int volume_effect;

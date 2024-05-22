@@ -18,6 +18,8 @@ static void draw_video_settings(app_t *app)
     sfRenderWindow_drawText(app->window, app->text[8].text, NULL);
     sfRenderWindow_drawSprite(app->window, app->button[8].sprite, NULL);
     sfRenderWindow_drawText(app->window, app->text[9].text, NULL);
+    sfRenderWindow_drawSprite(app->window, app->button[16].sprite, NULL);
+    sfRenderWindow_drawText(app->window, app->text[25].text, NULL);
 }
 
 static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
@@ -28,7 +30,7 @@ static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
 
     current_fps = current_fps == 8 ? 0 : current_fps + 1;
     if (current_fps == 0) {
-        update_text(text, (sfVector2f){1920 / 3, 1080 / 2},
+        update_text(text, (sfVector2f){1920 / 2, 1080 / 3 * 1.5},
             "Max Framerate: Vsync", 7);
         sfRenderWindow_setVerticalSyncEnabled(window, true);
     }
@@ -36,9 +38,22 @@ static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
         sfRenderWindow_setVerticalSyncEnabled(window, false);
         sprintf(fps_str, "Max Framerate: %d fps",
             fps_presets[current_fps - 1]);
-        update_text(text, (sfVector2f){1920 / 3, 1080 / 2}, fps_str, 7);
-        sfRenderWindow_setFramerateLimit(window, fps_presets[current_fps - 1]);
+        update_text(text, (sfVector2f){1920 / 2, 1080 / 3 * 1.5}, fps_str, 7);
+        sfRenderWindow_setFramerateLimit(window, fps_presets[current_fps - 1]); 
     }
+}
+
+static void cycle_resolution_modes(sfRenderWindow *window, text_t *text)
+{
+    sfVector2u screen_modes[] = {{1920, 1080}, {1280, 720}};
+    char *mode_str[] = {"1920/1080", "1280/720"};
+    static int current_mode = 0;
+    char button_str[50];
+
+    current_mode = current_mode == 1 ? 0 : current_mode + 1;
+    sfRenderWindow_setSize(window, screen_modes[current_mode]);
+    sprintf(button_str, "Resolution: %s", mode_str[current_mode]);
+    update_text(text, (sfVector2f){1920 / 2, 1080 / 3 * 1.25}, button_str, 25);
 }
 
 static void cycle_window_modes(sfRenderWindow **window, text_t *text)
@@ -53,7 +68,7 @@ static void cycle_window_modes(sfRenderWindow **window, text_t *text)
     *window = create_window((sfVector2f){1920, 1080}, 32,
         screen_modes[current_mode]);
     sprintf(button_str, "Fullscreen: %s", mode_str[current_mode]);
-    update_text(text, (sfVector2f){1920 / 3 * 2, 1080 / 2}, button_str, 8);
+    update_text(text, (sfVector2f){1920 / 2, 1080 / 3 * 1.75}, button_str, 8);
 }
 
 static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
@@ -67,6 +82,8 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
         cycle_window_modes(&app->window, app->text);
     if (is_on_sprite(app->button[8].sprite, mouse_pos))
         switch_to_settings(app);
+    if (is_on_sprite(app->button[16].sprite, mouse_pos))
+        cycle_resolution_modes(app->window, app->text);
 }
 
 static void handle_events_video(app_t *app, sfEvent *event)
