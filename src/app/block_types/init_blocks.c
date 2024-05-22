@@ -84,7 +84,26 @@ const init_func_t init_block_functions[] = {
     {init_coal_block},
     {init_obsidian},
     {init_crying_obsidian},
-    {init_dead_fire_coral}
+    {init_dead_fire_coral},
+    {init_magma_block},
+    {init_y_stripped_oak_wood},
+    {init_x_stripped_oak_wood},
+    {init_z_stripped_oak_wood},
+    {init_y_stripped_dark_oak_wood},
+    {init_x_stripped_dark_oak_wood},
+    {init_z_stripped_dark_oak_wood},
+    {init_azalea_leaves},
+    {init_flowering_azalea_leaves},
+    {init_large_fern_bottom},
+    {init_large_fern_top},
+    {init_tall_grass_bottom},
+    {init_tall_grass_top},
+    {init_ladder_east},
+    {init_ladder_south},
+    {init_y_acacia_log},
+    {init_x_acacia_log},
+    {init_z_acacia_log},
+    {init_yellow_terracotta}
 };
 
 sfVertex *get_top_face(uv_coords_t uv,
@@ -153,7 +172,7 @@ sfVertex *get_right_face(uv_coords_t uv,
 // The block_count is the last added block + 1
 block_t **init_blocks(void)
 {
-    uint8_t block_count = b_dead_fire_coral + 1;
+    uint8_t block_count = b_yellow_terracotta + 1;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
     for (int i = 0; i != block_count; i++)
