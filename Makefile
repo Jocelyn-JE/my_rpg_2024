@@ -82,6 +82,8 @@ SRC =	src/main.c												\
 		src/app/game/events/drag_view.c							\
 		src/app/game/movement.c									\
 		src/app/game/render_game.c								\
+		src/app/combat_system/setup_combat.c					\
+		src/app/combat_system/events/manage_combat_events.c		\
 		src/events/get_letterbox_view.c							\
 		src/events/handle_closed.c								\
 		src/app/game/events/handle_key_pressed.c 				\
