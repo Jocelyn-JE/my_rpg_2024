@@ -68,27 +68,39 @@ static game_t *init_game(void)
     return new_game;
 }
 
-// static sfSoundBuffer **init_buffers(void)
-// {
-//     sfSoundBuffer **buffers = malloc(sizeof(sfSoundBuffer *));
+static sfSoundBuffer **init_buffers(void)
+{
+    sfSoundBuffer **buffer = malloc(sizeof(sfSoundBuffer *) * 1 + 1);
+    const char *sound_files[] = {
+        "assets/sound/click.ogg",
+        NULL
+    };
 
-//     buffers[i] = sfSoundBuffer_createFromFile(sound_files[i]);
-// }
+    for (int i = 0; sound_files[i] != NULL; i++)
+        buffer[i] = sfSoundBuffer_createFromFile(sound_files[i]);
+    buffer[1] = NULL;
+    return buffer;
+}
 
-// static sfSound **init_sounds(sfSoundBuffer **buffers)
-// {
-    
-// }
+static sfSound **init_sounds(sfSoundBuffer **buffers)
+{
+    sfSound **sounds = malloc(sizeof(sfSound *) * 1 + 1);
+    for (int i = 0; buffers[i] != NULL;i++) {
+        sfSound_setBuffer(sounds[i], buffers[i]);
+    }
+    sounds[1] = NULL;
+    return sounds;
+}
 
 static sound_t *init_sound(void)
 {
     sound_t *sound = malloc(sizeof(sound_t));
 
-    sound->sounds = malloc(sizeof(sfSound *) * 2);
-    sound->sounds[1] = NULL;
-    sound->volume_general = 0;
-    sound->volume_music = 0;
-    sound->volume_effect = 0;
+    sound->sound_buffers = init_buffers();
+    sound->sounds = init_sounds(sound->sound_buffers);
+    sound->volume_general = 50;
+    sound->volume_music = 50;
+    sound->volume_effect = 50;
     return sound;
 }
 

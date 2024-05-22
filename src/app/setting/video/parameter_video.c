@@ -39,7 +39,7 @@ static void cycle_fps_setting(sfRenderWindow *window, text_t *text)
         sprintf(fps_str, "Max Framerate: %d fps",
             fps_presets[current_fps - 1]);
         update_text(text, (sfVector2f){1920 / 2, 1080 / 3 * 1.5}, fps_str, 7);
-        sfRenderWindow_setFramerateLimit(window, fps_presets[current_fps - 1]); 
+        sfRenderWindow_setFramerateLimit(window, fps_presets[current_fps - 1]);
     }
 }
 
