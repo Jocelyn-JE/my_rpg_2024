@@ -254,7 +254,9 @@ void text_video(app_t *app);
 
 void set_button_sound(app_t *app);
 void text_sound(app_t *app);
-
+sfSoundBuffer **init_buffers(void);
+sfSound **init_sounds(sfSoundBuffer **buffers);
+sound_t *init_sound(void);
 
 // Debug
 
