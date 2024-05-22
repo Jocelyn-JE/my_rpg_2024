@@ -16,7 +16,8 @@ static void handle_events(app_t *app, sfEvent *event)
     if (event->type == sfEvtKeyPressed && event->key.code == sfKeyF) {
         app->event_handler = manage_game_events;
         app->draw_function = draw_game;
-        get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
+        get_letterbox_view(app->game_view,
+            sfRenderWindow_getSize(app->window));
         sfRenderWindow_setView(app->window, app->game_view);
     }
 }
@@ -26,7 +27,7 @@ void manage_combat_events(app_t *app, sfEvent *event)
     player_t *player = app->game_ressources->player;
 
     while (sfRenderWindow_pollEvent(app->window, event) &&
-           sfRenderWindow_hasFocus(app->window)) {
+        sfRenderWindow_hasFocus(app->window)) {
         handle_events(app, event);
         sfRenderWindow_setView(app->window, app->view);
     }
