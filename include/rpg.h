@@ -137,12 +137,20 @@ typedef struct player_s {
     stat_t stats;
 } player_t;
 
+typedef enum combat_state_s {
+    COMBAT_STARTED,
+    PLAYER_TURN,
+    ENEMY_TURN,
+    COMBAT_ENDED
+} combat_state_t;
+
 typedef struct game_s {
     sfTexture *block_atlas;
     block_t **block_types;
     list_t *entities;
     chunk_t **map;
     player_t *player;
+    combat_state_t combat_state;
 } game_t;
 
 typedef struct logo_s {
