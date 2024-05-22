@@ -106,8 +106,10 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
         if (app->sound->volume_general < 100)
             app->sound->volume_general += 5;
     }
-    if (is_on_sprite(app->button[15].sprite, mouse_pos))
+    if (is_on_sprite(app->button[15].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_settings(app);
+    }
     handle_effect_music(app, mouse_pos);
 }
 
@@ -115,7 +117,7 @@ static void handle_events_volume(app_t *app, sfEvent *event)
 {
     sfMouseButtonEvent mouse_event = event->mouseButton;
 
-    if (event->type == sfEvtMouseButtonPressed) {
+    if (event->type == sfEvtMouseButtonReleased) {
         if (mouse_event.button == sfMouseLeft)
             handle_volume_click(app, &mouse_event);
     }
