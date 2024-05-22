@@ -11,7 +11,7 @@ static void handle_events_menu(app_t *app, sfEvent *event)
 {
     sfMouseButtonEvent mouse_event = event->mouseButton;
 
-    if (event->type == sfEvtMouseButtonPressed) {
+    if (event->type == sfEvtMouseButtonReleased) {
         if (mouse_event.button == sfMouseLeft)
             handle_button_click(app, &mouse_event);
     }
@@ -29,4 +29,5 @@ void manage_events_menu(app_t *app, sfEvent *events)
             sfRenderWindow_close(app->window);
     }
     sfRenderWindow_setView(app->window, app->view);
+    update_buttons(app);
 }

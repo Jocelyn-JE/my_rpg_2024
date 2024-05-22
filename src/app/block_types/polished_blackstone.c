@@ -18,7 +18,7 @@ block_t *init_polished_blackstone(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){32, 240},
         (sfVector2f){48, 256}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }
@@ -35,7 +35,7 @@ block_t *init_polished_blackstone_bricks(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){16, 256},
         (sfVector2f){32, 272}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }
@@ -52,7 +52,7 @@ block_t *init_cracked_polished_blackstone_bricks(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){32, 256},
         (sfVector2f){48, 272}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }
@@ -69,7 +69,7 @@ block_t *init_chiseled_polished_blackstone(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){48, 240},
         (sfVector2f){64, 256}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }

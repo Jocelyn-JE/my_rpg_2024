@@ -25,8 +25,10 @@ static void button(app_t *app, int index, int x, int y)
     sfVector2f pos_button = {x, y};
     sfFloatRect hitbox;
 
-    create_button_sprite(app, index, "assets/widgets/bouton.png");
-    sfSprite_setScale(app->button[index].sprite, (sfVector2f){0.4, 0.4});
+    create_button_sprite(app, index, "assets/widgets/button.png");
+    sfSprite_setTextureRect(app->button[index].sprite, (sfIntRect){0, 0, 200,
+        20});
+    sfSprite_setScale(app->button[index].sprite, (sfVector2f){2.5, 2.5});
     hitbox = sfSprite_getGlobalBounds(app->button[index].sprite);
     pos_button = (sfVector2f){x - hitbox.width / 2, y - hitbox.height / 2};
     set_button_position(app, index, pos_button);

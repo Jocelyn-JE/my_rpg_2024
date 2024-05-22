@@ -237,6 +237,8 @@ logo_t *create_logo(void);
 void text_menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
+void update_buttons(app_t *app);
+
 
 // Setting
 
