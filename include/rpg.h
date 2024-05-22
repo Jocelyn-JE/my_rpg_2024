@@ -338,7 +338,7 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 
 void switch_to_scene(app_t *app, scenes_t scene);
 
-void switch_to_menu(app_t *app);
+void switch_to_menu(app_t *app, scenes_t previous_scene);
 void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
 void switch_to_sound_settings(app_t *app);

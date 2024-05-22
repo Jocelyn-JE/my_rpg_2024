@@ -51,5 +51,8 @@ sound_t *init_sound(void)
     sound->volume_general = 50;
     sound->volume_music = 50;
     sound->volume_effect = 50;
+    sfMusic_setVolume(sound->music, 25);
+    sfSound_setVolume(sound->sounds[0], 25);
+    sfMusic_setLoop(sound->music, true);
     return sound;
 }

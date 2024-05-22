@@ -10,7 +10,7 @@
 void switch_to_scene(app_t *app, scenes_t scene)
 {
     if (scene == s_menu)
-        switch_to_menu(app);
+        switch_to_menu(app, app->previous_scene);
     if (scene == s_settings)
         switch_to_settings(app, app->previous_scene);
     if (scene == s_sound_settings)

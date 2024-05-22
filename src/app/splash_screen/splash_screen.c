@@ -31,13 +31,8 @@ static void animation_splash(app_t *app, sfClock *clock)
 
     if (seconds < 0.01)
         return;
-    if (color.a == 255) {
-        sfMusic_setVolume(app->sound->music, 25);
-        sfSound_setVolume(app->sound->sounds[0], 25);
-        sfMusic_setLoop(app->sound->music, true);
-        sfMusic_play(app->sound->music);
-        return switch_to_menu(app);
-    }
+    if (color.a == 255)
+        return switch_to_menu(app, s_splashscreen);
     if (color.a < 255) {
         color.a += 1.5;
         sfSprite_setColor(app->logo->sprite, color);
@@ -56,7 +51,7 @@ static void poll_events_splashscreen(app_t *app, sfEvent *event)
                 (sfVector2u){event->size.width, event->size.height});
         if (event->type == sfEvtKeyPressed ||
             event->type == sfEvtMouseButtonPressed)
-            return switch_to_menu(app);
+            return switch_to_menu(app, s_splashscreen);
     }
     animation_splash(app, app->game_clock);
     sfRenderWindow_setView(app->window, app->view);
