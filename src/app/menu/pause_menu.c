@@ -13,7 +13,7 @@ static void button_actions(app_t *app, sfMouseButtonEvent *mouse_event)
 
     if (is_on_sprite(app->button[17].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
-        return switch_to_settings(app);
+        return switch_to_settings(app, s_pause_menu);
     }
     if (is_on_sprite(app->button[18].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);

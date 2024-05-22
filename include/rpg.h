@@ -58,6 +58,17 @@ typedef enum p_items {
     p_netherite_boots = 29,
 } p_items_t;
 
+typedef enum scenes {
+    s_menu,
+    s_settings,
+    s_video_settings,
+    s_sound_settings,
+    s_game,
+    s_splashscreen,
+    s_pause_menu,
+    s_inventory
+} scenes_t;
+
 // Structures
 
 typedef struct inventory_params_s {
@@ -183,6 +194,7 @@ typedef struct app_s {
     game_t *game_ressources;
     inventory_t *inventory;
     sfFont **fonts;
+    scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
@@ -324,8 +336,10 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 
 // Scenes
 
+void switch_to_scene(app_t *app, scenes_t scene);
+
 void switch_to_menu(app_t *app);
-void switch_to_settings(app_t *app);
+void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
 void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);

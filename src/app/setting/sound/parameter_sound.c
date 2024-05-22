@@ -117,7 +117,7 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (is_on_sprite(app->button[15].sprite, mouse_pos)) {
         play_sound(app);
-        return switch_to_settings(app);
+        return switch_to_settings(app, app->previous_scene);
     }
     handle_effect_music(app, mouse_pos);
 }

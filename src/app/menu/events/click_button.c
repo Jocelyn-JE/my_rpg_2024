@@ -26,7 +26,7 @@ void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (is_on_sprite(app->button[1].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
-        return switch_to_settings(app);
+        return switch_to_settings(app, s_menu);
     }
     if (is_on_sprite(app->button[2].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);

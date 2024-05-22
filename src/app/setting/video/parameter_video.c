@@ -86,7 +86,7 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (is_on_sprite(app->button[8].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
-        switch_to_settings(app);
+        switch_to_settings(app, app->previous_scene);
     }
     if (is_on_sprite(app->button[16].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
