@@ -57,5 +57,17 @@ int start_combat(player_t *player, entity_t *enemy, app_t *app)
 
 void switch_to_combat(app_t *app)
 {
-    sfRenderWindow_clear(app->window, sfRed);
+    sfTexture* texture = sfTexture_createFromFile("./assets/textures/atlas.png", NULL);
+
+    sfSprite* sprite = sfSprite_create();
+    sfSprite_setTexture(sprite, texture, sfTrue);
+    sfIntRect textureRect = {415, 0, 117, 238};
+    sfSprite_setTextureRect(sprite, textureRect);
+    sfVector2f viewSize = sfView_getSize(app->view);
+    sfVector2f spritePosition = {viewSize.x / 2.0f, viewSize.y / 2.0f};
+    sfSprite_setPosition(sprite, spritePosition);
+    sfSprite_setScale(sprite, (sfVector2f){2, 2});
+    sfRenderWindow_clear(app->window, sfBlack);
+    sfRenderWindow_drawSprite(app->window, sprite, NULL);
+    sfSprite_destroy(sprite);
 }

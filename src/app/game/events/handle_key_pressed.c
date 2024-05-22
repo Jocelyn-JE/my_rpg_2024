@@ -31,5 +31,7 @@ void handle_key_pressed_game(sfEvent *event, app_t *app)
     if (event->key.code == sfKeyF) {
         app->event_handler = manage_combat_events;
         app->draw_function = switch_to_combat;
+        get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
+        sfRenderWindow_setView(app->window, app->view);
     }
 }
