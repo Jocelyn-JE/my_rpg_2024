@@ -70,16 +70,6 @@ static game_t *init_game(void)
     return new_game;
 }
 
-static sound_t *init_sound(void)
-{
-    sound_t *sound = malloc(sizeof(sound_t));
-
-    sound->volume_general = 0;
-    sound->volume_music = 0;
-    sound->volume_effect = 0;
-    return sound;
-}
-
 static sfFont **init_fonts(void)
 {
     sfFont **fonts = malloc(sizeof(sfFont *) * 3);
@@ -94,7 +84,7 @@ static sfFont **init_fonts(void)
 
 static void init_button(app_t *app)
 {
-    app->button = malloc(16 * sizeof(button_t));
+    app->button = malloc(17 * sizeof(button_t));
     set_button(app);
     set_button_setting(app);
     set_button_sound(app);
@@ -103,7 +93,7 @@ static void init_button(app_t *app)
 
 static void init_text(app_t *app)
 {
-    app->text = calloc(25, sizeof(button_t));
+    app->text = calloc(26, sizeof(button_t));
     text_setting(app);
     text_sound(app);
     text_video(app);

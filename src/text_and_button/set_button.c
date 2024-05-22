@@ -50,8 +50,9 @@ void set_button_setting(app_t *app)
 
 void set_button_video(app_t *app)
 {
-    button(app, 6, 1920 / 3, 1080 / 2);
-    button(app, 7, 1920 / 3 * 2, 1080 / 2);
+    button(app, 16, 1920 / 2, 1080 / 3 * 1.25);
+    button(app, 6, 1920 / 2, 1080 / 3 * 1.5);
+    button(app, 7, 1920 / 2, 1080 / 3 * 1.75);
     button(app, 8, 1920 / 2, 1080 / 3 * 2);
 }
 
