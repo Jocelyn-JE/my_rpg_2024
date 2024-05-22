@@ -43,15 +43,15 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 248.0f;
-    new_player->pos.y = 291.0f;
+    new_player->pos.x = 126.0f;
+    new_player->pos.y = 101.0f;
     return new_player;
 }
 
 static game_t *init_game(void)
 {
     game_t *new_game = malloc(sizeof(game_t));
-    int map_fd = open("tests/fmap.ioc", O_RDONLY);
+    int map_fd = open("tests/map.ioc", O_RDONLY);
 
     new_game->block_types = init_blocks();
     new_game->block_atlas = sfTexture_createFromFile(

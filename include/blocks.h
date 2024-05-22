@@ -92,7 +92,25 @@ enum blocks {
     b_obsidian,
     b_crying_obsidian,
     b_dead_fire_coral,
-    b_magma_block
+    b_magma_block,
+    b_y_stripped_oak_wood,
+    b_x_stripped_oak_wood,
+    b_z_stripped_oak_wood,
+    b_y_stripped_dark_oak_wood,
+    b_x_stripped_dark_oak_wood,
+    b_z_stripped_dark_oak_wood,
+    b_azalea_leaves,
+    b_flowering_azalea_leaves,
+    b_large_fern_bottom,
+    b_large_fern_top,
+    b_tall_grass_bottom,
+    b_tall_grass_top,
+    b_ladder_east,
+    b_ladder_south,
+    b_y_acacia,
+    b_x_acacia,
+    b_z_acacia,
+    b_yellow_terracotta
 };
 
 enum entities {
@@ -214,6 +232,24 @@ block_t *init_obsidian(void);
 block_t *init_crying_obsidian(void);
 block_t *init_dead_fire_coral(void);
 block_t *init_magma_block(void);
+block_t *init_y_stripped_oak_wood(void);
+block_t *init_x_stripped_oak_wood(void);
+block_t *init_z_stripped_oak_wood(void);
+block_t *init_y_stripped_dark_oak_wood(void);
+block_t *init_x_stripped_dark_oak_wood(void);
+block_t *init_z_stripped_dark_oak_wood(void);
+block_t *init_azalea_leaves(void);
+block_t *init_flowering_azalea_leaves(void);
+block_t *init_large_fern_bottom(void);
+block_t *init_large_fern_top(void);
+block_t *init_tall_grass_bottom(void);
+block_t *init_tall_grass_top(void);
+block_t *init_ladder_east(void);
+block_t *init_ladder_south(void);
+block_t *init_y_acacia_log(void);
+block_t *init_x_acacia_log(void);
+block_t *init_z_acacia_log(void);
+block_t *init_yellow_terracotta(void);
 
 // Colors
 

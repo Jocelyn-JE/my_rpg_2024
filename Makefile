@@ -73,6 +73,12 @@ SRC =	src/main.c												\
 		src/app/block_types/coal_block.c						\
 		src/app/block_types/obsidian.c							\
 		src/app/block_types/magma_block.c						\
+		src/app/block_types/stripped_oak_wood.c					\
+		src/app/block_types/stripped_dark_oak_wood.c			\
+		src/app/block_types/azalea_leaves.c						\
+		src/app/block_types/ladder.c							\
+		src/app/block_types/acacia_log.c						\
+		src/app/block_types/terracotta.c						\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\
