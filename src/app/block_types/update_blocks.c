@@ -64,6 +64,12 @@ static sfVector2f lava_anim[] = {
     (sfVector2f){112, 176}
 };
 
+static sfVector2f magma_anim[] = {
+    (sfVector2f){128, 208},
+    (sfVector2f){128 + 16, 208},
+    (sfVector2f){128 + 32, 208}
+};
+
 static bool check_time_water(sfTime dt)
 {
     static sfTime prev_dt = {(sfInt64){0}};
@@ -80,6 +86,17 @@ static bool check_time_lava(sfTime dt)
     static sfTime prev_dt = {(sfInt64){0}};
 
     if (sfTime_asMilliseconds(dt) - sfTime_asMilliseconds(prev_dt) > 100) {
+        prev_dt.microseconds = dt.microseconds;
+        return false;
+    }
+    return true;
+}
+
+static bool check_time_magma_block(sfTime dt)
+{
+    static sfTime prev_dt = {(sfInt64){0}};
+
+    if (sfTime_asMilliseconds(dt) - sfTime_asMilliseconds(prev_dt) > 800) {
         prev_dt.microseconds = dt.microseconds;
         return false;
     }
@@ -119,8 +136,33 @@ static void update_lava(block_t *lava, sfTime dt)
     i += offset;
 }
 
+static void update_magma_block(block_t *magma_block, sfTime dt)
+{
+    static int i = 0;
+
+    if (check_time_magma_block(dt))
+        return;
+    free(magma_block->faces[0]);
+    free(magma_block->faces[1]);
+    free(magma_block->faces[2]);
+    magma_block->faces[0] = get_top_face((uv_coords_t){magma_anim[i],
+        (sfVector2f){magma_anim[i].x + 16, magma_anim[i].y + 16}},
+        (sfVector2f){0, 0});
+    magma_block->faces[1] = get_left_face((uv_coords_t){magma_anim[i],
+        (sfVector2f){magma_anim[i].x + 16, magma_anim[i].y + 16}},
+        (sfVector2f){0, 0});
+    magma_block->faces[2] = get_right_face((uv_coords_t){magma_anim[i],
+        (sfVector2f){magma_anim[i].x + 16, magma_anim[i].y + 16}},
+        (sfVector2f){0, 0});
+    if (i >= 0 && i < 2)
+        i += 1;
+    else
+        i += -1;
+}
+
 void update_blocks(block_t **blocks, sfTime dt)
 {
     update_water(blocks[b_water], dt);
     update_lava(blocks[b_lava], dt);
+    update_magma_block(blocks[b_magma_block], dt);
 }

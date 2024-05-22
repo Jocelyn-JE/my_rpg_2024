@@ -18,7 +18,7 @@ block_t *init_smooth_quartz(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){160, 192},
         (sfVector2f){176, 208}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }

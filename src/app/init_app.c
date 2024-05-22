@@ -43,15 +43,15 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 248.0f;
-    new_player->pos.y = 291.0f;
+    new_player->pos.x = 126.0f;
+    new_player->pos.y = 101.0f;
     return new_player;
 }
 
 static game_t *init_game(void)
 {
     game_t *new_game = malloc(sizeof(game_t));
-    int map_fd = open("tests/fmap.ioc", O_RDONLY);
+    int map_fd = open("tests/map.ioc", O_RDONLY);
 
     new_game->block_types = init_blocks();
     new_game->block_atlas = sfTexture_createFromFile(
@@ -61,21 +61,13 @@ static game_t *init_game(void)
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
         e_player));
+    list_add(&new_game->entities, create_entity((sfVector2f){244, 291},
+        e_zombie));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
     place_chunks(new_game->map);
     return new_game;
-}
-
-static sound_t *init_sound(void)
-{
-    sound_t *sound = malloc(sizeof(sound_t));
-
-    sound->volume_general = 0;
-    sound->volume_music = 0;
-    sound->volume_effect = 0;
-    return sound;
 }
 
 static sfFont **init_fonts(void)
@@ -92,7 +84,7 @@ static sfFont **init_fonts(void)
 
 static void init_button(app_t *app)
 {
-    app->button = malloc(16 * sizeof(button_t));
+    app->button = malloc(17 * sizeof(button_t));
     set_button(app);
     set_button_setting(app);
     set_button_sound(app);
@@ -101,7 +93,7 @@ static void init_button(app_t *app)
 
 static void init_text(app_t *app)
 {
-    app->text = calloc(25, sizeof(button_t));
+    app->text = calloc(26, sizeof(button_t));
     text_setting(app);
     text_sound(app);
     text_video(app);

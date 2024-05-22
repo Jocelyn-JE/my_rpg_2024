@@ -12,3 +12,4 @@ my_rpg
 valgrind.log
 output*
 valgrind.*
+tests/r.0.0.mca
