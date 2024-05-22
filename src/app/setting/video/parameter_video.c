@@ -91,6 +91,7 @@ static void poll_events_video_settings(app_t *app, sfEvent *event)
                 (sfVector2u){event->size.width, event->size.height});
     }
     sfRenderWindow_setView(app->window, app->view);
+    update_buttons(app);
 }
 
 void switch_to_video_settings(app_t *app)

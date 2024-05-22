@@ -19,10 +19,13 @@ void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (is_on_sprite(app->button[0].sprite, mouse_pos))
+    if (is_on_sprite(app->button[0].sprite, mouse_pos)) {
         return switch_to_game(app);
-    if (is_on_sprite(app->button[1].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[1].sprite, mouse_pos)) {
         return switch_to_settings(app);
-    if (is_on_sprite(app->button[2].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[2].sprite, mouse_pos)) {
         sfRenderWindow_close(app->window);
+    }
 }

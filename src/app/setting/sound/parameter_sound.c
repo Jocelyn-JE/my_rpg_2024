@@ -128,6 +128,7 @@ static void poll_events_volume(app_t *app, sfEvent *event)
     }
     update_volume_text(app);
     sfRenderWindow_setView(app->window, app->view);
+    update_buttons(app);
 }
 
 void switch_to_sound_settings(app_t *app)

@@ -54,4 +54,3 @@ block_t *init_dead_fire_coral(void)
     block->solid = false;
     return block;
 }
-
