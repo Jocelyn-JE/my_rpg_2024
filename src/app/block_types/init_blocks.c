@@ -84,7 +84,8 @@ const init_func_t init_block_functions[] = {
     {init_coal_block},
     {init_obsidian},
     {init_crying_obsidian},
-    {init_dead_fire_coral}
+    {init_dead_fire_coral},
+    {init_magma_block}
 };
 
 sfVertex *get_top_face(uv_coords_t uv,
@@ -153,7 +154,7 @@ sfVertex *get_right_face(uv_coords_t uv,
 // The block_count is the last added block + 1
 block_t **init_blocks(void)
 {
-    uint8_t block_count = b_dead_fire_coral + 1;
+    uint8_t block_count = b_magma_block + 1;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
     for (int i = 0; i != block_count; i++)

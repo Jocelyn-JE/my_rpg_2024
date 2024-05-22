@@ -91,7 +91,8 @@ enum blocks {
     b_coal_block,
     b_obsidian,
     b_crying_obsidian,
-    b_dead_fire_coral
+    b_dead_fire_coral,
+    b_magma_block
 };
 
 enum entities {
@@ -212,6 +213,7 @@ block_t *init_coal_block(void);
 block_t *init_obsidian(void);
 block_t *init_crying_obsidian(void);
 block_t *init_dead_fire_coral(void);
+block_t *init_magma_block(void);
 
 // Colors
 

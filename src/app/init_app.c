@@ -61,6 +61,8 @@ static game_t *init_game(void)
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
         e_player));
+    list_add(&new_game->entities, create_entity((sfVector2f){244, 291},
+        e_zombie));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;

@@ -64,7 +64,8 @@ replacement_pairs = {
     "coal_block": 73,
     "obsidian": 74,
     "crying_obsidian": 75,
-    "dead_fire_coral": 76
+    "dead_fire_coral": 76,
+    "magma_block": 77
 }
 
 # Default value to write if the block is not found in replacement_pairs
