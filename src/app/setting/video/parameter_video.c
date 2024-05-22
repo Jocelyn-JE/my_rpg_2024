@@ -90,7 +90,7 @@ static void handle_events_video(app_t *app, sfEvent *event)
 {
     sfMouseButtonEvent mouse_event = event->mouseButton;
 
-    if (event->type == sfEvtMouseButtonPressed) {
+    if (event->type == sfEvtMouseButtonReleased) {
         if (mouse_event.button == sfMouseLeft)
             handle_video_click(app, &mouse_event);
     }
