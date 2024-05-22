@@ -37,12 +37,18 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (is_on_sprite(app->button[3].sprite, mouse_pos))
+    if (is_on_sprite(app->button[3].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_sound_settings(app);
-    if (is_on_sprite(app->button[4].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[4].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_video_settings(app);
-    if (is_on_sprite(app->button[5].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[5].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_menu(app);
+    }
 }
 
 static void handle_events_setting(app_t *app, sfEvent *event)

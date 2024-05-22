@@ -76,14 +76,22 @@ static void handle_video_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (is_on_sprite(app->button[6].sprite, mouse_pos))
+    if (is_on_sprite(app->button[6].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         cycle_fps_setting(app->window, app->text);
-    if (is_on_sprite(app->button[7].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[7].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         cycle_window_modes(&app->window, app->text);
-    if (is_on_sprite(app->button[8].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[8].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         switch_to_settings(app);
-    if (is_on_sprite(app->button[16].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[16].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         cycle_resolution_modes(app->window, app->text);
+    }
 }
 
 static void handle_events_video(app_t *app, sfEvent *event)

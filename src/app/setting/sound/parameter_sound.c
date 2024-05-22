@@ -70,18 +70,22 @@ static void update_volume_text(app_t *app)
 static void handle_effect_music(app_t *app, sfVector2f mouse_pos)
 {
     if (is_on_sprite(app->button[11].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_effect > 0)
             app->sound->volume_effect -= 5;
     }
     if (is_on_sprite(app->button[12].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_effect < 100)
             app->sound->volume_effect += 5;
     }
     if (is_on_sprite(app->button[13].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_music > 0)
             app->sound->volume_music -= 5;
     }
     if (is_on_sprite(app->button[14].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_music < 100)
             app->sound->volume_music += 5;
     }
@@ -93,10 +97,12 @@ static void handle_volume_click(app_t *app, sfMouseButtonEvent *mouse_event)
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
     if (is_on_sprite(app->button[9].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_general > 0)
             app->sound->volume_general -= 5;
     }
     if (is_on_sprite(app->button[10].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         if (app->sound->volume_general < 100)
             app->sound->volume_general += 5;
     }

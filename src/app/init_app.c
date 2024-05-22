@@ -70,7 +70,7 @@ static game_t *init_game(void)
 
 static sfSoundBuffer **init_buffers(void)
 {
-    sfSoundBuffer **buffer = malloc(sizeof(sfSoundBuffer *) * 1 + 1);
+    sfSoundBuffer **buffer = malloc(sizeof(sfSoundBuffer *) * 2);
     const char *sound_files[] = {
         "assets/sound/click.ogg",
         NULL
@@ -84,8 +84,10 @@ static sfSoundBuffer **init_buffers(void)
 
 static sfSound **init_sounds(sfSoundBuffer **buffers)
 {
-    sfSound **sounds = malloc(sizeof(sfSound *) * 1 + 1);
-    for (int i = 0; buffers[i] != NULL;i++) {
+    sfSound **sounds = malloc(sizeof(sfSound *) * 2);
+ 
+    for (int i = 0; buffers[i] != NULL; i++) {
+        sounds[i] = sfSound_create();
         sfSound_setBuffer(sounds[i], buffers[i]);
     }
     sounds[1] = NULL;
