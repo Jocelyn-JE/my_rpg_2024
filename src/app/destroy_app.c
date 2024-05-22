@@ -40,6 +40,7 @@ static void free_ui(app_t *app)
         sfSound_destroy(app->sound->sounds[i]);
         sfSoundBuffer_destroy(app->sound->sound_buffers[i]);
     }
+    sfMusic_destroy(app->sound->music);
     free(app->sound->sound_buffers);
     free(app->sound->sounds);
     free(app->sound);

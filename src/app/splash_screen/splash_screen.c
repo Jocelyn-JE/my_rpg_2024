@@ -31,8 +31,13 @@ static void animation_splash(app_t *app, sfClock *clock)
 
     if (seconds < 0.01)
         return;
-    if (color.a == 255)
+    if (color.a == 255) {
+        sfMusic_setVolume(app->sound->music, 25);
+        sfSound_setVolume(app->sound->sounds[0], 25);
+        sfMusic_setLoop(app->sound->music, true);
+        sfMusic_play(app->sound->music);
         return switch_to_menu(app);
+    }
     if (color.a < 255) {
         color.a += 1.5;
         sfSprite_setColor(app->logo->sprite, color);
