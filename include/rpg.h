@@ -214,7 +214,7 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
-entity_t *create_entity(sfVector2f pos, uint32_t type);
+entity_t *create_entity(sfVector2f pos, uint32_t type, stat_t);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 

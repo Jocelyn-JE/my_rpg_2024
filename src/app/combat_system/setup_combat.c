@@ -148,6 +148,28 @@ static void draw_hotbar_items(app_t *app, sfSprite *hotbar_sprite)
     draw_selection(app, hotbarBounds, itemWidth);
 }
 
+void play_enemy_turn(app_t *app, player_t *player, entity_t *enemy)
+{
+    wait_for_seconds(3.f);
+    printf("enemy stats: %d\n", enemy->stats.health);
+    app->game_ressources->combat_state = PLAYER_TURN;
+}
+
+entity_t *find_entity_by_type(list_t *start, uint32_t type)
+{
+    list_t *current = start;
+    entity_t *entity = NULL;
+
+    while (current != NULL) {
+        entity = (entity_t *)current->data;
+        if (entity->type == type) {
+            return entity;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
 void switch_to_combat(app_t *app)
 {
     static sfSprite *playerSprite = NULL;
@@ -167,4 +189,7 @@ void switch_to_combat(app_t *app)
     sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
     sfRenderWindow_drawSprite(app->window, hotbarSprite, NULL);
     draw_hotbar_items(app, hotbarSprite);
+    if (app->game_ressources->combat_state == ENEMY_TURN)
+        play_enemy_turn(app, app->game_ressources->player,
+        find_entity_by_type(app->game_ressources->entities, e_zombie));
 }

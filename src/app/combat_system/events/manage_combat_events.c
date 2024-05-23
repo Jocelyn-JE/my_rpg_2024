@@ -22,6 +22,24 @@ void handle_mouse_movnt(app_t *app, sfEvent event)
     }
 }
 
+void handle_mouse_button_combat(sfEvent *event, app_t *app)
+{
+    item_t *item = NULL;
+
+    if (app->game_ressources->combat_state != PLAYER_TURN ||
+        event->mouseButton.button != sfMouseLeft)
+        return;
+    item = app->inventory->slots
+        [app->game_ressources->selected_item + 27];
+    if (item == NULL) {
+        //manage_case_empty(app);
+        app->game_ressources->combat_state = ENEMY_TURN;
+        return;
+    }
+    printf("item quantity: %d\n", item->quantity);
+    //int type_item = get_item_type(item);
+}
+
 static void handle_events(app_t *app, sfEvent *event)
 {
     if (event->type == sfEvtClosed)
@@ -38,6 +56,8 @@ static void handle_events(app_t *app, sfEvent *event)
     if (event->type == sfEvtMouseWheelScrolled) {
         handle_mouse_movnt(app, *event);
     }
+    if (event->type == sfEvtMouseButtonPressed)
+        handle_mouse_button_combat(event, app);
 }
 
 void manage_combat_events(app_t *app, sfEvent *event)
@@ -45,7 +65,7 @@ void manage_combat_events(app_t *app, sfEvent *event)
     player_t *player = app->game_ressources->player;
 
     while (sfRenderWindow_pollEvent(app->window, event) &&
-           sfRenderWindow_hasFocus(app->window)) {
+        sfRenderWindow_hasFocus(app->window)) {
         handle_events(app, event);
         sfRenderWindow_setView(app->window, app->view);
     }

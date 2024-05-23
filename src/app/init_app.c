@@ -51,6 +51,16 @@ static player_t *init_player(void)
     return new_player;
 }
 
+stat_t setup_stats(int defense, int health, int attack)
+{
+    stat_t new_stats;
+
+    new_stats.health = health;
+    new_stats.attack = attack;
+    new_stats.defense = defense;
+    return new_stats;
+}
+
 static game_t *init_game(void)
 {
     game_t *new_game = malloc(sizeof(game_t));
@@ -63,9 +73,9 @@ static game_t *init_game(void)
     new_game->entities = NULL;
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
-        e_player));
+        e_player, setup_stats(0, 20, 1)));
     list_add(&new_game->entities, create_entity((sfVector2f){244, 291},
-        e_zombie));
+        e_zombie, setup_stats(10, 10, 2)));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
