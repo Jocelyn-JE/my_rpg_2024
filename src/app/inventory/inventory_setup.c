@@ -199,4 +199,22 @@ void setup_inventory(app_t *app)
         app->fonts[0]), -1);
     add_item_to_inventory(app->inventory, create_item(p_diamond_helmet, 1, 1,
         app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 20,
+        app->fonts[0]), 27);
+        add_item_to_inventory(app->inventory, create_item(p_apple, 64, 3,
+        app->fonts[0]), 28);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 12,
+        app->fonts[0]), 29);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 20,
+        app->fonts[0]), 30);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 20,
+        app->fonts[0]), 31);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 37,
+        app->fonts[0]), 32);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 11,
+        app->fonts[0]), 33);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 45,
+        app->fonts[0]), 34);
+    add_item_to_inventory(app->inventory, create_item(p_apple, 64, 46,
+        app->fonts[0]), 35);
 }
