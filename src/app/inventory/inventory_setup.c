@@ -217,4 +217,10 @@ void setup_inventory(app_t *app)
         app->fonts[0]), 34);
     add_item_to_inventory(app->inventory, create_item(p_apple, 64, 46,
         app->fonts[0]), 35);
+    add_item_to_inventory(app->inventory, create_item(p_gold_leggings, 1, 1,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_netherite_chestplate, 1, 1,
+        app->fonts[0]), -1);
+    add_item_to_inventory(app->inventory, create_item(p_iron_boots, 1, 1,
+        app->fonts[0]), -1);
 }
