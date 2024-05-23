@@ -73,6 +73,8 @@ void setup_combat(app_t *app, sfSprite **player_sprite,
     if (*hotbar_sprite != NULL)
         sfSprite_destroy(*hotbar_sprite);
     *hotbar_sprite = setup_hotbar_sprite(app);
+    app->game_ressources->selected_item = 0;
+    app->game_ressources->combat_state = PLAYER_TURN;
 }
 
 static void setup_bg_sprite(app_t *app, sfSprite **background_sprite)
@@ -95,6 +97,57 @@ static void setup_bg_sprite(app_t *app, sfSprite **background_sprite)
     sfSprite_setPosition(*background_sprite, (sfVector2f){0, 0});
 }
 
+static void draw_selection(app_t *app,
+    sfFloatRect hotbarBounds, float itemWidth)
+{
+    float selectionX = hotbarBounds.left +
+        app->game_ressources->selected_item * (itemWidth + 3.23f);
+    sfVector2f selection_position = {selectionX, hotbarBounds.top};
+
+    sfSprite_setPosition(app->inventory->selection, selection_position);
+    sfSprite_setScale(app->inventory->selection, (sfVector2f){4.7, 4.7});
+    sfRenderWindow_drawSprite(app->window, app->inventory->selection, NULL);
+}
+
+static void draw_item_quantity(app_t *app, sfVector2f pos, int i)
+{
+    char quantity[10];
+    item_t *item = app->inventory->slots[i + 27];
+
+    if (item->limit <= 1)
+        return;
+    sprintf(quantity, "%2d", item->quantity);
+    sfText_setString(item->quantity_text, quantity);
+    sfText_setCharacterSize(item->quantity_text, 22);
+    sfText_setPosition(item->quantity_text,
+        (sfVector2f){pos.x + 46, pos.y + 49});
+    sfRenderWindow_drawText(app->window, item->quantity_text, NULL);
+}
+
+static void draw_hotbar_items(app_t *app, sfSprite *hotbar_sprite)
+{
+    sfFloatRect hotbarBounds = sfSprite_getGlobalBounds(hotbar_sprite);
+    float totalWidth = hotbarBounds.width;
+    float itemWidth = (totalWidth - (5.f * (9 - 1))) / 9;
+    float itemX = 0.f;
+    sfVector2f item_pos = {0, 0};
+
+    for (int i = 0; i < 9; i++) {
+        if (app->inventory->slots[i + 27] == NULL)
+            continue;
+        itemX = hotbarBounds.left + i * (itemWidth + 3.23f);
+        item_pos.x = itemX + 17;
+        item_pos.y = hotbarBounds.top + 18;
+        sfSprite_setPosition(app->inventory->slots[i + 27]->sprite, item_pos);
+        sfSprite_setScale(app->inventory->slots[i + 27]->sprite,
+            (sfVector2f){4.7, 4.7});
+        sfRenderWindow_drawSprite(app->window,
+            app->inventory->slots[i + 27]->sprite, NULL);
+        draw_item_quantity(app, item_pos, i);
+    }
+    draw_selection(app, hotbarBounds, itemWidth);
+}
+
 void switch_to_combat(app_t *app)
 {
     static sfSprite *playerSprite = NULL;
@@ -113,4 +166,5 @@ void switch_to_combat(app_t *app)
     sfRenderWindow_drawSprite(app->window, playerSprite, NULL);
     sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
     sfRenderWindow_drawSprite(app->window, hotbarSprite, NULL);
+    draw_hotbar_items(app, hotbarSprite);
 }
