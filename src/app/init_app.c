@@ -43,8 +43,8 @@ static player_t *init_player(void)
 {
     player_t *new_player = malloc(sizeof(player_t));
 
-    new_player->pos.x = 126.0f;
-    new_player->pos.y = 101.0f;
+    new_player->pos.x = 410.0f;
+    new_player->pos.y = 194.0f;
     return new_player;
 }
 
@@ -66,6 +66,7 @@ static game_t *init_game(void)
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
+    close(map_fd);
     place_chunks(new_game->map);
     return new_game;
 }

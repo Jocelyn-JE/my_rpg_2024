@@ -110,7 +110,34 @@ enum blocks {
     b_y_acacia,
     b_x_acacia,
     b_z_acacia,
-    b_yellow_terracotta
+    b_yellow_terracotta,
+    b_ew_rail,
+    b_ns_rail,
+    b_aw_rail,
+    b_an_rail,
+    b_y_stripped_birch_log,
+    b_x_stripped_birch_log,
+    b_z_stripped_birch_log,
+    b_y_stripped_dark_oak_log,
+    b_x_stripped_dark_oak_log,
+    b_z_stripped_dark_oak_log,
+    b_y_stripped_spruce_wood,
+    b_x_stripped_spruce_wood,
+    b_z_stripped_spruce_wood,
+    b_glass,
+    b_orange_glass,
+    b_red_glass,
+    b_gray_glass,
+    b_deepslate,
+    b_deepslate_coal_ore,
+    b_cobbled_deepslate,
+    b_y_stripped_spruce_log,
+    b_x_stripped_spruce_log,
+    b_z_stripped_spruce_log,
+    b_deepslate_bricks,
+    b_cracked_deepslate_bricks,
+    b_white_terracotta,
+    b_gravel
 };
 
 enum entities {
@@ -250,6 +277,33 @@ block_t *init_y_acacia_log(void);
 block_t *init_x_acacia_log(void);
 block_t *init_z_acacia_log(void);
 block_t *init_yellow_terracotta(void);
+block_t *init_ew_rail(void);
+block_t *init_ns_rail(void);
+block_t *init_aw_rail(void);
+block_t *init_an_rail(void);
+block_t *init_y_stripped_birch_log(void);
+block_t *init_x_stripped_birch_log(void);
+block_t *init_z_stripped_birch_log(void);
+block_t *init_y_stripped_dark_oak_log(void);
+block_t *init_x_stripped_dark_oak_log(void);
+block_t *init_z_stripped_dark_oak_log(void);
+block_t *init_y_stripped_spruce_wood(void);
+block_t *init_x_stripped_spruce_wood(void);
+block_t *init_z_stripped_spruce_wood(void);
+block_t *init_glass(void);
+block_t *init_orange_glass(void);
+block_t *init_red_glass(void);
+block_t *init_gray_glass(void);
+block_t *init_deepslate(void);
+block_t *init_deepslate_coal_ore(void);
+block_t *init_cobbled_deepslate(void);
+block_t *init_y_stripped_spruce_log(void);
+block_t *init_x_stripped_spruce_log(void);
+block_t *init_z_stripped_spruce_log(void);
+block_t *init_deepslate_bricks(void);
+block_t *init_cracked_deepslate_bricks(void);
+block_t *init_white_terracotta(void);
+block_t *init_gravel(void);
 
 // Colors
 
