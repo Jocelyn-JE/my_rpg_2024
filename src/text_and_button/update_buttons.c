@@ -23,6 +23,6 @@ static void update_button(sfRenderWindow *window, sfSprite *sprite)
 
 void update_buttons(app_t *app)
 {
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 22; i++)
         update_button(app->window, app->button[i].sprite);
 }

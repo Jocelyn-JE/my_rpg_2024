@@ -158,6 +158,8 @@ typedef struct logo_s {
 typedef struct menu_s {
     sfSprite *backsprite;
     sfTexture *backtexture;
+    sfSprite *helpsprite;
+    sfTexture *helptexture;
 } menu_t;
 
 typedef struct sound_s {
@@ -346,3 +348,4 @@ void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
+void switch_to_help_menu(app_t *app);

@@ -21,6 +21,10 @@ static void button_actions(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (is_on_sprite(app->button[19].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
+        switch_to_help_menu(app);
+    }
+    if (is_on_sprite(app->button[20].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_menu(app, s_pause_menu);
     }
 }
@@ -56,7 +60,8 @@ static void draw_pause_menu(app_t *app)
     sfRenderWindow_setView(app->window, app->view);
     draw_button(app->window, app->button[17].sprite, app->text[26].text);
     draw_button(app->window, app->button[18].sprite, app->text[27].text);
-    draw_button(app->window, app->button[19].sprite, app->text[28].text);
+    draw_button(app->window, app->button[19].sprite, app->text[30].text);
+    draw_button(app->window, app->button[20].sprite, app->text[28].text);
     sfRenderWindow_drawText(app->window, app->text[29].text, NULL);
 }
 
