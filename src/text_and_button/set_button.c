@@ -39,6 +39,9 @@ void set_button(app_t *app)
     button(app, 0, 1920 / 2, 1080 / 2);
     button(app, 1, 1920 / 2, 1080 / 2 + 150);
     button(app, 2, 1920 / 2, 1080 / 2 + 300);
+    button(app, 17, 1920 / 2, 1080 / 2);
+    button(app, 18, 1920 / 2, 1080 / 2 - 60);
+    button(app, 19, 1920 / 2, 1080 / 2 + 60);
 }
 
 void set_button_setting(app_t *app)

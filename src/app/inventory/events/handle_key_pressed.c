@@ -25,8 +25,7 @@ static void set_dragged_to_null(app_t *app)
 
 void manage_inventory_input(app_t *app)
 {
-    app->event_handler = manage_game_events;
-    app->draw_function = draw_game;
+    switch_to_game(app);
     set_dragged_to_null(app);
 }
 

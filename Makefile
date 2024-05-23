@@ -121,6 +121,7 @@ SRC =	src/main.c												\
 		src/app/setting/setting.c								\
 		src/app/setting/sound/parameter_sound.c					\
 		src/app/setting/video/parameter_video.c					\
+		src/app/menu/pause_menu.c								\
 
 OBJ	=	$(SRC:.c=.o)
 
