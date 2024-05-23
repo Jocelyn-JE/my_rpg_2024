@@ -30,8 +30,6 @@ static void manage_events_help_menu(app_t *app, sfEvent *events)
         }
         if (events->type == sfEvtClosed)
             sfRenderWindow_close(app->window);
-        if (events->type == sfEvtKeyPressed && events->key.code == sfKeyEscape)
-            switch_to_game(app);
         if (events->type == sfEvtMouseButtonReleased &&
             events->mouseButton.button == sfMouseLeft)
             button_actions(app, &events->mouseButton);

@@ -32,7 +32,7 @@ static void place_chunks(chunk_t **chunks)
 static void set_help_sprite(app_t *app)
 {
     app->menu->helpsprite = create_sprite("assets/widg"
-        "ets/New Project.png", (sfVector2f){0, 0}, (sfVector2f){1, 1});
+        "ets/help.png", (sfVector2f){0, 0}, (sfVector2f){1, 1});
 }
 
 static sfView *create_view(sfVector2f res)
