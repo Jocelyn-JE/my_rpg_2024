@@ -114,7 +114,7 @@ SRC =	src/main.c												\
 		src/app/splash_screen/splash_screen.c					\
 		src/text_and_button/set_text.c							\
 		src/text_and_button/set_button.c						\
-		src/text_and_button/update_buttons.c					\
+		src/text_and_button/update_buttons.c				    \
 		src/app/menu/menu.c										\
 		src/app/menu/events/click_button.c						\
 		src/app/menu/events/poll_events_menu.c					\
