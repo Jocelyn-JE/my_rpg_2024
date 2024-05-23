@@ -16,6 +16,7 @@ SRC =	src/main.c												\
 		src/conversions/clamp.c									\
 		src/conversions/random.c								\
 		src/conversions/get_chunk_coords.c						\
+		src/conversions/wait_seconds.c							\
 		src/debug/print_fps.c									\
 		src/debug/mini_printf.c									\
 		src/debug/my_put_nbr.c									\

@@ -275,6 +275,7 @@ void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
+void wait_for_seconds(float);
 
 // Conversions
 int get_idx_from_pos(int x, int y, int z);
