@@ -148,10 +148,39 @@ static void draw_hotbar_items(app_t *app, sfSprite *hotbar_sprite)
     draw_selection(app, hotbarBounds, itemWidth);
 }
 
+void attack_entity(player_t *attacker, entity_t *defender, int ext_damage)
+{
+    int defense_delta = get_random_nb(0, 100);
+    int damage = attacker->stats.attack + ext_damage;
+
+    if (defense_delta < defender->stats.defense)
+        return;
+    defender->stats.health -= damage;
+    if (defender->stats.health < 0)
+        defender->stats.health = 0;
+    return;
+}
+
+void attack_player(entity_t *attacker, player_t *defender)
+{
+    int defense_delta = get_random_nb(0, 100);
+    int damage = attacker->stats.attack;
+
+    if (defense_delta < defender->stats.defense)
+        return;
+    defender->stats.health -= damage;
+    if (defender->stats.health < 0)
+        defender->stats.health = 0;
+    return;
+}
+
 void play_enemy_turn(app_t *app, player_t *player, entity_t *enemy)
 {
-    wait_for_seconds(3.f);
-    printf("enemy stats: %d\n", enemy->stats.health);
+    wait_for_seconds(1.5f);
+    printf("player health: %d\n", player->stats.health);
+    attack_player(enemy, player);
+    printf("player health: %d\n", player->stats.health);
+    wait_for_seconds(1.5f);
     app->game_ressources->combat_state = PLAYER_TURN;
 }
 
