@@ -45,6 +45,9 @@ static player_t *init_player(void)
 
     new_player->pos.x = 248.0f;
     new_player->pos.y = 291.0f;
+    new_player->stats.defense = 0;
+    new_player->stats.health = 20;
+    new_player->stats.attack = 1;
     return new_player;
 }
 

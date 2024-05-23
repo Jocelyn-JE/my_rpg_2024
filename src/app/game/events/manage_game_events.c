@@ -11,6 +11,8 @@ void switch_to_game(app_t *app)
     app->event_handler = manage_game_events;
     app->draw_function = draw_game;
     get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
+    app->game_ressources->player->stats.defense =
+        get_total_armor_value(app->inventory);
 }
 
 static void handle_events(app_t *app, sfEvent *event)

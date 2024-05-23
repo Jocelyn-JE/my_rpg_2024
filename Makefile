@@ -100,6 +100,7 @@ SRC =	src/main.c												\
 		src/app/inventory/is_armor.c							\
 		src/app/inventory/draw_highlighted_slot.c 				\
 		src/app/inventory/free_functions.c						\
+		src/app/inventory/armor_count.c							\
 		src/conversions/get_slot_index.c						\
 		src/conversions/get_armor_index.c						\
 		src/debug/draw_bounds.c									\

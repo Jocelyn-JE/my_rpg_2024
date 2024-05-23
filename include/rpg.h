@@ -151,6 +151,7 @@ typedef struct game_s {
     chunk_t **map;
     player_t *player;
     combat_state_t combat_state;
+    int selected_item;
 } game_t;
 
 typedef struct logo_s {
@@ -307,6 +308,7 @@ void manage_dragged_item(app_t *, sfVector2f, float, float);
 void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
+int get_total_armor_value(inventory_t *);
 
 //Draw functions
 
