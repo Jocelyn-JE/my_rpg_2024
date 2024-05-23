@@ -17,6 +17,8 @@ SRC =	src/main.c												\
 		src/conversions/random.c								\
 		src/conversions/get_chunk_coords.c						\
 		src/conversions/wait_seconds.c							\
+		src/conversions/get_slot_index.c						\
+		src/conversions/get_armor_index.c						\
 		src/debug/print_fps.c									\
 		src/debug/mini_printf.c									\
 		src/debug/my_put_nbr.c									\
@@ -24,6 +26,7 @@ SRC =	src/main.c												\
 		src/debug/draw_bounding_box.c							\
 		src/app/init_app.c										\
 		src/app/init_window.c									\
+		src/app/init_sound.c									\
 		src/app/destroy_app.c									\
 		src/app/block_types/init_blocks.c						\
 		src/app/block_types/update_blocks.c						\
@@ -71,6 +74,15 @@ SRC =	src/main.c												\
 		src/app/block_types/lava.c								\
 		src/app/block_types/blackstone.c						\
 		src/app/block_types/polished_blackstone.c				\
+		src/app/block_types/coal_block.c						\
+		src/app/block_types/obsidian.c							\
+		src/app/block_types/magma_block.c						\
+		src/app/block_types/stripped_oak_wood.c					\
+		src/app/block_types/stripped_dark_oak_wood.c			\
+		src/app/block_types/azalea_leaves.c						\
+		src/app/block_types/ladder.c							\
+		src/app/block_types/acacia_log.c						\
+		src/app/block_types/terracotta.c						\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\
@@ -78,21 +90,21 @@ SRC =	src/main.c												\
 		src/app/entity/create_entity.c							\
 		src/app/entity/destroy_entity.c							\
 		src/app/entity/add_entity.c								\
-		src/app/inventory/events/manage_inventory_events.c		\
 		src/app/game/events/manage_game_events.c 				\
 		src/app/game/events/drag_view.c							\
 		src/app/game/movement.c									\
 		src/app/game/render_game.c								\
 		src/app/combat_system/setup_combat.c					\
 		src/app/combat_system/events/manage_combat_events.c		\
+		src/app/game/events/handle_key_pressed.c 				\
+		src/app/game/events/handle_mouse_wheel.c 				\
 		src/events/get_letterbox_view.c							\
 		src/events/handle_closed.c								\
-		src/app/game/events/handle_key_pressed.c 				\
+		src/events/handle_resized.c								\
+		src/app/inventory/events/manage_inventory_events.c		\
 		src/app/inventory/events/handle_key_pressed.c			\
 		src/app/inventory/events/handle_mouse_button_pressed.c	\
 		src/app/inventory/events/handle_mouse_moved.c			\
-		src/app/game/events/handle_mouse_wheel.c 				\
-		src/events/handle_resized.c								\
 		src/app/inventory/events/manage_armor_slots.c			\
 		src/app/inventory/events/handle_mouse_right.c			\
 		src/app/inventory/inventory_management.c 				\
@@ -108,6 +120,7 @@ SRC =	src/main.c												\
 		src/app/splash_screen/splash_screen.c					\
 		src/text_and_button/set_text.c							\
 		src/text_and_button/set_button.c						\
+		src/text_and_button/update_buttons.c					\
 		src/app/menu/menu.c										\
 		src/app/menu/events/click_button.c						\
 		src/app/menu/events/poll_events_menu.c					\

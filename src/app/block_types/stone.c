@@ -35,7 +35,7 @@ block_t *init_diorite(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){112, 192},
         (sfVector2f){128, 208}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }
@@ -52,7 +52,7 @@ block_t *init_calcite(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){128, 192},
         (sfVector2f){144, 208}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }
@@ -69,7 +69,7 @@ block_t *init_andesite(void)
     block->faces[2] = get_right_face((uv_coords_t){(sfVector2f){32, 224},
         (sfVector2f){48, 240}}, (sfVector2f){0, 0});
     block->faces[3] = NULL;
-    block->transparent = true;
+    block->transparent = false;
     block->solid = true;
     return block;
 }

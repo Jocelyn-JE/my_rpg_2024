@@ -30,14 +30,20 @@ static void free_logo(logo_t *logo)
 static void free_ui(app_t *app)
 {
     free_logo(app->logo);
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 17; i++) {
         sfSprite_destroy(app->button[i].sprite);
         sfTexture_destroy(app->button[i].texture);
     }
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 26; i++)
         sfText_destroy(app->text[i].text);
-    free(app->button);
+    for (int i = 0; i < 1; i++) {
+        sfSound_destroy(app->sound->sounds[i]);
+        sfSoundBuffer_destroy(app->sound->sound_buffers[i]);
+    }
+    free(app->sound->sound_buffers);
+    free(app->sound->sounds);
     free(app->sound);
+    free(app->button);
     free(app->text);
 }
 

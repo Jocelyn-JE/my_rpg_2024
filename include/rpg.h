@@ -168,6 +168,8 @@ typedef struct menu_s {
 
 typedef struct sound_s {
     sfMusic *music;
+    sfSound **sounds;
+    sfSoundBuffer **sound_buffers;
     int volume_general;
     int volume_music;
     int volume_effect;
@@ -252,6 +254,8 @@ logo_t *create_logo(void);
 void text_menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
+void update_buttons(app_t *app);
+
 
 // Setting
 
@@ -267,7 +271,9 @@ void text_video(app_t *app);
 
 void set_button_sound(app_t *app);
 void text_sound(app_t *app);
-
+sfSoundBuffer **init_buffers(void);
+sfSound **init_sounds(sfSoundBuffer **buffers);
+sound_t *init_sound(void);
 
 // Debug
 

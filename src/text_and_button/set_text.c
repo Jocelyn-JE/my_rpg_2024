@@ -51,8 +51,12 @@ void text_setting(app_t *app)
 
 void text_video(app_t *app)
 {
-    set_text(app, (sfVector2f){1920 / 3, 1080 / 2}, "Max Framerate: Vsync", 7);
-    set_text(app, (sfVector2f){1920 / 3 * 2, 1080 / 2}, "Fullscreen: OFF", 8);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 1.5}, "Max Fr"
+        "amerate: Vsync", 7);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 1.75}, "Fullsc"
+        "reen: OFF", 8);
     set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 2}, "Done", 9);
     set_text(app, (sfVector2f){1920 / 2, 1080 / 3}, "Video Settings", 24);
+    set_text(app, (sfVector2f){1920 / 2, 1080 / 3 * 1.25}, "Resolu"
+        "tion: 1920/1080", 25);
 }
