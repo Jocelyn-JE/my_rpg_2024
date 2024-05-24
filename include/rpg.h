@@ -66,10 +66,15 @@ typedef enum scenes {
     s_game,
     s_splashscreen,
     s_pause_menu,
-    s_inventory
+    s_inventory,
+    s_help_menu
 } scenes_t;
 
 // Structures
+
+typedef struct switch_scene_s {
+    void (*function)();
+} switch_scene_t;
 
 typedef struct inventory_params_s {
     sfVector2f world_pos;
@@ -158,6 +163,8 @@ typedef struct logo_s {
 typedef struct menu_s {
     sfSprite *backsprite;
     sfTexture *backtexture;
+    sfSprite *helpsprite;
+    sfTexture *helptexture;
 } menu_t;
 
 typedef struct sound_s {
@@ -346,3 +353,4 @@ void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
+void switch_to_help_menu(app_t *app);

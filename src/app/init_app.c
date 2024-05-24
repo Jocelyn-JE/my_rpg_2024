@@ -29,6 +29,14 @@ static void place_chunks(chunk_t **chunks)
     }
 }
 
+static void set_help_sprite(app_t *app)
+{
+    app->menu->helptexture = sfTexture_createFromFile("assets/widgets/help.png"
+        , NULL);
+    app->menu->helpsprite = sfSprite_create();
+    sfSprite_setTexture(app->menu->helpsprite, app->menu->helptexture, true);
+}
+
 static sfView *create_view(sfVector2f res)
 {
     sfView *view = sfView_create();
@@ -85,7 +93,8 @@ static sfFont **init_fonts(void)
 
 static void init_button(app_t *app)
 {
-    app->button = malloc(20 * sizeof(button_t));
+    set_help_sprite(app);
+    app->button = malloc(22 * sizeof(button_t));
     set_button(app);
     set_button_setting(app);
     set_button_sound(app);
@@ -94,7 +103,7 @@ static void init_button(app_t *app)
 
 static void init_text(app_t *app)
 {
-    app->text = calloc(30, sizeof(button_t));
+    app->text = calloc(39, sizeof(button_t));
     text_setting(app);
     text_sound(app);
     text_video(app);
