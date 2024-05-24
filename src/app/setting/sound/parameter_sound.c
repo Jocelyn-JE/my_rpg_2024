@@ -74,6 +74,12 @@ static void play_sound(app_t *app)
             app->sound->volume_music) / 100);
     sfSound_setVolume(app->sound->sounds[0], (app->sound->volume_general *
         app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[1], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[2], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[3], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
     sfSound_play(app->sound->sounds[0]);
 }
 
