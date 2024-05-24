@@ -58,7 +58,7 @@ block_t *init_snow(void)
     block->faces[2] = get_snow_right_face((uv_coords_t){(sfVector2f){80, 64},
         (sfVector2f){96, 66}}, (sfVector2f){14.f / 16.f, 14.f / 16.f});
     block->faces[3] = NULL;
-    block->transparent = false;
+    block->transparent = true;
     block->solid = false;
     return block;
 }

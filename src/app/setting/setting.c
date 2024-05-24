@@ -47,7 +47,7 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
     }
     if (is_on_sprite(app->button[5].sprite, mouse_pos)) {
         sfSound_play(app->sound->sounds[0]);
-        return switch_to_menu(app);
+        return switch_to_scene(app, app->previous_scene);
     }
 }
 
@@ -76,8 +76,9 @@ static void poll_events_setting(app_t *app, sfEvent *event)
     update_buttons(app);
 }
 
-void switch_to_settings(app_t *app)
+void switch_to_settings(app_t *app, scenes_t previous_scene)
 {
+    app->previous_scene = previous_scene;
     app->event_handler = poll_events_setting;
     app->draw_function = draw_setting_button;
     sfTexture_destroy(app->menu->backtexture);

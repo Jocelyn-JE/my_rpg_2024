@@ -23,10 +23,9 @@ void handle_key_pressed_game(sfEvent *event, app_t *app)
 {
     update_debug_options(&event->key, app->debug_options);
     if (event->key.code == sfKeyEscape)
-        switch_to_menu(app);
+        switch_to_pause_menu(app);
     if (event->key.code == sfKeyE) {
-        app->event_handler = manage_invent_events;
-        app->draw_function = draw_inventory;
+        switch_to_inventory(app);
     }
     if (event->key.code == sfKeyF) {
         app->event_handler = manage_combat_events;

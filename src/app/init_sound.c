@@ -21,6 +21,14 @@ sfSoundBuffer **init_buffers(void)
     return buffer;
 }
 
+static sfMusic *init_music(void)
+{
+    sfMusic *music;
+
+    music = sfMusic_createFromFile("assets/music/music_menu.ogg");
+    return music;
+}
+
 sfSound **init_sounds(sfSoundBuffer **buffers)
 {
     sfSound **sounds = malloc(sizeof(sfSound *) * 2);
@@ -39,8 +47,12 @@ sound_t *init_sound(void)
 
     sound->sound_buffers = init_buffers();
     sound->sounds = init_sounds(sound->sound_buffers);
+    sound->music = init_music();
     sound->volume_general = 50;
     sound->volume_music = 50;
     sound->volume_effect = 50;
+    sfMusic_setVolume(sound->music, 25);
+    sfSound_setVolume(sound->sounds[0], 25);
+    sfMusic_setLoop(sound->music, true);
     return sound;
 }

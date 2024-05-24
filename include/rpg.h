@@ -58,7 +58,23 @@ typedef enum p_items {
     p_netherite_boots = 29,
 } p_items_t;
 
+typedef enum scenes {
+    s_menu,
+    s_settings,
+    s_video_settings,
+    s_sound_settings,
+    s_game,
+    s_splashscreen,
+    s_pause_menu,
+    s_inventory,
+    s_help_menu
+} scenes_t;
+
 // Structures
+
+typedef struct switch_scene_s {
+    void (*function)();
+} switch_scene_t;
 
 typedef struct inventory_params_s {
     sfVector2f world_pos;
@@ -165,6 +181,8 @@ typedef struct logo_s {
 typedef struct menu_s {
     sfSprite *backsprite;
     sfTexture *backtexture;
+    sfSprite *helpsprite;
+    sfTexture *helptexture;
 } menu_t;
 
 typedef struct sound_s {
@@ -201,6 +219,7 @@ typedef struct app_s {
     game_t *game_ressources;
     inventory_t *inventory;
     sfFont **fonts;
+    scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
@@ -256,6 +275,7 @@ void text_menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
 void update_buttons(app_t *app);
+void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text);
 
 
 // Setting
@@ -300,6 +320,7 @@ int get_armor_index(int, int, app_t *);
 // Inventory
 
 void setup_inventory(app_t *);
+void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view);
 void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
@@ -343,12 +364,17 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 
 // Scenes
 
-void switch_to_menu(app_t *app);
-void switch_to_settings(app_t *app);
+void switch_to_scene(app_t *app, scenes_t scene);
+
+void switch_to_menu(app_t *app, scenes_t previous_scene);
+void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
 void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
+void switch_to_pause_menu(app_t *app);
+void switch_to_inventory(app_t *app);
+void switch_to_help_menu(app_t *app);
 void switch_to_combat(app_t *app);
 
 // Combats

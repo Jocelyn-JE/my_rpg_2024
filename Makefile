@@ -83,6 +83,14 @@ SRC =	src/main.c												\
 		src/app/block_types/ladder.c							\
 		src/app/block_types/acacia_log.c						\
 		src/app/block_types/terracotta.c						\
+		src/app/block_types/rail.c								\
+		src/app/block_types/stripped_birch_log.c				\
+		src/app/block_types/stripped_dark_oak_log.c				\
+		src/app/block_types/stripped_spruce_wood.c				\
+		src/app/block_types/glass.c								\
+		src/app/block_types/deepslate.c							\
+		src/app/block_types/stripped_spruce_log.c				\
+		src/app/block_types/gravel.c							\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\
@@ -118,13 +126,15 @@ SRC =	src/main.c												\
 		src/app/splash_screen/splash_screen.c					\
 		src/text_and_button/set_text.c							\
 		src/text_and_button/set_button.c						\
-		src/text_and_button/update_buttons.c					\
+		src/text_and_button/update_buttons.c				    \
 		src/app/menu/menu.c										\
 		src/app/menu/events/click_button.c						\
 		src/app/menu/events/poll_events_menu.c					\
 		src/app/setting/setting.c								\
 		src/app/setting/sound/parameter_sound.c					\
 		src/app/setting/video/parameter_video.c					\
+		src/app/menu/pause_menu.c								\
+		src/app/menu/help_in_game.c								\
 
 OBJ	=	$(SRC:.c=.o)
 
