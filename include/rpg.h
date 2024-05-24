@@ -168,7 +168,8 @@ typedef struct menu_s {
 } menu_t;
 
 typedef struct sound_s {
-    sfMusic *music;
+    sfMusic *music_menu;
+    sfMusic *music_in_game;
     sfSound **sounds;
     sfSoundBuffer **sound_buffers;
     int volume_general;

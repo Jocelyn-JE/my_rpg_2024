@@ -29,6 +29,14 @@ static sfMusic *init_music(void)
     return music;
 }
 
+static sfMusic *init_music_in_game(void)
+{
+    sfMusic *music;
+
+    music = sfMusic_createFromFile("assets/music/music_in_game.ogg");
+    return music;
+}
+
 sfSound **init_sounds(sfSoundBuffer **buffers)
 {
     sfSound **sounds = malloc(sizeof(sfSound *) * 2);
@@ -47,12 +55,15 @@ sound_t *init_sound(void)
 
     sound->sound_buffers = init_buffers();
     sound->sounds = init_sounds(sound->sound_buffers);
-    sound->music = init_music();
+    sound->music_menu = init_music();
+    sound->music_in_game = init_music_in_game();
     sound->volume_general = 50;
     sound->volume_music = 50;
     sound->volume_effect = 50;
-    sfMusic_setVolume(sound->music, 25);
+    sfMusic_setVolume(sound->music_menu, 25);
+    sfMusic_setVolume(sound->music_in_game, 25);
     sfSound_setVolume(sound->sounds[0], 25);
-    sfMusic_setLoop(sound->music, true);
+    sfMusic_setLoop(sound->music_menu, true);
+    sfMusic_setLoop(sound->music_in_game, true);
     return sound;
 }
