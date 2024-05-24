@@ -25,6 +25,6 @@ void set_life(player_t *player, int x, int y)
     sfVector2f pos_life = {x, y};
 
     create_life_sprite(player, "assets/spritesheet_vie.png");
-    sfSprite_setScale(player->health_sprite, (sfVector2f){2, 2});
+    sfSprite_setScale(player->health_sprite, (sfVector2f){3, 3});
     set_life_position(player, pos_life);
 }

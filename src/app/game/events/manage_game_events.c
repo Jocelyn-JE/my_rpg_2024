@@ -23,11 +23,8 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_resized(event, app);
     if (event->type == sfEvtKeyPressed)
         handle_key_pressed_game(event, app);
-<<<<<<< HEAD
     if (event->type == sfEvtKeyPressed && event->key.code == sfKeyE)
         switch_to_inventory(app);
-=======
->>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4
     if (event->type == sfEvtMouseWheelScrolled)
         handle_mouse_wheeling(event, app);
 }

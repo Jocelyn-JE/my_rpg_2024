@@ -381,10 +381,7 @@ void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
 void switch_to_help_menu(app_t *app);
-<<<<<<< HEAD
-=======
 void switch_to_combat(app_t *app);
 
 // Combats
 entity_t *find_entity_by_type(list_t *, uint32_t);
->>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4
