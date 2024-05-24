@@ -16,10 +16,9 @@ static void add_face(sfVertexArray *vertices, vector3uint8_t pos,
         return;
     for (int i = 0; !is_null_vertex(face[i]); i++) {
         sfVertexArray_append(vertices, (sfVertex){cartesian_to_isometric(
-            face[i].position.x + pos.x, face[i].position.y + pos.y, pos.z,
-            100), (sfColor){face[i].color.r * shading_factor,
-            face[i].color.g * shading_factor,
-            face[i].color.b * shading_factor, face[i].color.a},
+            face[i].position.x + pos.x, face[i].position.y + pos.y, pos.z, 100)
+            , (sfColor){face[i].color.r * shading_factor, face[i].color.g *
+            shading_factor, face[i].color.b * shading_factor, face[i].color.a},
             face[i].texCoords});
     }
 }

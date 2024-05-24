@@ -232,6 +232,7 @@ sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
 sfVector2f get_chunk_coords(sfVector2f pos);
 block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
+uint8_t get_block_id(sfVector3f coords, chunk_t **map);
 
 // Other
 int get_random_nb(int min_value, int max_value);
@@ -290,6 +291,7 @@ int get_idx_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 int get_chunk_index_from_coordinates(int x, int y);
 sfVector2i get_chunk_coordinates_from_index(int index);
+sfVector2i get_block_coordinates_from_index(int index);
 
 // Entities
 

@@ -20,3 +20,12 @@ block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map)
         coords.y / 16)]->blocks[get_idx_from_pos(chunk_coords.x,
         chunk_coords.y, coords.z)]];
 }
+
+uint8_t get_block_id(sfVector3f coords, chunk_t **map)
+{
+    sfVector2i chunk_coords = get_block_chunk_coords((sfVector2i){coords.x,
+        coords.y});
+
+    return map[get_chunk_index_from_coordinates(coords.x / 16, coords.y / 16)
+        ]->blocks[get_idx_from_pos(chunk_coords.x, chunk_coords.y, coords.z)];
+}

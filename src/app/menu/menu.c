@@ -52,10 +52,19 @@ void draw_menu(app_t *app)
     draw_button(app->window, app->button[2].sprite, app->text[2].text);
 }
 
+static void set_help_sprite(menu_t *menu)
+{
+    menu->helptexture = sfTexture_createFromFile("assets/widgets/help.png"
+        , NULL);
+    menu->helpsprite = sfSprite_create();
+    sfSprite_setTexture(menu->helpsprite, menu->helptexture, true);
+}
+
 menu_t *create_menu(void)
 {
     menu_t *menu = malloc(sizeof(menu_t));
 
     set_menu(menu);
+    set_help_sprite(menu);
     return menu;
 }

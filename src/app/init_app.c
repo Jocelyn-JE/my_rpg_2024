@@ -29,14 +29,6 @@ static void place_chunks(chunk_t **chunks)
     }
 }
 
-static void set_help_sprite(app_t *app)
-{
-    app->menu->helptexture = sfTexture_createFromFile("assets/widgets/help.png"
-        , NULL);
-    app->menu->helpsprite = sfSprite_create();
-    sfSprite_setTexture(app->menu->helpsprite, app->menu->helptexture, true);
-}
-
 static sfView *create_view(sfVector2f res)
 {
     sfView *view = sfView_create();
@@ -56,6 +48,20 @@ static player_t *init_player(void)
     return new_player;
 }
 
+static void spawn_zombies(list_t **list, chunk_t **map, block_t **types)
+{
+    sfVector2i pos = {0, 0};
+
+    for (int i = 0; i < 512 * 512; i++) {
+        pos = get_block_coordinates_from_index(i);
+        if (!get_block((sfVector3f){pos.x, pos.y, 2}, types,
+            map)->solid && get_block((sfVector3f){pos.x, pos.y, 1},
+            types, map)->solid && get_random_nb(0, 1000) == 0)
+            list_add(list, create_entity((sfVector2f){pos.x, pos.y},
+                e_zombie));
+    }
+}
+
 static game_t *init_game(void)
 {
     game_t *new_game = malloc(sizeof(game_t));
@@ -69,11 +75,12 @@ static game_t *init_game(void)
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
         e_player));
-    list_add(&new_game->entities, create_entity((sfVector2f){244, 291},
+    list_add(&new_game->entities, create_entity(new_game->player->pos,
         e_zombie));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
+    spawn_zombies(&new_game->entities, new_game->map, new_game->block_types);
     close(map_fd);
     place_chunks(new_game->map);
     return new_game;
@@ -93,7 +100,6 @@ static sfFont **init_fonts(void)
 
 static void init_button(app_t *app)
 {
-    set_help_sprite(app);
     app->button = malloc(22 * sizeof(button_t));
     set_button(app);
     set_button_setting(app);
