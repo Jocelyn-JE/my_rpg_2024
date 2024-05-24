@@ -80,7 +80,57 @@ const init_func_t init_block_functions[] = {
     {init_polished_blackstone_bricks},
     {init_gilded_blackstone},
     {init_cracked_polished_blackstone_bricks},
-    {init_chiseled_polished_blackstone}
+    {init_chiseled_polished_blackstone},
+    {init_coal_block},
+    {init_obsidian},
+    {init_crying_obsidian},
+    {init_dead_fire_coral},
+    {init_magma_block},
+    {init_y_stripped_oak_wood},
+    {init_x_stripped_oak_wood},
+    {init_z_stripped_oak_wood},
+    {init_y_stripped_dark_oak_wood},
+    {init_x_stripped_dark_oak_wood},
+    {init_z_stripped_dark_oak_wood},
+    {init_azalea_leaves},
+    {init_flowering_azalea_leaves},
+    {init_large_fern_bottom},
+    {init_large_fern_top},
+    {init_tall_grass_bottom},
+    {init_tall_grass_top},
+    {init_ladder_east},
+    {init_ladder_south},
+    {init_y_acacia_log},
+    {init_x_acacia_log},
+    {init_z_acacia_log},
+    {init_yellow_terracotta},
+    {init_ew_rail},
+    {init_ns_rail},
+    {init_aw_rail},
+    {init_an_rail},
+    {init_y_stripped_birch_log},
+    {init_x_stripped_birch_log},
+    {init_z_stripped_birch_log},
+    {init_y_stripped_dark_oak_log},
+    {init_x_stripped_dark_oak_log},
+    {init_z_stripped_dark_oak_log},
+    {init_y_stripped_spruce_wood},
+    {init_x_stripped_spruce_wood},
+    {init_z_stripped_spruce_wood},
+    {init_glass},
+    {init_orange_glass},
+    {init_red_glass},
+    {init_gray_glass},
+    {init_deepslate},
+    {init_deepslate_coal_ore},
+    {init_cobbled_deepslate},
+    {init_y_stripped_spruce_log},
+    {init_x_stripped_spruce_log},
+    {init_z_stripped_spruce_log},
+    {init_deepslate_bricks},
+    {init_cracked_deepslate_bricks},
+    {init_white_terracotta},
+    {init_gravel}
 };
 
 sfVertex *get_top_face(uv_coords_t uv,
@@ -149,7 +199,7 @@ sfVertex *get_right_face(uv_coords_t uv,
 // The block_count is the last added block + 1
 block_t **init_blocks(void)
 {
-    uint8_t block_count = b_chiseled_polished_blackstone + 1;
+    uint8_t block_count = b_gravel + 1;
     block_t **blocks = malloc(sizeof(block_t *) * (block_count + 1));
 
     for (int i = 0; i != block_count; i++)

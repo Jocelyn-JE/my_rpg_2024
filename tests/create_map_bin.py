@@ -60,7 +60,68 @@ replacement_pairs = {
     "polished_blackstone_bricks": 69,
     "gilded_blackstone": 70,
     "cracked_polished_blackstone_bricks": 71,
-    "chiseled_polished_blackstone": 72
+    "chiseled_polished_blackstone": 72,
+    "coal_block": 73,
+    "obsidian": 74,
+    "crying_obsidian": 75,
+    "dead_fire_coral": 76,
+    "magma_block": 77,
+    "polished_blackstone_slab": 68,
+    "polished_blackstone_stairs": 68,
+    "polished_blackstone_brick_slab": 69,
+    "cobblestone_slab": 13,
+    "cobblestone_stairs": 13,
+    "cobblestone_wall": 13,
+    "mossy_cobblestone_slab": 21,
+    "mossy_cobblestone_stairs": 21,
+    "spruce_stairs": 56,
+    "oak_stairs": 3,
+    "dark_oak_stairs": 58,
+    "dark_oak_slab": 58,
+    "spruce_trapdoor": 1,
+    "jungle_trapdoor": 1,
+    "stone_button": 1,
+    "oak_button": 1,
+    "oak_trapdoor": 1,
+    "acacia_trapdoor": 1,
+    "jungle_door": 1,
+    "oak_door": 1,
+    "azalea_leaves": 84,
+    "flowering_azalea_leaves": 85,
+    "yellow_terracotta": 95,
+    "jungle_stairs": 59,
+    "andesite_stairs": 66,
+    "ladder": 1,
+    "acacia_planks": 13,
+    "cocoa": 1,
+    "vine": 1,
+    "sandstone_stairs": 15,
+    "jungle_slab": 59,
+    "jungle_button": 1,
+    "smooth_sandstone_stairs": 16,
+    "sandstone_slab": 1,
+    "birch_slab": 55,
+    "dark_oak_stairs": 58,
+    "dark_oak_slab": 58,
+    "spruce_stairs": 56,
+    "glass_pane": 109,
+    "orange_stained_glass": 110,
+    "red_stained_glass": 111,
+    "gray_stained_glass_pane": 112,
+    "deepslate": 113,
+    "deepslate_coal_ore": 114,
+    "cobbled_deepslate": 115,
+    "cobbled_deepslate_stairs": 115,
+    "cobbled_deepslate_slab": 115,
+    "spruce_door": 1,
+    "dark_oak_trapdoor": 1,
+    "spruce_slab": 56,
+    "deepslate_bricks": 119,
+    "cracked_deepslate_bricks": 120,
+    "deepslate_brick_wall": 119,
+    "white_terracotta": 121,
+    "chain": 1,
+    "gravel": 122
 }
 
 # Default value to write if the block is not found in replacement_pairs
@@ -107,6 +168,72 @@ def process_chunk(chunk_coords):
                     write_value = 63
                 elif (block.id == "spruce_log" and str(block.properties.get('axis')) == 'z'):
                     write_value = 64
+                elif (block.id == "stripped_oak_wood" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 78
+                elif (block.id == "stripped_oak_wood" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 79
+                elif (block.id == "stripped_oak_wood" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 80
+                elif (block.id == "stripped_dark_oak_wood" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 81
+                elif (block.id == "stripped_dark_oak_wood" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 82
+                elif (block.id == "stripped_dark_oak_wood" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 83
+                elif (block.id == "large_fern" and str(block.properties.get('half')) == 'lower'):
+                    write_value = 86
+                elif (block.id == "large_fern" and str(block.properties.get('half')) == 'upper'):
+                    write_value = 87
+                elif (block.id == "tall_grass" and str(block.properties.get('half')) == 'lower'):
+                    write_value = 88
+                elif (block.id == "tall_grass" and str(block.properties.get('half')) == 'upper'):
+                    write_value = 89
+                elif (block.id == "ladder" and str(block.properties.get('facing')) == 'east'):
+                    write_value = 90
+                elif (block.id == "ladder" and str(block.properties.get('facing')) == 'south'):
+                    write_value = 91
+                elif (block.id == "acacia_log" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 92
+                elif (block.id == "acacia_log" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 93
+                elif (block.id == "acacia_log" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 94
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'east_west'):
+                    write_value = 96
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'north_south'):
+                    write_value = 97
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'ascending_west'):
+                    write_value = 98
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'ascending_north'):
+                    write_value = 99
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'ascending_east'):
+                    write_value = 1
+                elif (block.id == "rail" and str(block.properties.get('shape')) == 'ascending_south'):
+                    write_value = 1
+                elif (block.id == "stripped_birch_log" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 100
+                elif (block.id == "stripped_birch_log" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 101
+                elif (block.id == "stripped_birch_log" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 102
+                elif (block.id == "stripped_dark_oak_log" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 103
+                elif (block.id == "stripped_dark_oak_log" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 104
+                elif (block.id == "stripped_dark_oak_log" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 105
+                elif (block.id == "stripped_spruce_wood" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 106
+                elif (block.id == "stripped_spruce_wood" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 107
+                elif (block.id == "stripped_spruce_wood" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 108
+                elif (block.id == "stripped_spruce_log" and str(block.properties.get('axis')) == 'y'):
+                    write_value = 116
+                elif (block.id == "stripped_spruce_log" and str(block.properties.get('axis')) == 'x'):
+                    write_value = 117
+                elif (block.id == "stripped_spruce_log" and str(block.properties.get('axis')) == 'z'):
+                    write_value = 118
                 else:
                     write_value = replacement_pairs.get(block.id, default_write_value)
                 # if block.id == "poppy":
@@ -116,7 +243,7 @@ def process_chunk(chunk_coords):
     return data
 
 if __name__ == '__main__':
-    region = anvil.Region.from_file('r.0.0.mca_rpg')
+    region = anvil.Region.from_file('r.0.0.mca')
 
     # Define chunk coordinates
     chunk_coords = [(x, z) for x in range(32) for z in range(32)]
@@ -124,6 +251,6 @@ if __name__ == '__main__':
     with Pool() as pool:
         results = pool.map(process_chunk, chunk_coords)
 
-    with open("fmap.ioc", "wb") as binary_file:
+    with open("map.ioc", "wb") as binary_file:
         for result in results:
             binary_file.write(result)

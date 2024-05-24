@@ -6,12 +6,12 @@
 */
 #include "rpg.h"
 
-entity_t *create_entity(sfVector2f pos, uint32_t type)
+entity_t *create_entity(sfVector2f pos, uint32_t type, e_state_t orientation)
 {
     entity_t *new_entity = malloc(sizeof(entity_t));
 
     new_entity->pos = pos;
     new_entity->type = type;
-    new_entity->state = e_north;
+    new_entity->state = orientation;
     return new_entity;
 }

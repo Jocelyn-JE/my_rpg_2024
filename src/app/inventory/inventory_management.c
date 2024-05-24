@@ -150,3 +150,9 @@ void draw_inventory(app_t *app)
     draw_inventory_items(app, center, size, scale);
     draw_armor_items(app, center, size, scale);
 }
+
+void switch_to_inventory(app_t *app)
+{
+    app->event_handler = manage_invent_events;
+    app->draw_function = draw_inventory;
+}

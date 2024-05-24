@@ -7,10 +7,13 @@
 
 #include "rpg.h"
 
-void switch_to_menu(app_t *app)
+void switch_to_menu(app_t *app, scenes_t previous_scene)
 {
+    app->previous_scene = previous_scene;
     app->event_handler = manage_events_menu;
     app->draw_function = draw_menu;
+    if (previous_scene != s_settings && previous_scene != s_menu)
+        sfMusic_play(app->sound->music);
     sfTexture_destroy(app->menu->backtexture);
     app->menu->backtexture = sfTexture_createFromFile("assets/widgets/menu.png"
         , NULL);
@@ -33,7 +36,7 @@ static void set_menu(menu_t *menu)
     sfSprite_setTexture(menu->backsprite, menu->backtexture, sfTrue);
 }
 
-static void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text)
+void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text)
 {
     sfRenderWindow_drawSprite(window, sprite, NULL);
     sfRenderWindow_drawText(window, text, NULL);
@@ -49,10 +52,19 @@ void draw_menu(app_t *app)
     draw_button(app->window, app->button[2].sprite, app->text[2].text);
 }
 
+static void set_help_sprite(menu_t *menu)
+{
+    menu->helptexture = sfTexture_createFromFile("assets/widgets/help.png"
+        , NULL);
+    menu->helpsprite = sfSprite_create();
+    sfSprite_setTexture(menu->helpsprite, menu->helptexture, true);
+}
+
 menu_t *create_menu(void)
 {
     menu_t *menu = malloc(sizeof(menu_t));
 
     set_menu(menu);
+    set_help_sprite(menu);
     return menu;
 }

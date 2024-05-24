@@ -58,7 +58,23 @@ typedef enum p_items {
     p_netherite_boots = 29,
 } p_items_t;
 
+typedef enum scenes {
+    s_menu,
+    s_settings,
+    s_video_settings,
+    s_sound_settings,
+    s_game,
+    s_splashscreen,
+    s_pause_menu,
+    s_inventory,
+    s_help_menu
+} scenes_t;
+
 // Structures
+
+typedef struct switch_scene_s {
+    void (*function)();
+} switch_scene_t;
 
 typedef struct inventory_params_s {
     sfVector2f world_pos;
@@ -155,10 +171,14 @@ typedef struct logo_s {
 typedef struct menu_s {
     sfSprite *backsprite;
     sfTexture *backtexture;
+    sfSprite *helpsprite;
+    sfTexture *helptexture;
 } menu_t;
 
 typedef struct sound_s {
     sfMusic *music;
+    sfSound **sounds;
+    sfSoundBuffer **sound_buffers;
     int volume_general;
     int volume_music;
     int volume_effect;
@@ -189,6 +209,7 @@ typedef struct app_s {
     game_t *game_ressources;
     inventory_t *inventory;
     sfFont **fonts;
+    scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
     void (*event_handler)(struct app_s *, sfEvent *);
 } app_t;
@@ -203,7 +224,7 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
-entity_t *create_entity(sfVector2f pos, uint32_t type);
+entity_t *create_entity(sfVector2f pos, uint32_t type, e_state_t orientation);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 
@@ -219,6 +240,7 @@ sfVector2f cartesian_to_isometric(float x, float y, float z, float size);
 sfVector2f isometric_to_cartesian(float x, float y, float size);
 sfVector2f get_chunk_coords(sfVector2f pos);
 block_t *get_block(sfVector3f coords, block_t **block_types, chunk_t **map);
+uint8_t get_block_id(sfVector3f coords, chunk_t **map);
 
 // Other
 int get_random_nb(int min_value, int max_value);
@@ -243,6 +265,9 @@ logo_t *create_logo(void);
 void text_menu(app_t *app);
 void set_button(app_t *app);
 void manage_events_menu(app_t *app, sfEvent *event);
+void update_buttons(app_t *app);
+void draw_button(sfRenderWindow *window, sfSprite *sprite, sfText *text);
+
 
 // Setting
 
@@ -258,7 +283,9 @@ void text_video(app_t *app);
 
 void set_button_sound(app_t *app);
 void text_sound(app_t *app);
-
+sfSoundBuffer **init_buffers(void);
+sfSound **init_sounds(sfSoundBuffer **buffers);
+sound_t *init_sound(void);
 
 // Debug
 
@@ -272,6 +299,7 @@ int get_idx_from_pos(int x, int y, int z);
 vector3uint8_t get_pos_from_index(int i);
 int get_chunk_index_from_coordinates(int x, int y);
 sfVector2i get_chunk_coordinates_from_index(int index);
+sfVector2i get_block_coordinates_from_index(int index);
 
 // Entities
 
@@ -283,6 +311,7 @@ int get_armor_index(int, int, app_t *);
 // Inventory
 
 void setup_inventory(app_t *);
+void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view);
 void draw_inventory(app_t *);
 void draw_hotbar(app_t *);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
@@ -325,10 +354,14 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 
 // Scenes
 
-void switch_to_menu(app_t *app);
-void switch_to_settings(app_t *app);
+void switch_to_scene(app_t *app, scenes_t scene);
+
+void switch_to_menu(app_t *app, scenes_t previous_scene);
+void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
 void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
-void switch_to_combat(app_t *app);
+void switch_to_pause_menu(app_t *app);
+void switch_to_inventory(app_t *app);
+void switch_to_help_menu(app_t *app);

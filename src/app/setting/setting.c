@@ -37,19 +37,25 @@ static void handle_setting_click(app_t *app, sfMouseButtonEvent *mouse_event)
     sfVector2f mouse_pos = sfRenderWindow_mapPixelToCoords(app->window,
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
-    if (is_on_sprite(app->button[3].sprite, mouse_pos))
+    if (is_on_sprite(app->button[3].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_sound_settings(app);
-    if (is_on_sprite(app->button[4].sprite, mouse_pos))
+    }
+    if (is_on_sprite(app->button[4].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_video_settings(app);
-    if (is_on_sprite(app->button[5].sprite, mouse_pos))
-        return switch_to_menu(app);
+    }
+    if (is_on_sprite(app->button[5].sprite, mouse_pos)) {
+        sfSound_play(app->sound->sounds[0]);
+        return switch_to_scene(app, app->previous_scene);
+    }
 }
 
 static void handle_events_setting(app_t *app, sfEvent *event)
 {
     sfMouseButtonEvent mouse_event = event->mouseButton;
 
-    if (event->type == sfEvtMouseButtonPressed) {
+    if (event->type == sfEvtMouseButtonReleased) {
         if (mouse_event.button == sfMouseLeft)
             handle_setting_click(app, &mouse_event);
     }
@@ -67,10 +73,12 @@ static void poll_events_setting(app_t *app, sfEvent *event)
                 (sfVector2u){event->size.width, event->size.height});
     }
     sfRenderWindow_setView(app->window, app->view);
+    update_buttons(app);
 }
 
-void switch_to_settings(app_t *app)
+void switch_to_settings(app_t *app, scenes_t previous_scene)
 {
+    app->previous_scene = previous_scene;
     app->event_handler = poll_events_setting;
     app->draw_function = draw_setting_button;
     sfTexture_destroy(app->menu->backtexture);

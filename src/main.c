@@ -7,6 +7,23 @@
 
 #include "../include/rpg.h"
 
+const switch_scene_t switch_functions[] = {
+    {switch_to_menu},
+    {switch_to_settings},
+    {switch_to_video_settings},
+    {switch_to_sound_settings},
+    {switch_to_game},
+    {switch_to_splashscreen},
+    {switch_to_pause_menu},
+    {switch_to_inventory},
+    {switch_to_help_menu}
+};
+
+void switch_to_scene(app_t *app, scenes_t scene)
+{
+    switch_functions[scene].function(app, app->previous_scene);
+}
+
 int main(void)
 {
     app_t *app = create_app();
