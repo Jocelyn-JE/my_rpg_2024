@@ -11,6 +11,8 @@ void switch_to_game(app_t *app)
     app->event_handler = manage_game_events;
     app->draw_function = draw_game;
     get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
+    app->game_ressources->player->stats.defense =
+        get_total_armor_value(app->inventory);
 }
 
 static void handle_events(app_t *app, sfEvent *event)
@@ -21,8 +23,11 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_resized(event, app);
     if (event->type == sfEvtKeyPressed)
         handle_key_pressed_game(event, app);
+<<<<<<< HEAD
     if (event->type == sfEvtKeyPressed && event->key.code == sfKeyE)
         switch_to_inventory(app);
+=======
+>>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4
     if (event->type == sfEvtMouseWheelScrolled)
         handle_mouse_wheeling(event, app);
 }

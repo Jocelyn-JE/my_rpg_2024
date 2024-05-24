@@ -128,6 +128,13 @@ void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
     sfRectangleShape_destroy(shape);
 }
 
+void draw_player_stats(app_t *app)
+{
+    int get_total_armor = get_total_armor_value(app->inventory);
+
+    app->game_ressources->player->stats.defense = get_total_armor;
+}
+
 void draw_inventory(app_t *app)
 {
     float scale = 0.f;
@@ -149,6 +156,7 @@ void draw_inventory(app_t *app)
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
     draw_inventory_items(app, center, size, scale);
     draw_armor_items(app, center, size, scale);
+    draw_player_stats(app);
 }
 
 void switch_to_inventory(app_t *app)

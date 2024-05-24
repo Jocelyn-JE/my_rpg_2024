@@ -155,12 +155,22 @@ typedef struct player_s {
     sfTexture *health_texture;
 } player_t;
 
+typedef enum combat_state_s {
+    PLAYER_TURN,
+    ENEMY_TURN,
+    COMBAT_IDLE,
+    PLAYER_WON,
+    PLAYER_LOST
+} combat_state_t;
+
 typedef struct game_s {
     sfTexture *block_atlas;
     block_t **block_types;
     list_t *entities;
     chunk_t **map;
     player_t *player;
+    combat_state_t combat_state;
+    int selected_item;
 } game_t;
 
 typedef struct logo_s {
@@ -227,7 +237,7 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
-entity_t *create_entity(sfVector2f pos, uint32_t type, e_state_t orientation);
+entity_t *create_entity(sfVector2f, uint32_t, e_state_t, stat_t);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 void set_life(player_t *player, int x, int y);
@@ -297,6 +307,7 @@ void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
+void wait_for_seconds(float);
 
 // Conversions
 int get_idx_from_pos(int x, int y, int z);
@@ -332,6 +343,7 @@ void manage_dragged_item(app_t *, sfVector2f, float, float);
 void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
+int get_total_armor_value(inventory_t *);
 
 //Draw functions
 
@@ -369,3 +381,10 @@ void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
 void switch_to_help_menu(app_t *app);
+<<<<<<< HEAD
+=======
+void switch_to_combat(app_t *app);
+
+// Combats
+entity_t *find_entity_by_type(list_t *, uint32_t);
+>>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4

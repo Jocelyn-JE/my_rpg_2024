@@ -24,4 +24,16 @@ void handle_key_pressed_game(sfEvent *event, app_t *app)
     update_debug_options(&event->key, app->debug_options);
     if (event->key.code == sfKeyEscape)
         switch_to_pause_menu(app);
+<<<<<<< HEAD
+=======
+    if (event->key.code == sfKeyE) {
+        switch_to_inventory(app);
+    }
+    if (event->key.code == sfKeyF) {
+        app->event_handler = manage_combat_events;
+        app->draw_function = switch_to_combat;
+        get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
+        sfRenderWindow_setView(app->window, app->view);
+    }
+>>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4
 }
