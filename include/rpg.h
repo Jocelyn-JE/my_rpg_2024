@@ -135,15 +135,34 @@ typedef enum e_state {
     e_east = 3,
 } e_state_t;
 
+typedef struct stat_s {
+    int health;
+    int attack;
+    int defense;
+} stat_t;
+
 typedef struct entity_s {
     uint32_t type;
     sfVector2f pos;
     e_state_t state;
+    stat_t stats;
 } entity_t;
 
 typedef struct player_s {
     sfVector2f pos;
+    stat_t stats;
+    entity_t *enemy;
+    sfSprite *health_sprite;
+    sfTexture *health_texture;
 } player_t;
+
+typedef enum combat_state_s {
+    PLAYER_TURN,
+    ENEMY_TURN,
+    COMBAT_IDLE,
+    PLAYER_WON,
+    PLAYER_LOST
+} combat_state_t;
 
 typedef struct game_s {
     sfTexture *block_atlas;
@@ -151,6 +170,8 @@ typedef struct game_s {
     list_t *entities;
     chunk_t **map;
     player_t *player;
+    combat_state_t combat_state;
+    int selected_item;
 } game_t;
 
 typedef struct logo_s {
@@ -216,9 +237,11 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
-entity_t *create_entity(sfVector2f pos, uint32_t type, e_state_t orientation);
+entity_t *create_entity(sfVector2f a, uint32_t b,
+    e_state_t c, stat_t d);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
+void set_life(player_t *player, int x, int y);
 
 // Destroy / free functions
 
@@ -249,6 +272,7 @@ sfSprite* create_sprite(const char *texture_path,
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
 void update_text(text_t *text, sfVector2f pos, char *string, int i);
 bool is_on_sprite(sfSprite *button, sfVector2f pos);
+void update_life(player_t *player);
 
 // Menu
 
@@ -285,6 +309,7 @@ void draw_bounding_box(sfRenderWindow *window, sfView *view, sfFloatRect box,
     sfVector2f position);
 void print_framerate(void);
 void draw_bounds(sfRenderWindow *, sfSprite *, float);
+void wait_for_seconds(float);
 
 // Conversions
 int get_idx_from_pos(int x, int y, int z);
@@ -320,6 +345,7 @@ void manage_dragged_item(app_t *, sfVector2f, float, float);
 void free_item(item_t *);
 void free_inventory(inventory_t *);
 item_t *copy_item(item_t *);
+int get_total_armor_value(inventory_t *);
 
 //Draw functions
 
@@ -339,6 +365,7 @@ void handle_mouse_moved(sfEvent *, app_t *);
 void manage_armor_slots(app_t *, sfEvent *);
 void manage_game_events(app_t *, sfEvent *);
 void manage_invent_events(app_t *, sfEvent *);
+void manage_combat_events(app_t *, sfEvent *);
 void handle_key_pressed_game(sfEvent *, app_t *);
 void case_picking(app_t *, int, sfVector2f);
 void handle_mouse_button_right(app_t *, sfEvent *);
@@ -346,7 +373,6 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 // Scenes
 
 void switch_to_scene(app_t *app, scenes_t scene);
-
 void switch_to_menu(app_t *app, scenes_t previous_scene);
 void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
@@ -356,3 +382,13 @@ void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
 void switch_to_help_menu(app_t *app);
+void switch_to_combat(app_t *app);
+
+// Combats
+entity_t *find_entity_by_type(list_t *, uint32_t);
+void attack_player(entity_t *, player_t *);
+void attack_entity(player_t *, entity_t *, int);
+sfSprite *setup_hotbar_sprite(app_t *app);
+void draw_selection_game(app_t *, sfFloatRect, float);
+void draw_hotbar_items_game(app_t *app, sfSprite *hotbar_sprite);
+void display_hotbar_unavailable(app_t *app, sfSprite *hotbarSprite);

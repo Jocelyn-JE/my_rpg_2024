@@ -6,6 +6,13 @@
 */
 #include "../../include/rpg.h"
 
+static void free_player(player_t *player)
+{
+    sfTexture_destroy(player->health_texture);
+    sfSprite_destroy(player->health_sprite);
+    free(player);
+}
+
 static void destroy_game_ressources(game_t *game)
 {
     sfTexture_destroy(game->block_atlas);
@@ -16,7 +23,7 @@ static void destroy_game_ressources(game_t *game)
     for (int i = 0; game->block_types[i] != NULL; i++)
         destroy_block(game->block_types[i]);
     free(game->block_types);
-    free(game->player);
+    free_player(game->player);
     free(game);
 }
 

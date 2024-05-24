@@ -24,7 +24,7 @@ static void draw_item_quantity(app_t *app, item_t *item,
 
     if (item->limit <= 1)
         return;
-    sprintf(quantity, "%d", item->quantity);
+    sprintf(quantity, "%2d", item->quantity);
     sfText_setString(item->quantity_text, quantity);
     sfText_setCharacterSize(item->quantity_text, (20.5 * scale));
     sfText_setPosition(item->quantity_text, (sfVector2f){pos.x + (31 * scale),
@@ -40,7 +40,7 @@ static void draw_dragged_item(app_t *app)
         sfRenderWindow_drawSprite(app->window,
         app->inventory->dragged_item->sprite, NULL);
         if (app->inventory->dragged_item->limit > 1) {
-            sprintf(quantity, "%d", app->inventory->dragged_item->quantity);
+            sprintf(quantity, "%2d", app->inventory->dragged_item->quantity);
             sfText_setString(app->inventory->dragged_item->quantity_text,
                 quantity);
             sfRenderWindow_drawText(app->window,
@@ -128,6 +128,13 @@ void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
     sfRectangleShape_destroy(shape);
 }
 
+static void draw_player_stats(app_t *app)
+{
+    int get_total_armor = get_total_armor_value(app->inventory);
+
+    app->game_ressources->player->stats.defense = get_total_armor;
+}
+
 void draw_inventory(app_t *app)
 {
     float scale = 0.f;
@@ -149,6 +156,7 @@ void draw_inventory(app_t *app)
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
     draw_inventory_items(app, center, size, scale);
     draw_armor_items(app, center, size, scale);
+    draw_player_stats(app);
 }
 
 void switch_to_inventory(app_t *app)
