@@ -63,7 +63,8 @@ static entity_t *get_player_entity(app_t *app)
 
 void update_life(player_t *player)
 {
-    sfSprite_setTextureRect(player->health_sprite, (sfIntRect){0, 200 - 10 * player->stats.health, 81, 10});
+    sfSprite_setTextureRect(player->health_sprite,
+        (sfIntRect){0, 200 - 10 * player->stats.health, 81, 10});
 }
 
 void manage_game_events(app_t *app, sfEvent *event)

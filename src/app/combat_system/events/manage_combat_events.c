@@ -118,8 +118,6 @@ static void handle_events(app_t *app, sfEvent *event)
 
 void manage_combat_events(app_t *app, sfEvent *event)
 {
-    player_t *player = app->game_ressources->player;
-
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window)) {
         handle_events(app, event);
