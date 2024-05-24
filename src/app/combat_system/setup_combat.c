@@ -132,6 +132,7 @@ static void draw_hotbar_items(app_t *app, sfSprite *hotbar_sprite)
     float itemX = 0.f;
     sfVector2f item_pos = {0, 0};
 
+    sfRenderWindow_drawSprite(app->window, hotbar_sprite, NULL);
     for (int i = 0; i < 9; i++) {
         if (app->inventory->slots[i + 27] == NULL)
             continue;
@@ -222,6 +223,16 @@ int check_combat_end(app_t *app, sfSprite *hotbarSprite)
     return 0;
 }
 
+void draw_game_sprites(app_t *app, sfSprite *playerSprite,
+    sfSprite *enemySprite, sfSprite *backgroundSprite)
+{
+    sfRenderWindow_clear(app->window, sfBlack);
+    sfRenderWindow_drawSprite(app->window, backgroundSprite, NULL);
+    sfRenderWindow_drawSprite(app->window, playerSprite, NULL);
+    sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
+    sfRenderWindow_drawSprite(app->window, app->game_ressources->player->health_sprite, NULL);
+}
+
 void switch_to_combat(app_t *app)
 {
     static sfSprite *playerSprite = NULL;
@@ -235,11 +246,7 @@ void switch_to_combat(app_t *app)
         setup_bg_sprite(app, &backgroundSprite);
         initialized = true;
     }
-    sfRenderWindow_clear(app->window, sfBlack);
-    sfRenderWindow_drawSprite(app->window, backgroundSprite, NULL);
-    sfRenderWindow_drawSprite(app->window, playerSprite, NULL);
-    sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
-    sfRenderWindow_drawSprite(app->window, hotbarSprite, NULL);
+    draw_game_sprites(app, playerSprite, enemySprite, backgroundSprite);
     draw_hotbar_items(app, hotbarSprite);
     if (check_combat_end(app, hotbarSprite) == 1) {
         initialized = false;
