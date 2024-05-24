@@ -151,6 +151,8 @@ typedef struct entity_s {
 typedef struct player_s {
     sfVector2f pos;
     stat_t stats;
+    sfSprite *health_sprite;
+    sfTexture *health_texture;
 } player_t;
 
 typedef enum combat_state_s {
@@ -218,6 +220,7 @@ typedef struct app_s {
     debug_t *debug_options;
     game_t *game_ressources;
     inventory_t *inventory;
+    player_t *player;
     sfFont **fonts;
     scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
@@ -237,6 +240,7 @@ void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
 entity_t *create_entity(sfVector2f, uint32_t, e_state_t, stat_t);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
+void set_life(player_t *player, int x, int y);
 
 // Destroy / free functions
 
@@ -377,7 +381,10 @@ void switch_to_splashscreen(app_t *app);
 void switch_to_pause_menu(app_t *app);
 void switch_to_inventory(app_t *app);
 void switch_to_help_menu(app_t *app);
+<<<<<<< HEAD
+=======
 void switch_to_combat(app_t *app);
 
 // Combats
 entity_t *find_entity_by_type(list_t *, uint32_t);
+>>>>>>> b11962b9f4f3f8fe24c44896482ecbb91c5082e4
