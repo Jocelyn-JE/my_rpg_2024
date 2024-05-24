@@ -148,19 +148,6 @@ static void draw_hotbar_items(app_t *app, sfSprite *hotbar_sprite)
     draw_selection(app, hotbarBounds, itemWidth);
 }
 
-void attack_entity(player_t *attacker, entity_t *defender, int ext_damage)
-{
-    int defense_delta = get_random_nb(0, 100);
-    int damage = attacker->stats.attack + ext_damage;
-
-    if (defense_delta < defender->stats.defense)
-        return;
-    defender->stats.health -= damage;
-    if (defender->stats.health < 0)
-        defender->stats.health = 0;
-    return;
-}
-
 void attack_player(entity_t *attacker, player_t *defender)
 {
     int defense_delta = get_random_nb(0, 100);
@@ -174,12 +161,28 @@ void attack_player(entity_t *attacker, player_t *defender)
     return;
 }
 
-void play_enemy_turn(app_t *app, player_t *player, entity_t *enemy)
+void display_hotbar_unavailable(app_t *app, sfSprite *hotbarSprite)
 {
+    sfRectangleShape *rect = sfRectangleShape_create();
+    sfFloatRect hotbarBounds = sfSprite_getGlobalBounds(hotbarSprite);
+    sfVector2f hotbarPos = sfSprite_getPosition(hotbarSprite);
+    sfVector2f rectSize = {hotbarBounds.width, hotbarBounds.height};
+    sfVector2f rectPos = hotbarPos;
+
+    sfRectangleShape_setSize(rect, rectSize);
+    sfRectangleShape_setPosition(rect, rectPos);
+    sfRectangleShape_setFillColor(rect, sfColor_fromRGBA(0, 0, 0, 150));
+    sfRenderWindow_drawRectangleShape(app->window, rect, NULL);
+    sfRenderWindow_display(app->window);
+    sfRectangleShape_destroy(rect);
+}
+
+void play_enemy_turn(app_t *app, player_t *player,
+    entity_t *enemy, sfSprite *hotbarSprite)
+{
+    display_hotbar_unavailable(app, hotbarSprite);
     wait_for_seconds(1.5f);
-    printf("player health: %d\n", player->stats.health);
     attack_player(enemy, player);
-    printf("player health: %d\n", player->stats.health);
     wait_for_seconds(1.5f);
     app->game_ressources->combat_state = PLAYER_TURN;
 }
@@ -197,6 +200,26 @@ entity_t *find_entity_by_type(list_t *start, uint32_t type)
         current = current->next;
     }
     return NULL;
+}
+
+int check_combat_end(app_t *app, sfSprite *hotbarSprite)
+{
+    if (app->game_ressources->player->stats.health <= 0) {
+        app->game_ressources->combat_state = PLAYER_LOST;
+        display_hotbar_unavailable(app, hotbarSprite);
+        wait_for_seconds(1.5f);
+        switch_to_game(app);
+        return 1;
+    }
+    if (find_entity_by_type(app->game_ressources->entities,
+        e_zombie)->stats.health <= 0) {
+        app->game_ressources->combat_state = PLAYER_WON;
+        display_hotbar_unavailable(app, hotbarSprite);
+        wait_for_seconds(1.5f);
+        switch_to_game(app);
+        return 1;
+    }
+    return 0;
 }
 
 void switch_to_combat(app_t *app)
@@ -218,7 +241,12 @@ void switch_to_combat(app_t *app)
     sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
     sfRenderWindow_drawSprite(app->window, hotbarSprite, NULL);
     draw_hotbar_items(app, hotbarSprite);
+    if (check_combat_end(app, hotbarSprite) == 1) {
+        initialized = false;
+        return;
+    }
     if (app->game_ressources->combat_state == ENEMY_TURN)
         play_enemy_turn(app, app->game_ressources->player,
-        find_entity_by_type(app->game_ressources->entities, e_zombie));
+        find_entity_by_type(app->game_ressources->entities,
+        e_zombie), hotbarSprite);
 }
