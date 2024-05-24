@@ -4,7 +4,7 @@
 ** File description:
 ** poll_events
 */
-#include "../../../../include/rpg.h"
+#include "rpg.h"
 
 void switch_to_game(app_t *app)
 {
@@ -13,6 +13,8 @@ void switch_to_game(app_t *app)
     sfMusic_pause(app->sound->music[0]);
     sfMusic_play(app->sound->music[1]);
     get_letterbox_view(app->game_view, sfRenderWindow_getSize(app->window));
+    app->game_ressources->player->stats.defense =
+        get_total_armor_value(app->inventory);
 }
 
 static void handle_events(app_t *app, sfEvent *event)
@@ -29,6 +31,24 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_mouse_wheeling(event, app);
 }
 
+static entity_t *get_enemy_entity(app_t *app)
+{
+    list_t *entities = app->game_ressources->entities;
+    player_t *player = app->game_ressources->player;
+    entity_t *enemy = NULL;
+
+    for (list_t *current = entities; current; current = current->next) {
+        enemy = current->data;
+        if (enemy->type == e_zombie && enemy->pos.x > player->pos.x - 1 &&
+            enemy->pos.x < player->pos.x + 1 && enemy->pos.y > player->pos.y -
+            1 && enemy->pos.y < player->pos.y + 1) {
+            player->enemy = enemy;
+            return enemy;
+        }
+    }
+    return NULL;
+}
+
 static entity_t *get_player_entity(app_t *app)
 {
     list_t *entities = app->game_ressources->entities;
@@ -39,6 +59,11 @@ static entity_t *get_player_entity(app_t *app)
             player_entity = current->data;
     }
     return player_entity;
+}
+
+void update_life(player_t *player)
+{
+    sfSprite_setTextureRect(player->health_sprite, (sfIntRect){0, 200 - 10 * player->stats.health, 81, 10});
 }
 
 void manage_game_events(app_t *app, sfEvent *event)
@@ -52,7 +77,10 @@ void manage_game_events(app_t *app, sfEvent *event)
     if (sfRenderWindow_hasFocus(app->window))
         handle_movement(player, get_player_entity(app), dt,
             app->game_ressources);
+    if (get_enemy_entity(app))
+        switch_to_combat(app);
     update_blocks(app->game_ressources->block_types, dt);
+    update_life(app->game_ressources->player);
     sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));
     sfRenderWindow_setView(app->window, app->game_view);
