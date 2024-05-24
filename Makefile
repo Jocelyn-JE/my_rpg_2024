@@ -82,6 +82,14 @@ SRC =	src/main.c												\
 		src/app/block_types/ladder.c							\
 		src/app/block_types/acacia_log.c						\
 		src/app/block_types/terracotta.c						\
+		src/app/block_types/rail.c								\
+		src/app/block_types/stripped_birch_log.c				\
+		src/app/block_types/stripped_dark_oak_log.c				\
+		src/app/block_types/stripped_spruce_wood.c				\
+		src/app/block_types/glass.c								\
+		src/app/block_types/deepslate.c							\
+		src/app/block_types/stripped_spruce_log.c				\
+		src/app/block_types/gravel.c							\
 		src/app/chunk/add_cube.c								\
 		src/app/chunk/create_chunk.c							\
 		src/app/chunk/destroy_chunk.c							\
