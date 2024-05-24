@@ -109,11 +109,12 @@ int check_combat_end(app_t *app, sfSprite *hotbarSprite)
         switch_to_game(app);
         return 1;
     }
-    if (find_entity_by_type(app->game_ressources->entities,
-        e_zombie)->stats.health <= 0) {
+    if (app->game_ressources->player->enemy->stats.health <= 0) {
         app->game_ressources->combat_state = PLAYER_WON;
         display_hotbar_unavailable(app, hotbarSprite);
         wait_for_seconds(1.5f);
+        list_del(&app->game_ressources->entities,
+            app->game_ressources->player->enemy);
         switch_to_game(app);
         return 1;
     }
@@ -127,10 +128,11 @@ void draw_game_sprites(app_t *app, sfSprite *playerSprite,
     sfRenderWindow_drawSprite(app->window, backgroundSprite, NULL);
     sfRenderWindow_drawSprite(app->window, playerSprite, NULL);
     sfRenderWindow_drawSprite(app->window, enemySprite, NULL);
-    sfRenderWindow_drawSprite(app->window, app->game_ressources->player->health_sprite, NULL);
+    sfRenderWindow_drawSprite(app->window,
+        app->game_ressources->player->health_sprite, NULL);
 }
 
-void switch_to_combat(app_t *app)
+static void draw_combat(app_t *app)
 {
     static sfSprite *playerSprite = NULL;
     static sfSprite *enemySprite = NULL;
@@ -151,6 +153,13 @@ void switch_to_combat(app_t *app)
     }
     if (app->game_ressources->combat_state == ENEMY_TURN)
         play_enemy_turn(app, app->game_ressources->player,
-        find_entity_by_type(app->game_ressources->entities,
-        e_zombie), hotbarSprite);
+        app->game_ressources->player->enemy, hotbarSprite);
+}
+
+void switch_to_combat(app_t *app)
+{
+    app->event_handler = manage_combat_events;
+    app->draw_function = draw_combat;
+    get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
+    sfRenderWindow_setView(app->window, app->view);
 }

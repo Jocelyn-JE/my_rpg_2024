@@ -64,8 +64,7 @@ static void manage_response(app_t *app, int attack_delta, item_t *item)
         return;
     }
     attack_entity(app->game_ressources->player,
-        find_entity_by_type(app->game_ressources->entities, e_zombie),
-        attack_delta);
+        app->game_ressources->player->enemy, attack_delta);
     app->game_ressources->combat_state = ENEMY_TURN;
 }
 
@@ -95,13 +94,6 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_closed(event, app);
     if (event->type == sfEvtResized)
         get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
-    if (event->type == sfEvtKeyPressed && event->key.code == sfKeyF) {
-        app->event_handler = manage_game_events;
-        app->draw_function = draw_game;
-        get_letterbox_view(app->game_view,
-            sfRenderWindow_getSize(app->window));
-        sfRenderWindow_setView(app->window, app->game_view);
-    }
     if (event->type == sfEvtMouseWheelScrolled) {
         handle_mouse_movnt(app, *event);
     }

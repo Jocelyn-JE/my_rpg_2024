@@ -128,7 +128,7 @@ void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
     sfRectangleShape_destroy(shape);
 }
 
-void draw_player_stats(app_t *app)
+static void draw_player_stats(app_t *app)
 {
     int get_total_armor = get_total_armor_value(app->inventory);
 

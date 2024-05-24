@@ -151,6 +151,7 @@ typedef struct entity_s {
 typedef struct player_s {
     sfVector2f pos;
     stat_t stats;
+    entity_t *enemy;
     sfSprite *health_sprite;
     sfTexture *health_texture;
 } player_t;

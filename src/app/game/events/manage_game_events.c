@@ -29,6 +29,24 @@ static void handle_events(app_t *app, sfEvent *event)
         handle_mouse_wheeling(event, app);
 }
 
+static entity_t *get_enemy_entity(app_t *app)
+{
+    list_t *entities = app->game_ressources->entities;
+    player_t *player = app->game_ressources->player;
+    entity_t *enemy = NULL;
+
+    for (list_t *current = entities; current; current = current->next) {
+        enemy = current->data;
+        if (enemy->type == e_zombie && enemy->pos.x > player->pos.x - 1 &&
+            enemy->pos.x < player->pos.x + 1 && enemy->pos.y > player->pos.y -
+            1 && enemy->pos.y < player->pos.y + 1) {
+            player->enemy = enemy;
+            return enemy;
+        }
+    }
+    return NULL;
+}
+
 static entity_t *get_player_entity(app_t *app)
 {
     list_t *entities = app->game_ressources->entities;
@@ -57,6 +75,8 @@ void manage_game_events(app_t *app, sfEvent *event)
     if (sfRenderWindow_hasFocus(app->window))
         handle_movement(player, get_player_entity(app), dt,
             app->game_ressources);
+    if (get_enemy_entity(app))
+        switch_to_combat(app);
     update_blocks(app->game_ressources->block_types, dt);
     update_life(app->game_ressources->player);
     sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
