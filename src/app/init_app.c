@@ -58,7 +58,7 @@ static void spawn_zombies(list_t **list, chunk_t **map, block_t **types)
             map)->solid && get_block((sfVector3f){pos.x, pos.y, 1},
             types, map)->solid && get_random_nb(0, 1000) == 0)
             list_add(list, create_entity((sfVector2f){pos.x, pos.y},
-                e_zombie));
+                e_zombie, get_random_nb(0, 3)));
     }
 }
 
@@ -74,7 +74,7 @@ static game_t *init_game(void)
     new_game->entities = NULL;
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
-        e_player));
+        e_player, e_south));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;
