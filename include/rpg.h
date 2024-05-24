@@ -393,3 +393,4 @@ sfSprite *setup_hotbar_sprite(app_t *app);
 void draw_selection_game(app_t *, sfFloatRect, float);
 void draw_hotbar_items_game(app_t *app, sfSprite *hotbar_sprite);
 void display_hotbar_unavailable(app_t *app, sfSprite *hotbarSprite);
+void reset_player_stats(player_t *player);

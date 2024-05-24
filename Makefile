@@ -106,6 +106,7 @@ SRC =	src/main.c												\
 		src/app/combat_system/init_life.c						\
 		src/app/combat_system/attacking.c						\
 		src/app/combat_system/hotbar_rendering.c				\
+		src/app/combat_system/reset_player.c					\
 		src/app/combat_system/events/manage_combat_events.c		\
 		src/app/game/events/handle_key_pressed.c 				\
 		src/app/game/events/handle_mouse_wheel.c 				\
@@ -148,7 +149,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Wextra -Wshadow $(INCLUDES) $(LIBS) -O3 -flto -g
+CFLAGS += -Wall -Wextra -Wshadow $(INCLUDES) $(LIBS) -O3 -flto
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
