@@ -132,6 +132,7 @@ void manage_combat_events(app_t *app, sfEvent *event)
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window)) {
         handle_events(app, event);
+        update_life(app->game_ressources->player);
         sfRenderWindow_setView(app->window, app->view);
     }
 }

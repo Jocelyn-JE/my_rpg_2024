@@ -48,7 +48,7 @@ static player_t *init_player(void)
     new_player->stats.attack = 1;
     new_player->pos.x = 126.0f;
     new_player->pos.y = 101.0f;
-    set_life(new_player, 1920 / 2, 1080 / 2);
+    set_life(new_player, 1920 / 2, 1780);
     return new_player;
 }
 

@@ -220,7 +220,6 @@ typedef struct app_s {
     debug_t *debug_options;
     game_t *game_ressources;
     inventory_t *inventory;
-    player_t *player;
     sfFont **fonts;
     scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
@@ -271,6 +270,7 @@ sfSprite* create_sprite(const char *texture_path,
 void set_text(app_t *app, sfVector2f position, char *filename, int i);
 void update_text(text_t *text, sfVector2f pos, char *string, int i);
 bool is_on_sprite(sfSprite *button, sfVector2f pos);
+void update_life(player_t *player);
 
 // Menu
 

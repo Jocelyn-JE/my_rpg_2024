@@ -41,6 +41,11 @@ static entity_t *get_player_entity(app_t *app)
     return player_entity;
 }
 
+void update_life(player_t *player)
+{
+    sfSprite_setTextureRect(player->health_sprite, (sfIntRect){0, 200 - 10 * player->stats.health, 81, 10});
+}
+
 void manage_game_events(app_t *app, sfEvent *event)
 {
     player_t *player = app->game_ressources->player;
@@ -53,6 +58,7 @@ void manage_game_events(app_t *app, sfEvent *event)
         handle_movement(player, get_player_entity(app), dt,
             app->game_ressources);
     update_blocks(app->game_ressources->block_types, dt);
+    update_life(app->game_ressources->player);
     sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));
     sfRenderWindow_setView(app->window, app->game_view);

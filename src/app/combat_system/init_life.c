@@ -23,8 +23,11 @@ static void set_life_position(player_t *player, sfVector2f position)
 void set_life(player_t *player, int x, int y)
 {
     sfVector2f pos_life = {x, y};
+    sfFloatRect rect;
 
     create_life_sprite(player, "assets/spritesheet_vie.png");
-    sfSprite_setScale(player->health_sprite, (sfVector2f){3, 3});
+    sfSprite_setScale(player->health_sprite, (sfVector2f){4, 4});
+    rect = sfSprite_getGlobalBounds(player->health_sprite);
+    pos_life = (sfVector2f){x - rect.width / 2, y - rect.height};
     set_life_position(player, pos_life);
 }
