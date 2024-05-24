@@ -66,10 +66,15 @@ typedef enum scenes {
     s_game,
     s_splashscreen,
     s_pause_menu,
-    s_inventory
+    s_inventory,
+    s_help_menu
 } scenes_t;
 
 // Structures
+
+typedef struct switch_scene_s {
+    void (*function)();
+} switch_scene_t;
 
 typedef struct inventory_params_s {
     sfVector2f world_pos;
