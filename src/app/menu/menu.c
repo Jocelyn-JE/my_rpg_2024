@@ -13,7 +13,7 @@ void switch_to_menu(app_t *app, scenes_t previous_scene)
     app->event_handler = manage_events_menu;
     app->draw_function = draw_menu;
     if (previous_scene != s_settings && previous_scene != s_menu)
-        sfMusic_play(app->sound->music);
+        sfMusic_play(app->sound->music_menu);
     sfTexture_destroy(app->menu->backtexture);
     app->menu->backtexture = sfTexture_createFromFile("assets/widgets/menu.png"
         , NULL);

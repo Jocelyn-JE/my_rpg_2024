@@ -69,7 +69,7 @@ static void update_volume_text(app_t *app)
 
 static void play_sound(app_t *app)
 {
-    sfMusic_setVolume(app->sound->music, (app->sound->volume_general *
+    sfMusic_setVolume(app->sound->music_menu, (app->sound->volume_general *
         app->sound->volume_music) / 100);
     sfSound_setVolume(app->sound->sounds[0], (app->sound->volume_general *
         app->sound->volume_effect) / 100);
