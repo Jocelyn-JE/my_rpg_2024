@@ -237,7 +237,8 @@ sfRenderWindow *create_window(sfVector2f res, unsigned int bpp,
 app_t *create_app(void);
 void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
     block_t **block_types);
-entity_t *create_entity(sfVector2f, uint32_t, e_state_t, stat_t);
+entity_t *create_entity(sfVector2f a, uint32_t b,
+    e_state_t c, stat_t d);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
 void set_life(player_t *player, int x, int y);

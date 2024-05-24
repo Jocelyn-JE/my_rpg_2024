@@ -50,9 +50,22 @@ static int get_item_attack(int item)
     return -1;
 }
 
-static void use_food(item_t *item)
+static void use_food(item_t *item, app_t *app)
 {
-    wait_for_seconds(1.5);
+    int item_count = item->quantity;
+
+    --item_count;
+    if (item_count <= 0) {
+        free_item(item);
+        app->inventory->slots
+            [app->game_ressources->selected_item + 27] = NULL;
+    } else {
+        item->quantity--;
+    }
+    app->game_ressources->player->stats.health += 3;
+    if (app->game_ressources->player->stats.health > 20)
+        app->game_ressources->player->stats.health = 20;
+    app->game_ressources->combat_state = ENEMY_TURN;
 }
 
 static void manage_response(app_t *app, int attack_delta, item_t *item)
@@ -60,7 +73,7 @@ static void manage_response(app_t *app, int attack_delta, item_t *item)
     if (attack_delta == -1)
         return;
     if (attack_delta == 1001) {
-        //use_food(item);
+        use_food(item, app);
         return;
     }
     attack_entity(app->game_ressources->player,
