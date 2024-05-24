@@ -36,12 +36,12 @@ static void free_ui(app_t *app)
     }
     for (int i = 0; i < 39; i++)
         sfText_destroy(app->text[i].text);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; app->sound->sounds[i]; i++) {
         sfSound_destroy(app->sound->sounds[i]);
         sfSoundBuffer_destroy(app->sound->sound_buffers[i]);
     }
-    sfMusic_destroy(app->sound->music_menu);
-    sfMusic_destroy(app->sound->music_in_game);
+    for (int i = 0; app->sound->music[i]; i++)
+        sfMusic_destroy(app->sound->music[i]);
     free(app->sound->sound_buffers);
     free(app->sound->sounds);
     free(app->sound);

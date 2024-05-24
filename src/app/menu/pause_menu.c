@@ -69,6 +69,6 @@ void switch_to_pause_menu(app_t *app)
 {
     app->event_handler = manage_events_pause_menu;
     app->draw_function = draw_pause_menu;
-    sfMusic_pause(app->sound->music_in_game);
+    sfMusic_pause(app->sound->music[1]);
     get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
 }
