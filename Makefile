@@ -104,6 +104,8 @@ SRC =	src/main.c												\
 		src/app/game/render_game.c								\
 		src/app/combat_system/setup_combat.c					\
 		src/app/combat_system/init_life.c						\
+		src/app/combat_system/attacking.c						\
+		src/app/combat_system/hotbar_rendering.c				\
 		src/app/combat_system/events/manage_combat_events.c		\
 		src/app/game/events/handle_key_pressed.c 				\
 		src/app/game/events/handle_mouse_wheel.c 				\

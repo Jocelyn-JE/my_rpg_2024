@@ -371,7 +371,6 @@ void handle_mouse_button_right(app_t *, sfEvent *);
 // Scenes
 
 void switch_to_scene(app_t *app, scenes_t scene);
-
 void switch_to_menu(app_t *app, scenes_t previous_scene);
 void switch_to_settings(app_t *app, scenes_t previous_scene);
 void switch_to_video_settings(app_t *app);
@@ -385,3 +384,9 @@ void switch_to_combat(app_t *app);
 
 // Combats
 entity_t *find_entity_by_type(list_t *, uint32_t);
+void attack_player(entity_t *, player_t *);
+void attack_entity(player_t *, entity_t *, int);
+sfSprite *setup_hotbar_sprite(app_t *app);
+void draw_selection_game(app_t *, sfFloatRect, float);
+void draw_hotbar_items_game(app_t *app, sfSprite *hotbar_sprite);
+void display_hotbar_unavailable(app_t *app, sfSprite *hotbarSprite);

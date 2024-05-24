@@ -7,19 +7,6 @@
 
 #include "../../../../include/rpg.h"
 
-void attack_entity(player_t *attacker, entity_t *defender, int ext_damage)
-{
-    int defense_delta = get_random_nb(0, 100);
-    int damage = attacker->stats.attack + ext_damage;
-
-    if (defense_delta < defender->stats.defense)
-        return;
-    defender->stats.health -= damage;
-    if (defender->stats.health < 0)
-        defender->stats.health = 0;
-    return;
-}
-
 void handle_mouse_movnt(app_t *app, sfEvent event)
 {
     if (app->game_ressources->combat_state != PLAYER_TURN)
@@ -37,10 +24,8 @@ void handle_mouse_movnt(app_t *app, sfEvent event)
 
 static void manage_case_empty(app_t *app)
 {
-    wait_for_seconds(1.5);
     attack_entity(app->game_ressources->player,
         find_entity_by_type(app->game_ressources->entities, e_zombie), 0);
-    wait_for_seconds(1.5);
     app->game_ressources->combat_state = ENEMY_TURN;
 }
 
@@ -70,12 +55,11 @@ static void use_food(item_t *item)
     wait_for_seconds(1.5);
 }
 
-static void manage_response(app_t *app, int type_item,
-    int attack_delta, item_t *item)
+static void manage_response(app_t *app, int attack_delta, item_t *item)
 {
     if (attack_delta == -1)
         return;
-    if (type_item == 0) {
+    if (attack_delta == 1001) {
         //use_food(item);
         return;
     }
@@ -102,7 +86,7 @@ void handle_mouse_button_combat(sfEvent *event, app_t *app)
     }
     type_item = item->current_item;
     attack_delta = get_item_attack(type_item);
-    manage_response(app, type_item, attack_delta, item);
+    manage_response(app, attack_delta, item);
 }
 
 static void handle_events(app_t *app, sfEvent *event)
