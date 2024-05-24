@@ -8,11 +8,9 @@
 
 bool is_null_vertex(sfVertex vertex)
 {
-    if (vertex.color.a == 0 && vertex.color.r == 0 && vertex.color.g == 0 &&
-        vertex.color.b == 0 && vertex.position.x == 0 && vertex.position.y ==
-        0 && vertex.texCoords.x == 0 && vertex.texCoords.y == 0)
-        return true;
-    return false;
+    return (vertex.color.a == 0 && vertex.color.r == 0 && vertex.color.g == 0
+        && vertex.color.b == 0 && vertex.position.x == 0 && vertex.position.y
+        == 0 && vertex.texCoords.x == 0 && vertex.texCoords.y == 0);
 }
 
 sfVertex null_vertex(void)
