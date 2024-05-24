@@ -14,7 +14,7 @@ static sfSprite *setup_player_sprite(app_t *app)
     sfSprite *playerSprite = sfSprite_create();
     sfIntRect textureRect = {533, 0, 119, 240};
     sfVector2f viewSize = sfView_getSize(app->view);
-    sfVector2f spritePosition = {viewSize.x / 4.1f, viewSize.y / 1.9f};
+    sfVector2f spritePosition = {viewSize.x / 3.7f, viewSize.y / 1.9f};
 
     sfSprite_setTexture(playerSprite, texture, sfTrue);
     sfSprite_setTextureRect(playerSprite, textureRect);
@@ -30,7 +30,7 @@ static sfSprite *setup_enemy_sprite(app_t *app)
     sfSprite *enemySprite = sfSprite_create();
     sfIntRect textureRect = {414, 240, 119, 191};
     sfVector2f viewSize = sfView_getSize(app->view);
-    sfVector2f spritePosition = {viewSize.x * 3.35 / 4.0f, viewSize.y / 3.f};
+    sfVector2f spritePosition = {viewSize.x / 1.55f, viewSize.y / 3.35f};
 
     sfSprite_setTexture(enemySprite, texture, sfTrue);
     sfSprite_setTextureRect(enemySprite, textureRect);
