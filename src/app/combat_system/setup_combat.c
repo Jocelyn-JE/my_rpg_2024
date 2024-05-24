@@ -106,6 +106,7 @@ int check_combat_end(app_t *app, sfSprite *hotbarSprite)
     if (app->game_ressources->player->stats.health <= 0) {
         app->game_ressources->combat_state = PLAYER_LOST;
         display_hotbar_unavailable(app, hotbarSprite);
+        sfSound_play(app->sound->sounds[2]);
         wait_for_seconds(1.5f);
         reset_player_stats(app->game_ressources->player);
         switch_to_game(app);
@@ -114,7 +115,6 @@ int check_combat_end(app_t *app, sfSprite *hotbarSprite)
     if (app->game_ressources->player->enemy->stats.health <= 0) {
         app->game_ressources->combat_state = PLAYER_WON;
         display_hotbar_unavailable(app, hotbarSprite);
-        sfSound_play(app->sound->sounds[2]);
         wait_for_seconds(1.5f);
         list_del(&app->game_ressources->entities,
             app->game_ressources->player->enemy);
