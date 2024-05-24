@@ -71,7 +71,10 @@ void manage_game_events(app_t *app, sfEvent *event)
 {
     player_t *player = app->game_ressources->player;
     sfTime dt = sfClock_getElapsedTime(app->game_clock);
+    sfThread *chunk_update_thread = sfThread_create(&update_chunks, app);
 
+    update_blocks(app->game_ressources->block_types, dt);
+    sfThread_launch(chunk_update_thread);
     while (sfRenderWindow_pollEvent(app->window, event) &&
         sfRenderWindow_hasFocus(app->window))
         handle_events(app, event);
@@ -80,9 +83,9 @@ void manage_game_events(app_t *app, sfEvent *event)
             app->game_ressources);
     if (get_enemy_entity(app))
         switch_to_combat(app);
-    update_blocks(app->game_ressources->block_types, dt);
     update_life(app->game_ressources->player);
     sfView_setCenter(app->game_view, cartesian_to_isometric(player->pos.x + 16,
         player->pos.y, 1.5, 100));
     sfRenderWindow_setView(app->window, app->game_view);
+    sfThread_wait(chunk_update_thread);
 }

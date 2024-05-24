@@ -24,18 +24,29 @@ void switch_to_scene(app_t *app, scenes_t scene)
     switch_functions[scene].function(app, app->previous_scene);
 }
 
+void draw_to_window(void *void_app)
+{
+    app_t *app = void_app;
+
+    sfRenderWindow_setActive(app->window, true);
+    app->draw_function(app);
+    sfRenderWindow_display(app->window);
+}
+
 int main(void)
 {
     app_t *app = create_app();
     sfEvent events;
+    sfThread *render_thread = sfThread_create(draw_to_window, app);
 
     switch_to_splashscreen(app);
-    sfRenderWindow_requestFocus(app->window);
+    sfRenderWindow_setActive(app->window, false);
     while (sfRenderWindow_isOpen(app->window)) {
+        sfThread_wait(render_thread);
         app->event_handler(app, &events);
-        app->draw_function(app);
-        sfRenderWindow_display(app->window);
+        sfThread_launch(render_thread);
     }
+    sfThread_wait(render_thread);
     destroy_app(app);
     return 0;
 }

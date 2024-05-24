@@ -53,7 +53,7 @@ sound_t *init_sound(void)
     sound->sound_buffers = init_buffers();
     sound->sounds = init_sounds(sound->sound_buffers);
     sound->music = init_music();
-    sound->volume_general = 50;
+    sound->volume_general = 0;
     sound->volume_music = 50;
     sound->volume_effect = 50;
     sfSound_setVolume(sound->sounds[0], 25);

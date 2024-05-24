@@ -42,21 +42,45 @@ void draw_chunks(chunk_t **list, app_t *app)
     }
 }
 
-void update_chunks(chunk_t **list, app_t *app)
+void update_chunks(app_t *app)
 {
-    for (int i = 0; list[i] != NULL; i++) {
-        if (is_vertexarray_visible(app->game_view, list[i]->bounding_box,
-            sfTransformable_getPosition(list[i]->transform))) {
-            update_chunk(list[i], app->game_ressources->block_types,
-                app->game_ressources->entities, i);
+    game_t *game = app->game_ressources;
+    chunk_t **chunks = game->map;
+    update_chunk_info_t threads_data[] = {{NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}, {NULL, game->block_types, game->entities, 0}};
+    sfThread *threads[] = {sfThread_create(update_chunk, &threads_data[0]),
+        sfThread_create(update_chunk, &threads_data[1]), sfThread_create(
+        update_chunk, &threads_data[2]), sfThread_create(update_chunk,
+        &threads_data[3]), sfThread_create(update_chunk, &threads_data[4]),
+        sfThread_create(update_chunk, &threads_data[5]), sfThread_create(
+        update_chunk, &threads_data[6]), sfThread_create(update_chunk,
+        &threads_data[7]), sfThread_create(update_chunk, &threads_data[8]),
+        sfThread_create(update_chunk, &threads_data[9]), sfThread_create(
+        update_chunk, &threads_data[10]), sfThread_create(update_chunk,
+        &threads_data[11]), sfThread_create(update_chunk, &threads_data[12]),
+        sfThread_create(update_chunk, &threads_data[13]), sfThread_create(
+        update_chunk, &threads_data[14]), sfThread_create(update_chunk,
+        &threads_data[15])};
+    int current_thread = 0;
+
+    for (int i = 0; i != 1024; i++) {
+        if (is_vertexarray_visible(app->game_view, chunks[i]->bounding_box,
+            sfTransformable_getPosition(chunks[i]->transform))) {
+            sfThread_wait(threads[current_thread]);
+            threads_data[current_thread].chunk = chunks[i];
+            threads_data[current_thread].chunk_index = chunks[i];
+            sfThread_launch(threads[current_thread]);
+            current_thread++;
+            if (current_thread == 16)
+                current_thread = 0;
         }
     }
+    for (int i = 0; i != 16; i++)
+        sfThread_wait(threads[i]);
 }
 
 void draw_game(app_t *app)
 {
     sfRenderWindow_clear(app->window, sfBlack);
-    update_chunks(app->game_ressources->map, app);
     draw_chunks(app->game_ressources->map, app);
     draw_hotbar(app);
     sfRenderWindow_setView(app->window, app->view);

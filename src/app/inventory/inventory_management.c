@@ -118,11 +118,9 @@ float adjust_sprite_scale(inventory_t *inventory, float baseScale,
 void draw_semi_transparent_rect(sfRenderWindow *window, const sfView *view)
 {
     sfRectangleShape *shape = sfRectangleShape_create();
-    sfVector2f view_top_left =
-        sfRenderWindow_mapPixelToCoords(window, (sfVector2i){0, 0}, view);
 
-    sfRectangleShape_setPosition(shape, view_top_left);
-    sfRectangleShape_setSize(shape, (sfVector2f){10000, 10000});
+    sfRectangleShape_setPosition(shape, (sfVector2f){0, 0});
+    sfRectangleShape_setSize(shape, (sfVector2f){1920, 1080});
     sfRectangleShape_setFillColor(shape, (sfColor){0, 0, 0, 170});
     sfRenderWindow_drawRectangleShape(window, shape, NULL);
     sfRectangleShape_destroy(shape);
@@ -144,7 +142,9 @@ void draw_inventory(app_t *app)
     sfSprite_setPosition(app->inventory->trash,
         (sfVector2f){center.x + 400.5 * scale, center.y + 234 * scale});
     draw_chunks(app->game_ressources->map, app);
+    sfRenderWindow_setView(app->window, app->view);
     draw_semi_transparent_rect(app->window, app->game_view);
+    sfRenderWindow_setView(app->window, app->game_view);
     sfRenderWindow_drawSprite(app->window, app->inventory->background, NULL);
     sfRenderWindow_drawSprite(app->window, app->inventory->trash, NULL);
     draw_inventory_items(app, center, size, scale);

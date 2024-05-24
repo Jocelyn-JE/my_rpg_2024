@@ -207,6 +207,13 @@ typedef struct text_s {
     sfText *text;
 } text_t;
 
+typedef struct update_chunk_info_s {
+    chunk_t *chunk;
+    block_t **blocks;
+    list_t *entities;
+    int chunk_index;
+} update_chunk_info_t;
+
 typedef struct app_s {
     float zoom;
     sfRenderWindow *window;
@@ -262,8 +269,8 @@ int get_random_nb(int min_value, int max_value);
 double clamp(double d, double min, double max);
 void drag_view(sfEvent *event, sfRenderWindow *window, sfView *view);
 void get_letterbox_view(sfView *view, sfVector2u size);
-void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
-    int chunk_index);
+void update_chunk(update_chunk_info_t *info);
+void update_chunks(app_t *app);
 void handle_movement(player_t *player, entity_t *player_entity, sfTime dt,
     game_t *game);
 void handle_button_click(app_t *app, sfMouseButtonEvent *mouse_event);

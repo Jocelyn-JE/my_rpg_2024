@@ -55,14 +55,13 @@ chunk_t *create_chunk(block_t **blocks, int map_fd)
     return new_chunk;
 }
 
-void update_chunk(chunk_t *chunk, block_t **blocks, list_t *entities,
-    int chunk_index)
+void update_chunk(update_chunk_info_t *info)
 {
-    sfVertexArray_clear(chunk->vertices);
+    sfVertexArray_clear(info->chunk->vertices);
     for (int i = 0; i < 8192; i++) {
-        add_entities(chunk->vertices, i, entities, chunk_index);
-        if (chunk->blocks[i] != b_air)
-            add_cube(chunk->vertices, i, chunk->blocks, blocks);
+        add_entities(info->chunk->vertices, i, info->entities, info->chunk_index);
+        if (info->chunk->blocks[i] != b_air)
+            add_cube(info->chunk->vertices, i, info->chunk->blocks, info->blocks);
     }
-    chunk->bounding_box = sfVertexArray_getBounds(chunk->vertices);
+    info->chunk->bounding_box = sfVertexArray_getBounds(info->chunk->vertices);
 }
