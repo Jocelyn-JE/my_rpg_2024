@@ -324,6 +324,7 @@ void add_entity(sfVertexArray *vertices, entity_t *entity);
 sfVector2f get_entity_chunk_coords(entity_t *entity);
 int get_slot_index(int, int, app_t *);
 int get_armor_index(int, int, app_t *);
+player_t *init_player(void);
 
 // Inventory
 

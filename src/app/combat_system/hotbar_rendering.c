@@ -24,6 +24,7 @@ sfSprite *setup_hotbar_sprite(app_t *app)
     float hotbarX = center.x - backgroundBounds.width * 2.46;
     float hotbarY = center.y + (size.y / 2.35) - backgroundBounds.height;
 
+    ret = ret;
     sfSprite_setPosition(hotbar_sprite, (sfVector2f){hotbarX, hotbarY});
     sfSprite_setScale(hotbar_sprite, (sfVector2f){5, 5});
     return hotbar_sprite;
