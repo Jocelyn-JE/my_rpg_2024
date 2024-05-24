@@ -41,7 +41,6 @@ static void free_ui(app_t *app)
         sfSoundBuffer_destroy(app->sound->sound_buffers[i]);
     }
     sfMusic_destroy(app->sound->music);
-    sfSprite_destroy(app->menu->helpsprite);
     free(app->sound->sound_buffers);
     free(app->sound->sounds);
     free(app->sound);
@@ -60,6 +59,8 @@ static void free_menu(menu_t *menu)
 {
     sfTexture_destroy(menu->backtexture);
     sfSprite_destroy(menu->backsprite);
+    sfTexture_destroy(menu->helptexture);
+    sfSprite_destroy(menu->helpsprite);
     free(menu);
 }
 
