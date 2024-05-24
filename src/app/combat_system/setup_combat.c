@@ -80,6 +80,7 @@ void play_enemy_turn(app_t *app, player_t *player,
 {
     display_hotbar_unavailable(app, hotbarSprite);
     wait_for_seconds(1.5f);
+    sfSound_play(app->sound->sounds[1]);
     attack_player(enemy, player);
     wait_for_seconds(1.5f);
     app->game_ressources->combat_state = PLAYER_TURN;

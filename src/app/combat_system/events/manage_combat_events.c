@@ -73,9 +73,11 @@ static void manage_response(app_t *app, int attack_delta, item_t *item)
     if (attack_delta == -1)
         return;
     if (attack_delta == 1001) {
+        sfSound_play(app->sound->sounds[3]);
         use_food(item, app);
         return;
     }
+    sfSound_play(app->sound->sounds[1]);
     attack_entity(app->game_ressources->player,
         app->game_ressources->player->enemy, attack_delta);
     app->game_ressources->combat_state = ENEMY_TURN;

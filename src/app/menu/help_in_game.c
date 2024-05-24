@@ -13,7 +13,7 @@ static void button_actions(app_t *app, sfMouseButtonEvent *mouse_event)
         (sfVector2i){mouse_event->x, mouse_event->y}, NULL);
 
     if (is_on_sprite(app->button[21].sprite, mouse_pos)) {
-        sfSound_play(app->sound->sounds[1]);
+        sfSound_play(app->sound->sounds[0]);
         return switch_to_pause_menu(app);
     }
 }
