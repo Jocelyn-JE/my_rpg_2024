@@ -4,7 +4,7 @@
 ** File description:
 ** poll_events
 */
-#include "../../../../include/rpg.h"
+#include "rpg.h"
 
 void switch_to_game(app_t *app)
 {

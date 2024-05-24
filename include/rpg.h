@@ -151,6 +151,8 @@ typedef struct entity_s {
 typedef struct player_s {
     sfVector2f pos;
     stat_t stats;
+    sfSprite *health_sprite;
+    sfTexture *health_texture;
 } player_t;
 
 typedef struct game_s {
@@ -208,6 +210,7 @@ typedef struct app_s {
     debug_t *debug_options;
     game_t *game_ressources;
     inventory_t *inventory;
+    player_t *player;
     sfFont **fonts;
     scenes_t previous_scene;
     void (*draw_function)(struct app_s *);
@@ -227,6 +230,7 @@ void add_cube(sfVertexArray *vertices, int index, uint8_t *blocks,
 entity_t *create_entity(sfVector2f pos, uint32_t type, e_state_t orientation);
 chunk_t *create_chunk(block_t **blocks, int map_fd);
 block_t **init_blocks(void);
+void set_life(player_t *player, int x, int y);
 
 // Destroy / free functions
 

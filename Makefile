@@ -103,6 +103,9 @@ SRC =	src/main.c												\
 		src/app/game/render_game.c								\
 		src/app/game/events/handle_key_pressed.c 				\
 		src/app/game/events/handle_mouse_wheel.c 				\
+		src/app/combat_system/setup_combat.c					\
+		src/app/combat_system/events/manage_combat_events.c		\
+		src/app/combat_system/init_life.c						\
 		src/events/get_letterbox_view.c							\
 		src/events/handle_closed.c								\
 		src/events/handle_resized.c								\

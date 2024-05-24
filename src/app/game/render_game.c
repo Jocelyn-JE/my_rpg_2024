@@ -56,6 +56,7 @@ void update_chunks(chunk_t **list, app_t *app)
 void draw_game(app_t *app)
 {
     sfRenderWindow_clear(app->window, sfBlack);
+    sfRenderWindow_drawSprite(app->window, app->game_ressources->player->health_sprite, NULL);
     update_chunks(app->game_ressources->map, app);
     draw_chunks(app->game_ressources->map, app);
     draw_hotbar(app);
