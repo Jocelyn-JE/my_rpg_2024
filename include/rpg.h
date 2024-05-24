@@ -138,10 +138,11 @@ typedef struct player_s {
 } player_t;
 
 typedef enum combat_state_s {
-    COMBAT_STARTED,
     PLAYER_TURN,
     ENEMY_TURN,
-    COMBAT_ENDED
+    COMBAT_IDLE,
+    PLAYER_WON,
+    PLAYER_LOST
 } combat_state_t;
 
 typedef struct game_s {
@@ -349,3 +350,6 @@ void switch_to_sound_settings(app_t *app);
 void switch_to_game(app_t *app);
 void switch_to_splashscreen(app_t *app);
 void switch_to_combat(app_t *app);
+
+// Combats
+entity_t *find_entity_by_type(list_t *, uint32_t);
