@@ -16,6 +16,7 @@ SRC =	src/main.c												\
 		src/conversions/clamp.c									\
 		src/conversions/random.c								\
 		src/conversions/get_chunk_coords.c						\
+		src/conversions/wait_seconds.c							\
 		src/conversions/get_slot_index.c						\
 		src/conversions/get_armor_index.c						\
 		src/debug/print_fps.c									\
@@ -101,6 +102,11 @@ SRC =	src/main.c												\
 		src/app/game/events/drag_view.c							\
 		src/app/game/movement.c									\
 		src/app/game/render_game.c								\
+		src/app/combat_system/setup_combat.c					\
+		src/app/combat_system/init_life.c						\
+		src/app/combat_system/attacking.c						\
+		src/app/combat_system/hotbar_rendering.c				\
+		src/app/combat_system/events/manage_combat_events.c		\
 		src/app/game/events/handle_key_pressed.c 				\
 		src/app/game/events/handle_mouse_wheel.c 				\
 		src/events/get_letterbox_view.c							\
@@ -118,6 +124,7 @@ SRC =	src/main.c												\
 		src/app/inventory/is_armor.c							\
 		src/app/inventory/draw_highlighted_slot.c 				\
 		src/app/inventory/free_functions.c						\
+		src/app/inventory/armor_count.c							\
 		src/debug/draw_bounds.c									\
 		src/app/splash_screen/splash_screen.c					\
 		src/text_and_button/set_text.c							\
@@ -131,6 +138,7 @@ SRC =	src/main.c												\
 		src/app/setting/video/parameter_video.c					\
 		src/app/menu/pause_menu.c								\
 		src/app/menu/help_in_game.c								\
+		src/app/init_player.c									\
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -140,7 +148,7 @@ LIBS	= -L ./libs -lm
 
 NAME	=	my_rpg
 
-CFLAGS += -Wall -Wextra -Wshadow $(INCLUDES) $(LIBS) -O3 -flto
+CFLAGS += -Wall -Wextra -Wshadow $(INCLUDES) $(LIBS) -O3 -flto -g
 
 CSFML	= -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 

@@ -39,13 +39,14 @@ static sfView *create_view(sfVector2f res)
     return view;
 }
 
-static player_t *init_player(void)
+stat_t setup_stats(int defense, int health, int attack)
 {
-    player_t *new_player = malloc(sizeof(player_t));
+    stat_t new_stats;
 
-    new_player->pos.x = 410.0f;
-    new_player->pos.y = 194.0f;
-    return new_player;
+    new_stats.health = health;
+    new_stats.attack = attack;
+    new_stats.defense = defense;
+    return new_stats;
 }
 
 static void spawn_zombies(list_t **list, chunk_t **map, block_t **types)
@@ -58,7 +59,7 @@ static void spawn_zombies(list_t **list, chunk_t **map, block_t **types)
             map)->solid && get_block((sfVector3f){pos.x, pos.y, 1},
             types, map)->solid && get_random_nb(0, 1000) == 0)
             list_add(list, create_entity((sfVector2f){pos.x, pos.y},
-                e_zombie, get_random_nb(0, 3)));
+            e_zombie, get_random_nb(0, 3), setup_stats(20, 10, 2)));
     }
 }
 
@@ -74,7 +75,7 @@ static game_t *init_game(void)
     new_game->entities = NULL;
     new_game->player = init_player();
     list_add(&new_game->entities, create_entity(new_game->player->pos,
-        e_player, e_south));
+        e_player, e_south, setup_stats(0, 20, 1)));
     for (int i = 0; i != 32 * 32; i++)
         new_game->map[i] = create_chunk(new_game->block_types, map_fd);
     new_game->map[1024] = NULL;

@@ -55,7 +55,7 @@ static void draw_item_quantity(app_t *app, int i,
 
     if (item->limit <= 1)
         return;
-    sprintf(quantity, "%d", item->quantity);
+    sprintf(quantity, "%2d", item->quantity);
     sfText_setString(item->quantity_text, quantity);
     sfText_setCharacterSize(item->quantity_text, (12 * scale));
     sfText_setPosition(item->quantity_text,

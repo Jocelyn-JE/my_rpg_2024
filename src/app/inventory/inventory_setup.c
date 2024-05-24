@@ -197,6 +197,4 @@ void setup_inventory(app_t *app)
         app->fonts[0]), -1);
     add_item_to_inventory(app->inventory, create_item(p_diamond_sword, 1, 1,
         app->fonts[0]), -1);
-    add_item_to_inventory(app->inventory, create_item(p_diamond_helmet, 1, 1,
-        app->fonts[0]), -1);
 }

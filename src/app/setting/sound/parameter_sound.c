@@ -69,9 +69,16 @@ static void update_volume_text(app_t *app)
 
 static void play_sound(app_t *app)
 {
-    sfMusic_setVolume(app->sound->music_menu, (app->sound->volume_general *
-        app->sound->volume_music) / 100);
+    for (int i = 0; app->sound->music[i]; i++)
+        sfMusic_setVolume(app->sound->music[i], (app->sound->volume_general *
+            app->sound->volume_music) / 100);
     sfSound_setVolume(app->sound->sounds[0], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[1], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[2], (app->sound->volume_general *
+        app->sound->volume_effect) / 100);
+    sfSound_setVolume(app->sound->sounds[3], (app->sound->volume_general *
         app->sound->volume_effect) / 100);
     sfSound_play(app->sound->sounds[0]);
 }

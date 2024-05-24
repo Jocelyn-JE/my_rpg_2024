@@ -24,4 +24,6 @@ void handle_key_pressed_game(sfEvent *event, app_t *app)
     update_debug_options(&event->key, app->debug_options);
     if (event->key.code == sfKeyEscape)
         switch_to_pause_menu(app);
+    if (event->key.code == sfKeyE)
+        switch_to_inventory(app);
 }

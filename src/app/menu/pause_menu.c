@@ -56,6 +56,10 @@ static void draw_pause_menu(app_t *app)
     sfRenderWindow_setView(app->window, app->game_view);
     draw_chunks(app->game_ressources->map, app);
     draw_hotbar(app);
+    sfRenderWindow_setView(app->window, app->view);
+    sfRenderWindow_drawSprite(app->window,
+        app->game_ressources->player->health_sprite, NULL);
+    sfRenderWindow_setView(app->window, app->game_view);
     draw_semi_transparent_rect(app->window, app->game_view);
     sfRenderWindow_setView(app->window, app->view);
     draw_button(app->window, app->button[17].sprite, app->text[26].text);
@@ -69,6 +73,6 @@ void switch_to_pause_menu(app_t *app)
 {
     app->event_handler = manage_events_pause_menu;
     app->draw_function = draw_pause_menu;
-    sfMusic_pause(app->sound->music_in_game);
+    sfMusic_pause(app->sound->music[1]);
     get_letterbox_view(app->view, sfRenderWindow_getSize(app->window));
 }

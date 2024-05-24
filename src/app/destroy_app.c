@@ -6,6 +6,13 @@
 */
 #include "../../include/rpg.h"
 
+static void free_player(player_t *player)
+{
+    sfTexture_destroy(player->health_texture);
+    sfSprite_destroy(player->health_sprite);
+    free(player);
+}
+
 static void destroy_game_ressources(game_t *game)
 {
     sfTexture_destroy(game->block_atlas);
@@ -16,7 +23,7 @@ static void destroy_game_ressources(game_t *game)
     for (int i = 0; game->block_types[i] != NULL; i++)
         destroy_block(game->block_types[i]);
     free(game->block_types);
-    free(game->player);
+    free_player(game->player);
     free(game);
 }
 
@@ -36,12 +43,12 @@ static void free_ui(app_t *app)
     }
     for (int i = 0; i < 39; i++)
         sfText_destroy(app->text[i].text);
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; app->sound->sounds[i]; i++) {
         sfSound_destroy(app->sound->sounds[i]);
         sfSoundBuffer_destroy(app->sound->sound_buffers[i]);
     }
-    sfMusic_destroy(app->sound->music_menu);
-    sfMusic_destroy(app->sound->music_in_game);
+    for (int i = 0; app->sound->music[i]; i++)
+        sfMusic_destroy(app->sound->music[i]);
     free(app->sound->sound_buffers);
     free(app->sound->sounds);
     free(app->sound);
